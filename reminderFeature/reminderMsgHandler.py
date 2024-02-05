@@ -11,6 +11,7 @@ reminder_2_sent = []
 reminder_3_sent = []
 rmndr_interval = 10  # 15 minutes or 900 seconds reminder interval
 current_time = datetime.utcnow()
+is_assigned_msg_sent = []
 
 
 def createRmndrMsg(list_of_ticket) -> None:
@@ -21,6 +22,7 @@ def createRmndrMsg(list_of_ticket) -> None:
     :param list_of_ticket:
     :return: string
     """
+    # print(list_of_ticket)
     if list_of_ticket:
         for ticket in list_of_ticket:
             is_assigned = get_user_info(ticket)
@@ -42,7 +44,9 @@ def createRmndrMsg(list_of_ticket) -> None:
                     sendMessageToWxT(data)
                     reminder_sent.append(ticket['ticket_id'])
                     logger.info(f"Sending Reminder for {ticket['ticket_id']} -> COMPLETED")
-                if is_assigned:
+            if is_assigned:
+                # if (ticket['ticket_id'] not in is_assigned_msg_sent) and (ticket['ticket_id'] not in reminder_sent):
+                if ticket['ticket_id'] not in is_assigned_msg_sent:
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - STARTED")
                     logger.info(f"Creating ticket Assignment Message for {ticket['ticket_id']} - STARTED")
                     ticket_assigned_msg = \
@@ -58,9 +62,12 @@ def createRmndrMsg(list_of_ticket) -> None:
                     logger.info(f"Creating ticket Assignment Message for {ticket['ticket_id']} - COMPLETED")
                     logger.info(f"Sending Ticket Assignment message for {ticket['ticket_id']} -> STARTED")
                     sendMessageToWxT(data)
+                    is_assigned_msg_sent.append(ticket['ticket_id'])
                     reminder_sent.append(ticket['ticket_id'])
                     logger.info(f"Sending Ticket Assignment message for {ticket['ticket_id']} -> COMPLETED")
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - COMPLETED")
+            else:
+                logger.info(f"Ticket {ticket['ticket_id']} is already processed.")
 
 
 def reminder_trigger(ticket, is_assigned) -> bool:
