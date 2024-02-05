@@ -7,7 +7,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     datefmt='%Y-%m-%d %H:%M:%S')
 
-treated_tickets = set()
+# treated_tickets = set()
 
 
 def get_user_info(ticket):
@@ -18,24 +18,41 @@ def get_user_info(ticket):
     :return: User information in dict format.
     """
 
-    if ticket['ticket_id'] not in treated_tickets:
-        treated_tickets.add(ticket['ticket_id'])
-        logger.info(f"Linking assignee_id to user information.")
-        assignee_id = get_assignee_id(ticket)
-        if assignee_id:
-            url = f"{tqw().zendesk_user_url}{assignee_id}.json"
-            zendesk_response = requests.get(url, headers=tqw().zendesk_headers)
-            if zendesk_response.status_code == 200:
-                # Parse the JSON response
-                user_data = zendesk_response.json()
-                # Extract and return relevant user information
-                user_info = {
-                    'ID': user_data['user']['id'],
-                    'Name': user_data['user']['name'],
-                    'Email': user_data['user']['email']
-                }
-                logger.info(f"Returning user info dict -> {user_info}.")
-                return user_info
+    logger.info(f"Linking assignee_id to user information.")
+    assignee_id = get_assignee_id(ticket)
+    if assignee_id:
+        url = f"{tqw().zendesk_user_url}{assignee_id}.json"
+        zendesk_response = requests.get(url, headers=tqw().zendesk_headers)
+        if zendesk_response.status_code == 200:
+            # Parse the JSON response
+            user_data = zendesk_response.json()
+            # Extract and return relevant user information
+            user_info = {
+                'ID': user_data['user']['id'],
+                'Name': user_data['user']['name'],
+                'Email': user_data['user']['email']
+            }
+            logger.info(f"Returning user info dict -> {user_info}.")
+            return user_info
+
+    # if ticket['ticket_id'] not in treated_tickets:
+    #     treated_tickets.add(ticket['ticket_id'])
+    #     logger.info(f"Linking assignee_id to user information.")
+    #     assignee_id = get_assignee_id(ticket)
+    #     if assignee_id:
+    #         url = f"{tqw().zendesk_user_url}{assignee_id}.json"
+    #         zendesk_response = requests.get(url, headers=tqw().zendesk_headers)
+    #         if zendesk_response.status_code == 200:
+    #             # Parse the JSON response
+    #             user_data = zendesk_response.json()
+    #             # Extract and return relevant user information
+    #             user_info = {
+    #                 'ID': user_data['user']['id'],
+    #                 'Name': user_data['user']['name'],
+    #                 'Email': user_data['user']['email']
+    #             }
+    #             logger.info(f"Returning user info dict -> {user_info}.")
+    #             return user_info
 
 
 def get_assignee_id(ticket) -> int:

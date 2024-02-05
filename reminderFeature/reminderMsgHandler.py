@@ -67,7 +67,10 @@ def createRmndrMsg(list_of_ticket) -> None:
                     logger.info(f"Sending Ticket Assignment message for {ticket['ticket_id']} -> COMPLETED")
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - COMPLETED")
             else:
-                logger.info(f"Ticket {ticket['ticket_id']} is already processed.")
+                if not is_assigned:
+                    logger.info(f"Ticket {ticket['ticket_id']} is not new but yet assigned.")
+                else:
+                    logger.info(f"Ticket {ticket['ticket_id']} is already processed.")
 
 
 def reminder_trigger(ticket, is_assigned) -> bool:
