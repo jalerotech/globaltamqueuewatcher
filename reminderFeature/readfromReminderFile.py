@@ -3,7 +3,7 @@ import logging
 
 
 def read_json_file_line_by_line():
-    logger = logging.getLogger("Buttler_services")
+    logger = logging.getLogger("read_json_file_line_by_line")
     logger.info("Reading ticket from reminder_data.json file - STARTED.")
     """
     Read a JSON file line by line and return a list of dictionaries.
@@ -14,7 +14,6 @@ def read_json_file_line_by_line():
     Returns:
     - list: A list of dictionaries, where each dictionary corresponds to a line in the file.
     """
-    # file_name = 'reminder_data.json'
     file_name = 'Files/reminder_data.json'
     data_list = []
     with open(file_name, 'r') as json_file:

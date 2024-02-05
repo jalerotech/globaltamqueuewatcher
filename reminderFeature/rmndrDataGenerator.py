@@ -20,9 +20,6 @@ def rmndrDataWriter(entry_data) -> None:
 
     logger.info(f"Writing data {entry_data} to the reminder_data.json file")
     # Specify the JSON file name
-    # print(entry_data)
-    # file_name = "../reminder_data.json"
-    # file_name = 'reminder_data.json'
     file_name = 'Files/reminder_data.json'
 
     # logger.info(f"Adding data -> {entry_data} to the data_list")

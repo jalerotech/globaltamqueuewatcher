@@ -65,9 +65,9 @@ def get_assignee_id(ticket) -> int:
         ticket_data = zendesk_response.json()
         return ticket_data['ticket']['assignee_id']
 
-
-if __name__ == '__main__':
-    ticket = {'ticket_counter': 3, 'subject': 'SCTASK0782762 - Provide access to blocked website', 'assignee': 360606549946, 'ticket_id': 1729693, 'created_at': '2024-01-10T18:45:18Z'}
-    # get_user_info(12466330566932)
-    # print(get_assignee_id(ticket))
-    print(get_user_info(ticket))
+#
+# if __name__ == '__main__':
+#     ticket = {'ticket_counter': 3, 'subject': 'SCTASK0782762 - Provide access to blocked website', 'assignee': 360606549946, 'ticket_id': 1729693, 'created_at': '2024-01-10T18:45:18Z'}
+#     # get_user_info(12466330566932)
+#     # print(get_assignee_id(ticket))
+#     print(get_user_info(ticket))

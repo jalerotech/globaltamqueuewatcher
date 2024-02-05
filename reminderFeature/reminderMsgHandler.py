@@ -31,7 +31,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                 # Checks if the reminder should be triggered and ticket is not yet assigned.
                 if reminder_trigger(ticket, is_assigned) and not is_assigned:
                     logger.info(f"Creating Reminder Message - STARTED")
-                    RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) \n " \
+                    RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) _(BETA)_ \n " \
                                f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                                f"Subject: {ticket['subject']} \n " \
                                f"In Queue for: {time_difference} \n " ""
@@ -50,7 +50,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - STARTED")
                     logger.info(f"Creating ticket Assignment Message for {ticket['ticket_id']} - STARTED")
                     ticket_assigned_msg = \
-                        f"### ✅Ticket Assignment ({ticket['ticket_counter']}) \n " \
+                        f"### ✅Ticket Assignment ({ticket['ticket_counter']}) _(BETA)_ \n " \
                         f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                         f"Subject: {ticket['subject']} \n " \
                         f"Assigned to: {is_assigned['Email']} \n "
