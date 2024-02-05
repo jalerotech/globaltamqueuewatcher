@@ -1,0 +1,93 @@
+from pathlib import Path
+from dotenv import load_dotenv
+import os
+
+env_path = Path('.') / 'authkey.env'
+if os.path.exists(env_path):
+    load_dotenv(env_path)
+else:
+    pass
+
+
+class TamQueueWatcher:
+
+    def __init__(self):
+        # Content type for request headers
+        self.contentType = 'application/json'
+
+        # Loading AuthKeys via environment variables:
+
+        self.zendesk_auth_key = os.getenv('zendesk_auth_key')
+        self.WebEx_teams_auth_key = os.getenv('WebEx_teams_auth_key')
+        self.monday_auth_keys = os.getenv('monday_auth_keys')
+
+        # Tests Bot and space:
+        self.tqw_webex_token = os.getenv('tqw_webex_token')
+        self.tamqueuewatcher_room_id = os.getenv('tamqueuewatcher_room_id')
+        self.Global_TAM_UMB_Queue_watcher = os.getenv('Global_TAM_UMB_Queue_watcher')
+
+        # Requests Variables #
+
+        # Set the API Zendesk Endpoint to fetch all tickets
+        self.zendesk_api_url = 'https://opendns.zendesk.com/api/v2/views/159080128/tickets.json'
+        self.zendesk_org_url = "https://opendns.zendesk.com/api/v2/organizations/"
+        self.zendesk_user_url = "https://opendns.zendesk.com/api/v2/users/"
+
+        # BFG base url
+        self.bfg_base_url = "https://bfg.umbrella.com/organizations/organization/"
+
+        # Monday API URL
+
+        self.monday_api_url = "https://api.monday.com/v2"
+
+        # Set the headers for ZenDesk Q
+        self.zendesk_headers = {
+            'Content-Type': self.contentType,
+            'Authorization': f'Basic {self.zendesk_auth_key}'
+        }
+
+        self.monday_headers = {
+            'Content-Type': self.contentType,
+            'Authorization': {self.monday_auth_keys}
+        }
+
+        # Set the url Webex API Endpoint
+        self.webex_api_url = 'https://webexapis.com/v1/messages'
+
+        # Set the header Webex API Endpoint - Production.
+        self.webex_headers = {
+            'Content-Type': self.contentType,
+            'Authorization': f'Bearer {self.WebEx_teams_auth_key}'
+        }
+
+        # Set the header for Monday.com API
+        self.monday_headers = {
+            "Authorization": f"Bearer {self.monday_auth_keys}"
+        }
+
+        # Set the ticket status to monitor
+        self.ticket_status = 'new'
+
+        # Excluded tickets with this string in the no_reply_recipient:
+        self.no_reply_recipient = 'umbrella-research-noreply@cisco.com'
+
+        # TAC collab:
+        self.tac_collab = 'tac-to-umbrella-premium@cisco.com'
+        self.csone_short_base_url = 'http://mwz/'
+        self.ext_tac_case_base_url = 'https://mycase.cloudapps.cisco.com/'
+
+        # Set the interval for the API to Zendesk call (in seconds)
+        self.zendesk_polling_interval = 60
+
+        # Initialize an empty set to keep track of processed tickets
+        self.processed_tickets = set()
+
+        # Zendesk Agent Base URL -> Used by agents to access tickets on Zendesk
+        self.zend_agent_tickets_url = f"https://opendns.zendesk.com/agent/tickets/"
+        self.zendesk_ticket_base_url = f"https://opendns.zendesk.com/api/v2/tickets/"
+
+        # f'https://{subdomain}.zendesk.com/api/v2/tickets/{ticket_id}.json'
+
+        # Ticket message labels:
+        self.unassigned_label = "None Assigned"
+        self.not_set = "Not Set"

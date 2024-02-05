@@ -1,0 +1,1 @@
+from .fetchProcessMdyDataClass import MondayDotCom

@@ -1,0 +1,1 @@
+from .getBfgUrlFromList import createBfgUrls
