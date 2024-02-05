@@ -1,15 +1,10 @@
 import logging
-import requests
 from datetime import datetime, timedelta
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from reminderFeature.assigneeInfo import get_user_info
 
 reminder_sent = []
-reminder_1_sent = []
-reminder_2_sent = []
-reminder_3_sent = []
-rmndr_interval = 10  # 15 minutes or 900 seconds reminder interval
 current_time = datetime.utcnow()
 is_assigned_msg_sent = []
 
@@ -20,15 +15,20 @@ def createRmndrMsg(list_of_ticket) -> None:
     Creates the reminder message using the list_of_ticket received from processReminderData function
     which returns the data in dict format
     :param list_of_ticket:
-    :return: string
+    :return: None
     """
-    # print(list_of_ticket)
     if list_of_ticket:
         for ticket in list_of_ticket:
-            is_assigned = get_user_info(ticket)
+            # Initialize empty dict for the is_assigned information.
+            is_assigned = {}
+            # Ensures that the ticket is not completely processed in the case of when it's been assigned already
+            if ticket['ticket_id'] not in is_assigned_msg_sent:
+                is_assigned = get_user_info(ticket)
             if ticket['ticket_id'] not in reminder_sent:
                 ticket_open_time = datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ')
+                # Checks that the time difference between now and when the ticket was created.
                 time_difference = abs(current_time - ticket_open_time)
+                # Checks if the reminder should be triggered and ticket is not yet assigned.
                 if reminder_trigger(ticket, is_assigned) and not is_assigned:
                     logger.info(f"Creating Reminder Message - STARTED")
                     RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) \n " \
@@ -44,8 +44,8 @@ def createRmndrMsg(list_of_ticket) -> None:
                     sendMessageToWxT(data)
                     reminder_sent.append(ticket['ticket_id'])
                     logger.info(f"Sending Reminder for {ticket['ticket_id']} -> COMPLETED")
+            # Checks if the ticket is already assigned and hasn't been completely processed.
             if is_assigned:
-                # if (ticket['ticket_id'] not in is_assigned_msg_sent) and (ticket['ticket_id'] not in reminder_sent):
                 if ticket['ticket_id'] not in is_assigned_msg_sent:
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - STARTED")
                     logger.info(f"Creating ticket Assignment Message for {ticket['ticket_id']} - STARTED")
@@ -58,7 +58,6 @@ def createRmndrMsg(list_of_ticket) -> None:
                         "text": ticket_assigned_msg,
                         "markdown": ticket_assigned_msg
                     }
-                    # ‹@personEmail:jane@example.com>
                     logger.info(f"Creating ticket Assignment Message for {ticket['ticket_id']} - COMPLETED")
                     logger.info(f"Sending Ticket Assignment message for {ticket['ticket_id']} -> STARTED")
                     sendMessageToWxT(data)
@@ -67,10 +66,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                     logger.info(f"Sending Ticket Assignment message for {ticket['ticket_id']} -> COMPLETED")
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - COMPLETED")
             else:
-                if not is_assigned:
-                    logger.info(f"Ticket {ticket['ticket_id']} is not new but yet assigned.")
-                else:
-                    logger.info(f"Ticket {ticket['ticket_id']} is already processed.")
+                logger.info(f"Ticket {ticket['ticket_id']} is already processed.")
 
 
 def reminder_trigger(ticket, is_assigned) -> bool:
@@ -78,14 +74,11 @@ def reminder_trigger(ticket, is_assigned) -> bool:
     """
     Returns True if the ticket has been created more than 30 minutes ago and has not been assigned.
     :param ticket:
-    :return:
+    :return:bool (True or False)
     """
     logger.info(f"Checking if reminder is needed for ticket {ticket['ticket_id']}")
     ticket_open_time = datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ')
     time_difference = abs(current_time - ticket_open_time)
-    # print(current_time)
-    # print(ticket_open_time)
-    # print(time_difference)
     if time_difference >= timedelta(minutes=30):
         if is_assigned:
             logger.info(f"No reminder needed for {ticket['ticket_id']} as it's already been assigned.")
