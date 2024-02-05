@@ -4,7 +4,6 @@ from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from reminderFeature.assigneeInfo import get_user_info
 
-
 reminder_sent = []
 current_time = datetime.utcnow()
 is_assigned_msg_sent = []
