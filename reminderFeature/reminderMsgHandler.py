@@ -125,5 +125,5 @@ def _convert_seconds_to_hours_minutes(seconds):
     hours = seconds // 3600
     remaining_seconds = seconds % 3600
     minutes = remaining_seconds // 60
-    time_in_queue = f"{hours} Hour(s):{minutes} Minutes"
+    time_in_queue = f"{hours} Hour(s) and {minutes} Minutes"
     return time_in_queue
