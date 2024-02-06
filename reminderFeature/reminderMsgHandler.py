@@ -1,5 +1,5 @@
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from reminderFeature.assigneeInfo import get_user_info
@@ -25,16 +25,17 @@ def createRmndrMsg(list_of_ticket) -> None:
             if ticket['ticket_id'] not in is_assigned_msg_sent:
                 is_assigned = get_user_info(ticket)
             if ticket['ticket_id'] not in reminder_sent:
-                ticket_open_time = datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ')
+                # ticket_open_time = datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ')
                 # Checks that the time difference between now and when the ticket was created.
-                time_difference = abs(current_time - ticket_open_time)
+                # time_difference = abs(current_time - ticket_open_time)
+                time_in_queue = _IsTimeDifMoreThan30Mins(ticket)
                 # Checks if the reminder should be triggered and ticket is not yet assigned.
                 if reminder_trigger(ticket, is_assigned) and not is_assigned:
                     logger.info(f"Creating Reminder Message - STARTED")
                     RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) _(Beta)_ \n " \
                                f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                                f"Subject: {ticket['subject']} \n " \
-                               f"In Queue for: {time_difference} \n " ""
+                               f"In Queue for: {time_in_queue} \n " ""
                     data = {
                         "text": RmndrMsg,
                         "markdown": RmndrMsg
@@ -77,9 +78,8 @@ def reminder_trigger(ticket, is_assigned) -> bool:
     :return:bool (True or False)
     """
     logger.info(f"Checking if reminder is needed for ticket {ticket['ticket_id']}")
-    ticket_open_time = datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ')
-    time_difference = abs(current_time - ticket_open_time)
-    if time_difference >= timedelta(minutes=30):
+    moreThan30MinsInQueue = _IsTimeDifMoreThan30Mins(ticket)
+    if moreThan30MinsInQueue:
         if is_assigned:
             logger.info(f"No reminder needed for {ticket['ticket_id']} as it's already been assigned.")
             return False
@@ -87,7 +87,43 @@ def reminder_trigger(ticket, is_assigned) -> bool:
             logger.info(f"Sending Reminder for {ticket['ticket_id']}")
             return True
     else:
-        time_difference_test = abs(current_time - datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ'))
         logger.info(f"No reminder needed for {ticket['ticket_id']} as it's not older than 30 minutes in the Queue.")
-        logger.info(f"Time difference on ticket with ID {ticket['ticket_id']} is {time_difference_test}")
+        logger.info(f"Time difference on ticket with ID {ticket['ticket_id']} is {moreThan30MinsInQueue}")
         return False
+    # if time_difference >= timedelta(minutes=30):
+    #     if is_assigned:
+    #         logger.info(f"No reminder needed for {ticket['ticket_id']} as it's already been assigned.")
+    #         return False
+    #     else:
+    #         logger.info(f"Sending Reminder for {ticket['ticket_id']}")
+    #         return True
+    # else:
+    #     time_difference_test = abs(current_time - datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ'))
+    #     logger.info(f"No reminder needed for {ticket['ticket_id']} as it's not older than 30 minutes in the Queue.")
+    #     logger.info(f"Time difference on ticket with ID {ticket['ticket_id']} is {time_difference_test}")
+    #     return False
+
+
+def _IsTimeDifMoreThan30Mins(ticket) -> str:
+    ticket_open_time = datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ')
+    current_time_utc = datetime.now(timezone.utc)
+
+    # Convert the datetime objects to Unix timestamps
+    ticket_timestamp_unix = int(ticket_open_time.timestamp())
+    current_time_unix = int(current_time_utc.timestamp())
+
+    # Calculate the absolute difference in seconds
+    time_difference_seconds = abs(ticket_timestamp_unix - current_time_unix)
+    # Checks if time difference is at least 30 minutes from the ticket opening time.
+    if time_difference_seconds >= 30 * 60:
+        ticket_time_in_queue = _convert_seconds_to_hours_minutes(time_difference_seconds)
+        return ticket_time_in_queue
+
+
+def _convert_seconds_to_hours_minutes(seconds):
+    # Calculate hours and minutes
+    hours = seconds // 3600
+    remaining_seconds = seconds % 3600
+    minutes = remaining_seconds // 60
+    time_in_queue = f"{hours} Hour(s):{minutes} Minutes"
+    return time_in_queue
