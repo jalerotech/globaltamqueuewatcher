@@ -88,7 +88,7 @@ class TamQueueWatcher:
 
         # f'https://{subdomain}.zendesk.com/api/v2/tickets/{ticket_id}.json'
 
-        # Ticket message labels:
+        # Ticket message label(s):
         self.unassigned_label = "None Assigned"
         self.not_set = "Not Set"
         self.hour_trigger = "HOUR"
