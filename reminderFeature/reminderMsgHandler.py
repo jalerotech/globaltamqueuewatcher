@@ -30,6 +30,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                     time_in_queue = f"{_IsTimeDifMoreThan30Mins(ticket)[0]['hours']} hour(s) and {_IsTimeDifMoreThan30Mins(ticket)[0]['minutes']} minute(s)."
                     to_trigger_reminder = _IsTimeDifMoreThan30Mins(ticket)[1]
                     print(to_trigger_reminder)
+                    "<@personEmail:jane@example.com>"
                     # Checks if the reminder should be triggered and ticket is not yet assigned.
                     if reminder_trigger(ticket, is_assigned) and not is_assigned:
                         if ticket['ticket_id'] not in (first_reminder_sent, second_reminder_sent, third_reminder_sent):
@@ -100,7 +101,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                         f"### ✅Ticket Assignment ({ticket['ticket_counter']}) _(Beta)_ \n " \
                         f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                         f"Subject: {ticket['subject']} \n " \
-                        f"Assigned to: {is_assigned['Email']} \n "
+                        f"Assigned to: <@personEmail:{is_assigned['Email']}> \n "
                     data = {
                         "text": ticket_assigned_msg,
                         "markdown": ticket_assigned_msg
