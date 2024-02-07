@@ -91,3 +91,7 @@ class TamQueueWatcher:
         # Ticket message labels:
         self.unassigned_label = "None Assigned"
         self.not_set = "Not Set"
+        self.hour_trigger = "HOUR"
+        self.half_hour_trigger = "HALF_HOUR"
+        self.quarter_hour_trigger = "QUARTER_HOUR"
+
