@@ -50,8 +50,10 @@ def createRmndrMsg(list_of_ticket) -> None:
                                 sendMessageToWxT(data)
                                 first_reminder_sent.append(ticket['ticket_id'])
                                 logger.info(f"Sending First Reminder for {ticket['ticket_id']} -> COMPLETED")
-                        else:
-                            logger.info(f"First reminder sent for ticket {ticket['ticket_id']}")
+                            else:
+                                logger.info(f"Ticket {ticket['ticket_id']} not yet ready for first reminder.")
+                        # else:
+                        #     logger.info(f"First reminder sent for ticket {ticket['ticket_id']}")
 
                         if ticket['ticket_id'] not in (first_reminder_sent or second_reminder_sent or third_reminder_sent):
                             if to_trigger_reminder == "QUARTER_HOUR":
@@ -72,8 +74,10 @@ def createRmndrMsg(list_of_ticket) -> None:
                                 sendMessageToWxT(data)
                                 second_reminder_sent.append(ticket['ticket_id'])
                                 logger.info(f"Sending Second Reminder for {ticket['ticket_id']} -> COMPLETED")
-                        else:
-                            logger.info(f"Second reminder sent for ticket {ticket['ticket_id']}")
+                            else:
+                                logger.info(f"Ticket {ticket['ticket_id']} not yet ready for second reminder.")
+                        # else:
+                        #     logger.info(f"Second reminder sent for ticket {ticket['ticket_id']}")
 
                         if ticket['ticket_id'] not in (first_reminder_sent or second_reminder_sent or third_reminder_sent):
                             if to_trigger_reminder == "HOUR":
@@ -95,8 +99,10 @@ def createRmndrMsg(list_of_ticket) -> None:
                                 third_reminder_sent.append(ticket['ticket_id'])
                                 is_assigned_msg_sent.append(ticket['ticket_id'])
                                 logger.info(f"Sending Final for {ticket['ticket_id']} -> COMPLETED")
-                        else:
-                            logger.info(f"Final reminder sent for ticket {ticket['ticket_id']}")
+                            else:
+                                logger.info(f"Ticket {ticket['ticket_id']} not yet ready for final reminder.")
+                        # else:
+                        #     logger.info(f"Final reminder sent for ticket {ticket['ticket_id']}")
                 else:
                     logger.info(f"Ticket {ticket['ticket_id']} is not yet ready to be reminded for.")
                 # Checks if the ticket is already assigned and hasn't been completely processed.
@@ -168,7 +174,7 @@ def _IsTimeDifMoreThan30Mins(ticket):
     if 30 <= ticket_time_in_queue['minutes'] < 31:
         return ticket_time_in_queue, tqw().half_hour_trigger
     if ticket_time_in_queue['hours'] == 0:
-        if 45 <= ticket_time_in_queue['minutes'] < 46:
+        if 45 <= ticket_time_in_queue['minutes'] < 47:
             return ticket_time_in_queue, tqw().quarter_hour_trigger
     if ticket_time_in_queue['hours'] == 1 and ticket_time_in_queue['minutes'] < 1:
         return ticket_time_in_queue, tqw().hour_trigger
