@@ -55,7 +55,7 @@ class TicketStats:
                 })
             self.logger.info(f"Stats for {theatre} being written to stats.json file -> {ticket_id_company_mapping}")
             self.logger.info(f'Writing {theatre} ticket data to file for statistics. - STARTED')
-            with open('stats.json', 'w') as f:
+            with open('Files/stats.json', 'w') as f:
                 json.dump(stat_list, f, indent=4)
             f.close()
             self.logger.info(f'Writing {theatre} ticket data to file for statistics. - COMPLETED')

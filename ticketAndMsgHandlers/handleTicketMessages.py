@@ -388,11 +388,11 @@ def postCollabTicketMsg(data) -> None:
                       f"Company name: **{data['org_name']}** \n " \
                       f"Creation time in UTC: {data['formatted_timestamp']} \n" \
                       f"TAC SR: [{data['SR_number']}]({tqw().csone_short_base_url}{data['SR_number']}) \n "
-        data = {
+        msg_data = {
             "text": msg_to_send,
             "markdown": msg_to_send
         }
-        sendMessageToWxT(data)
+        sendMessageToWxT(msg_data)
         if data['ticket_id'] not in reminder_added:
             rmndrDataWriter(_callReminderFun(data))
             reminder_added.add(data['ticket_id'])
