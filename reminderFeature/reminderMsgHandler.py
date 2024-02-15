@@ -152,11 +152,10 @@ def _IsTimeDifMoreThan30Mins(ticket):
     # Calculate the absolute difference in seconds
     time_difference_seconds = abs(current_time_unix - ticket_timestamp_unix)
     ticket_time_in_queue = _convert_seconds_to_hours_minutes(time_difference_seconds)
-    if 30 <= ticket_time_in_queue['minutes'] < 31:
+    if (30 <= ticket_time_in_queue['minutes'] < 31) and ticket_time_in_queue['hours'] == 0:
         return ticket_time_in_queue, tqw().half_hour_trigger
-    if ticket_time_in_queue['hours'] == 0:
-        if 45 <= ticket_time_in_queue['minutes'] < 47:
-            return ticket_time_in_queue, tqw().quarter_hour_trigger
+    if (45 <= ticket_time_in_queue['minutes'] < 47) and ticket_time_in_queue['hours'] == 0:
+        return ticket_time_in_queue, tqw().quarter_hour_trigger
     if ticket_time_in_queue['hours'] == 1 and ticket_time_in_queue['minutes'] < 1:
         return ticket_time_in_queue, tqw().hour_trigger
     else:
