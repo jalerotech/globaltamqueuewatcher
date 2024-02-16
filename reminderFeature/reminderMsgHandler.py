@@ -33,7 +33,10 @@ def createRmndrMsg(list_of_ticket) -> None:
                         if ticket['ticket_id'] not in first_reminder_sent:
                             if to_trigger_reminder == "HALF_HOUR":
                                 logger.info(f"Creating First Reminder Message - STARTED")
-                                RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) (#1) _(Beta)_ \n " \
+                                # RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) (#1) _(Beta)_ \n " \
+                                #            f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
+                                #            f"In Queue for: {time_in_queue} \n " ""
+                                RmndrMsg = f"### ⏰First Reminder !!! ({ticket['ticket_counter']}) \n " \
                                            f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                                            f"In Queue for: {time_in_queue} \n " ""
                                 data = {
@@ -51,7 +54,10 @@ def createRmndrMsg(list_of_ticket) -> None:
                         if ticket['ticket_id'] not in second_reminder_sent:
                             if to_trigger_reminder == "QUARTER_HOUR":
                                 logger.info(f"Creating Second Reminder Message - STARTED")
-                                RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) (#2) _(Beta)_ \n " \
+                                # RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) (#2) _(Beta)_ \n " \
+                                #            f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
+                                #            f"In Queue for: {time_in_queue} \n " ""
+                                RmndrMsg = f"### ⏰Second Reminder !!! ({ticket['ticket_counter']}) \n " \
                                            f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                                            f"In Queue for: {time_in_queue} \n " ""
                                 data = {
@@ -69,7 +75,10 @@ def createRmndrMsg(list_of_ticket) -> None:
                         if ticket['ticket_id'] not in third_reminder_sent:
                             if to_trigger_reminder == "HOUR":
                                 logger.info(f"Creating Final Reminder Message - STARTED")
-                                RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) (#3) _(Beta)_ \n " \
+                                # RmndrMsg = f"### ⏰Reminder !!! ({ticket['ticket_counter']}) (#3) _(Beta)_ \n " \
+                                #            f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
+                                #            f"In Queue for: {time_in_queue} \n " ""
+                                RmndrMsg = f"### ⏰Final Reminder !!! ({ticket['ticket_counter']}) \n " \
                                            f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                                            f"In Queue for: {time_in_queue} \n " ""
                                 data = {
@@ -80,7 +89,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                                 logger.info(f"Sending Final Reminder for {ticket['ticket_id']} -> STARTED")
                                 sendMessageToWxT(data)
                                 third_reminder_sent.append(ticket['ticket_id'])
-                                is_assigned_msg_sent.append(ticket['ticket_id'])
+                                # is_assigned_msg_sent.append(ticket['ticket_id'])
                                 logger.info(f"Sending Final for {ticket['ticket_id']} -> COMPLETED")
                             else:
                                 logger.info(f"Ticket {ticket['ticket_id']} not yet ready for final reminder.")
@@ -90,7 +99,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - STARTED")
                     logger.info(f"Creating ticket Assignment Message for {ticket['ticket_id']} - STARTED")
                     ticket_assigned_msg = \
-                        f"### ✅Ticket Assignment ({ticket['ticket_counter']}) _(Beta)_ \n " \
+                        f"### ✅Ticket Assignment ({ticket['ticket_counter']}) \n " \
                         f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
                         f"Assigned to: <@personEmail:{is_assigned['Email']}> \n "
 
