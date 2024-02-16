@@ -4,7 +4,6 @@ from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from reminderFeature.assigneeInfo import get_user_info
 
-# reminder_sent = []
 first_reminder_sent = []
 second_reminder_sent = []
 third_reminder_sent = []
@@ -46,8 +45,8 @@ def createRmndrMsg(list_of_ticket) -> None:
                                 sendMessageToWxT(data)
                                 first_reminder_sent.append(ticket['ticket_id'])
                                 logger.info(f"Sending First Reminder for {ticket['ticket_id']} -> COMPLETED")
-                        # else:
-                        #     logger.info(f"First reminder sent for ticket {ticket['ticket_id']}")
+                            else:
+                                logger.info(f"Ticket {ticket['ticket_id']} not yet ready for First reminder.")
 
                         if ticket['ticket_id'] not in second_reminder_sent:
                             if to_trigger_reminder == "QUARTER_HOUR":
@@ -64,10 +63,8 @@ def createRmndrMsg(list_of_ticket) -> None:
                                 sendMessageToWxT(data)
                                 second_reminder_sent.append(ticket['ticket_id'])
                                 logger.info(f"Sending Second Reminder for {ticket['ticket_id']} -> COMPLETED")
-                            # else:
-                            #     logger.info(f"Ticket {ticket['ticket_id']} not yet ready for second reminder.")
-                        # else:
-                        #     logger.info(f"Second reminder sent for ticket {ticket['ticket_id']}")
+                            else:
+                                logger.info(f"Ticket {ticket['ticket_id']} not yet ready for second reminder.")
 
                         if ticket['ticket_id'] not in third_reminder_sent:
                             if to_trigger_reminder == "HOUR":
@@ -87,11 +84,7 @@ def createRmndrMsg(list_of_ticket) -> None:
                                 logger.info(f"Sending Final for {ticket['ticket_id']} -> COMPLETED")
                             else:
                                 logger.info(f"Ticket {ticket['ticket_id']} not yet ready for final reminder.")
-                        # else:
-                        #     logger.info(f"Final reminder sent for ticket {ticket['ticket_id']}")
-                else:
-                    logger.info(f"Ticket {ticket['ticket_id']} is not yet ready to be reminded for.")
-                # Checks if the ticket is already assigned and hasn't been completely processed.
+            # Checks if the ticket is already assigned and hasn't been completely processed.
             if is_assigned:
                 if ticket['ticket_id'] not in is_assigned_msg_sent:
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - STARTED")
@@ -117,12 +110,11 @@ def createRmndrMsg(list_of_ticket) -> None:
 
 
 def reminder_trigger(ticket, is_assigned) -> tuple:
-
     logger = logging.getLogger('Reminder Trigger')
     """
     Returns True if the ticket has been created more than 30 minutes ago and has not been assigned.
     :param ticket:
-    :return:bool (True or False)
+    :return:Tuple Bool & trigger_data
     """
     logger.info(f"Checking if reminder is needed for ticket {ticket['ticket_id']}")
     if _IsTimeDifMoreThan30Mins(ticket):
@@ -142,6 +134,11 @@ def reminder_trigger(ticket, is_assigned) -> tuple:
 
 
 def _IsTimeDifMoreThan30Mins(ticket):
+    """
+    Checks if the time difference is at least 30 minutes before enabling the trigger.
+    :param ticket: ticket data -> ticket_id, ticket_open_time etc.
+    :return: time_in_queue in minutes and trigger labels
+    """
     ticket_open_time = datetime.strptime(ticket['created_at'], '%Y-%m-%dT%H:%M:%SZ')
     current_time_utc = datetime.now(timezone.utc)
 
@@ -156,13 +153,18 @@ def _IsTimeDifMoreThan30Mins(ticket):
         return ticket_time_in_queue, tqw().half_hour_trigger
     if (45 <= ticket_time_in_queue['minutes'] < 47) and ticket_time_in_queue['hours'] == 0:
         return ticket_time_in_queue, tqw().quarter_hour_trigger
-    if ticket_time_in_queue['hours'] == 1 and ticket_time_in_queue['minutes'] < 1:
+    if ticket_time_in_queue['hours'] == 1 and ticket_time_in_queue['minutes'] < 2:
         return ticket_time_in_queue, tqw().hour_trigger
     else:
         return None
 
 
-def _convert_seconds_to_hours_minutes(seconds):
+def _convert_seconds_to_hours_minutes(seconds) -> dict:
+    """
+    converts the absolute time to seconds.
+    :param seconds:
+    :return: dict - time in queue in dict format.
+    """
     # Calculate hours and minutes
     hours = seconds // 3600
     remaining_seconds = seconds % 3600
