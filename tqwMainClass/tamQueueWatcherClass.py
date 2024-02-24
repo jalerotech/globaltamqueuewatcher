@@ -54,6 +54,9 @@ class TamQueueWatcher:
         # Set the url Webex API Endpoint
         self.webex_api_url = 'https://webexapis.com/v1/messages'
 
+        # WebEx base URL:
+        self.webex_base_url = 'https://webexapis.com/v1/'
+
         # Set the header Webex API Endpoint - Production.
         self.webex_headers = {
             'Content-Type': self.contentType,
