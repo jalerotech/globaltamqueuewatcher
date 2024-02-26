@@ -1,9 +1,10 @@
 from tQwAlerter.shiftTimeDataClass import ShifttimeData
 import logging
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
-from statsHandler.createAndPostStats import postDailyStatistics_V2, postDailyShiftTicketSummary
+from statsHandler.createAndPostStats import postDailyShiftTicketSummary
 from ticketAndMsgHandlers.handleTicketMessages import returnCurrentDataForStats, reset_tickets_handled_today, reset_processed_tickets
 from zendeskData.fetchProcessZendeskData import reset_sets_of_tickets_no_time_check
+from TamPtoTracker.ptoAvailabilityWatcher import ptoWatcherMain
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
@@ -36,6 +37,9 @@ def alertshiftstart() -> None:
         # Handle stats posting after shift end alert sent.
         if shift_data['status'] == "ended 🏁":
             postDailyShiftTicketSummary(returnCurrentDataForStats(), shift_data)
+        # Checks that the status in the shift data is "started" before posting the PTO alerts.
+        if shift_data['status'] == "started 🎬":
+            ptoWatcherMain()
 
 
 def weekendAlert() -> None:
