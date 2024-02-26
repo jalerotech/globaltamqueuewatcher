@@ -1,4 +1,5 @@
 import logging
+from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
@@ -18,8 +19,15 @@ def genPTOMsg(tam_ooo_list) -> dict:
     tam_list_name = []
     joined_tam_list = ''
     for tam in tam_ooo_list:
-        tam_list_name.append(tam['name'])
-        joined_tam_list = '\n'.join(tam_list_name)
+        if tam['region'] in tqw().EMEA_region:
+            tam_list_name.append(f"{tam['name']} (**_EMEA_**)")
+            joined_tam_list = '\n'.join(tam_list_name)
+        if tam['region'] in tqw().US_region:
+            tam_list_name.append(f"{tam['name']} (**_US_**)")
+            joined_tam_list = '\n'.join(tam_list_name)
+        if tam['region'] in tqw().APAC_region:
+            tam_list_name.append(f"{tam['name']} (**_APAC_**)")
+            joined_tam_list = '\n'.join(tam_list_name)
     msg_to_send = f"### 🛫 TAM(s) on PTO today _(Beta)_: \n " \
                   f"{joined_tam_list}"
     data = {
