@@ -98,3 +98,7 @@ class TamQueueWatcher:
         self.half_hour_trigger = "HALF_HOUR"
         self.quarter_hour_trigger = "QUARTER_HOUR"
 
+        self.EMEA_region = ['GB', 'BE', 'PL', 'ES', 'PT']
+        self.US_region = ['CR', 'US', 'CA']
+        self.APAC_region = ['AU', 'CN']
+
