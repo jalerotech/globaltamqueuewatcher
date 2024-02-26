@@ -20,7 +20,7 @@ def genPTOMsg(tam_ooo_list) -> dict:
     for tam in tam_ooo_list:
         tam_list_name.append(tam['name'])
         joined_tam_list = '\n'.join(tam_list_name)
-    msg_to_send = f"### 🛫 TAM(s) on PTO today: \n " \
+    msg_to_send = f"### 🛫 TAM(s) on PTO today _(Beta)_: \n " \
                   f"{joined_tam_list}"
     data = {
            "text": msg_to_send,
