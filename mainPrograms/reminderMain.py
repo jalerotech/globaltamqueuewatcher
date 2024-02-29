@@ -21,7 +21,6 @@ def runReminderService() -> None:
 
     currentDateAndTime = datetime.now()
     today = currentDateAndTime.strftime('%A')
-
     while True:
         createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
         if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (today == "Sunday"):

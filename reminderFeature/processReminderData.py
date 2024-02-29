@@ -1,7 +1,7 @@
 import logging
 
 
-logger = logging.getLogger("Remindder Data Processor")
+logger = logging.getLogger("Reminder Data Processor")
 
 processed_reminder_tickets = []
 

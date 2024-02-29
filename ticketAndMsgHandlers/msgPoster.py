@@ -1,16 +1,17 @@
 import requests
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 import logging
+import json
 
 
 # # Room IDs:
 # Global WxT space
-roomId = tqw().Global_TAM_UMB_Queue_watcher
+# roomId = tqw().Global_TAM_UMB_Queue_watcher
 # Devs room ID:
-# roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
+roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
 
 
-def sendMessageToWxT(data) -> None:
+def sendMessageToWxT(data):
     """
     Function for posting messages to WxT, called by other functions when they need to send messages to WxT.
     :param data: Formatted data to be sent to WxT
@@ -25,12 +26,14 @@ def sendMessageToWxT(data) -> None:
         if webex_response.status_code == 200:
             logger.info(f'Message successfully posted to "Global_TAM_UMB_Queue_watcher" WxT space.')
             logger.info(f"Running sendMessageToWxT function. - COMPLETED")
+            return json.loads(webex_response.content)['id']
         else:
             # If the API call was not successful
             logger.info(f"Error in the API call to webex API {webex_response.status_code}: {webex_response.reason}")
-        return None
+            return None
     except Exception as e:
         logger.info(f'Posting to WxT failed with error {e}.')
+        return None
 
 
 def _add_room_id_to_date(data_to_update):
