@@ -1,5 +1,9 @@
 import logging
+from TamPtoTracker.ptoAvailabilityWatcher import ptoWatcherMain
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher
+# from TamPtoTracker.ptoAvailabilityWatcher import returnTAMStatus
+from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
+from TamPtoTracker.getPersonDataWebEx import get_users_status
 import requests
 import os
 from pathlib import Path
@@ -112,6 +116,8 @@ class MondayDotCom:
         return tam_customer_assignments
 
     def getOrgNameMonday(self, tam_cust_assignments_from_Monday, Zendesk_New_ticks_w_orgnames) -> list[dict]:
+        # Call function to return list of tams on PTO here.
+        # tam_in_ooo_list = ptoWatcherMain('local')
         """
         Produces a list with the ticket_id, primary and backup TAMs including customer region information.
         :param tam_cust_assignments_from_Monday: list of primary and backup TAMs for each customer -> From Monday.com

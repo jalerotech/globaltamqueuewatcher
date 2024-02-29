@@ -8,8 +8,8 @@ logging.basicConfig(
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
 
-# roomId = tqw().Global_TAM_UMB_Queue_watcher
-roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
+roomId = tQw().Global_TAM_UMB_Queue_watcher
+# roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
 
 logger = logging.getLogger("Reply message poster")
 
@@ -28,7 +28,7 @@ def reply_to_message(message_id, data):
         "markdown": data['markdown'],
         'parentId': message_id
     }
-    logger.info("Posting messqge reply to WxT.")
+    logger.info("Posting messaqe reply to WxT.")
     response = requests.post(f"{tQw().webex_api_url}", headers=tQw().webex_headers, json=payload)
     if response.status_code == 200:
         logger.info("Reply Posted successfully.")

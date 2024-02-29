@@ -39,7 +39,7 @@ def alertshiftstart() -> None:
             postDailyShiftTicketSummary(returnCurrentDataForStats(), shift_data)
         # Checks that the status in the shift data is "started" before posting the PTO alerts.
         if shift_data['status'] == "started 🎬":
-            ptoWatcherMain()
+            ptoWatcherMain('Not_local')
 
 
 def weekendAlert() -> None:

@@ -69,7 +69,7 @@ class TamQueueWatcher:
         }
 
         # Set the ticket status to monitor
-        self.ticket_status = 'new'
+        self.ticket_status = 'open'
 
         # Excluded tickets with this string in the no_reply_recipient:
         self.no_reply_recipient = 'umbrella-research-noreply@cisco.com'
@@ -101,4 +101,18 @@ class TamQueueWatcher:
         self.EMEA_region = ['GB', 'BE', 'PL', 'ES', 'PT']
         self.US_region = ['CR', 'US', 'CA']
         self.APAC_region = ['AU', 'CN']
+
+        # List of TAMs
+
+        self.list_of_tam = ['anattwoo@cisco.com', 'aely@cisco.com', 'jalero@cisco.com',
+                            'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com', 'bewallac@cisco.com',
+                            'brparnel@cisco.com', 'ccoral@cisco.com', 'ccardina@cisco.com', 'dforcade@cisco.com',
+                            'diebarra@cisco.com', 'hputra@cisco.com', 'harmeije@cisco.com', 'ianave@cisco.com',
+                            'halijenn@cisco.com', 'jesshepp@cisco.com', 'jonleduc@cisco.com', 'kahowes@cisco.com',
+                            'kevhudso@cisco.com', 'kporzezr@cisco.com', 'kvindas@cisco.com',
+                            'magainer@cisco.com', 'mneibert@cisco.com', 'nnwobodo@cisco.com', 'paulth2@cisco.com',
+                            'pwijenay@cisco.com',
+                            'sknez@cisco.com', 'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com',
+                            'wgardeaz@cisco.com',
+                            'xiaoshya@cisco.com', 'yusito@cisco.com']
 

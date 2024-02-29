@@ -6,6 +6,7 @@ from ticketAndMsgHandlers.handleTicketMessages import postMsgTicketInfo
 from zendeskData.fetchProcessZendeskData import getAllTickets, getOrgName
 from mondayData.fetchProcessMdyDataClass import MondayDotCom as mdy
 from tQwAlerter.alertShiftStartStop import alertshiftstart, weekendAlert
+from TamPtoTracker.updatePTOData import update_tam_to_cust_w_ticket_id
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
@@ -54,8 +55,10 @@ def main():
                             tam_cust_assignments_from_Monday = mdy().getDatafromdy()
                             tam_to_cust_w_ticket_id = mdy().getOrgNameMonday(tam_cust_assignments_from_Monday,
                                                                              lont_w_OrgNames)
+
+                            updated_tam_to_cust_w_ticket_id = update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id)
                             # # Posts messages created to the WxT space
-                            postMsgTicketInfo(lont_w_OrgNames, tam_to_cust_w_ticket_id)
+                            postMsgTicketInfo(lont_w_OrgNames, updated_tam_to_cust_w_ticket_id)
                     # Wait for the specified interval before making the next API call
                 except Exception or KeyboardInterrupt as e:
                     logger.info(f"An error occurred to execute the main task: {str(e)}")
