@@ -69,7 +69,7 @@ class TamQueueWatcher:
         }
 
         # Set the ticket status to monitor
-        self.ticket_status = 'open'
+        self.ticket_status = 'new'
 
         # Excluded tickets with this string in the no_reply_recipient:
         self.no_reply_recipient = 'umbrella-research-noreply@cisco.com'
