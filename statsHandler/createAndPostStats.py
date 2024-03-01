@@ -6,6 +6,7 @@ from zendeskData.fetchProcessZendeskData import reset_sets_of_tickets_no_time_ch
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from statsHandler.ticketStatsWritingClass import TicketStats as DoStats
 from collections import defaultdict
+from Tools.jsonFileCleaner import cleanJsonFiles
 
 logger = logging.getLogger('Creating and Posting Summary')
 logging.basicConfig(
@@ -182,6 +183,8 @@ def postDailyShiftTicketSummary(ticket_id_company_mapping, shift_data) -> None:
             reset_processed_tickets()
             reset_tickets_handled_today()
             reset_sets_of_tickets_no_time_check()
+            # Clean up
+            cleanJsonFiles()
         return None
 
 

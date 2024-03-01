@@ -6,9 +6,9 @@ import json
 
 # # Room IDs:
 # Global WxT space
-roomId = tqw().Global_TAM_UMB_Queue_watcher
+# roomId = tqw().Global_TAM_UMB_Queue_watcher
 # Devs room ID:
-# roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
+roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
 
 
 def sendMessageToWxT(data):
