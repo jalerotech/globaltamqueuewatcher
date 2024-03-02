@@ -20,9 +20,7 @@ def tamPTOMsgDataWriter(entry_data) -> None:
 
     #  Writes the entry_data one line at a time in the reminder_data.json file. No list needed here -> Evaluating the best performance in the reminder feature.
     with open(file_name, 'w+') as json_file:
-        # logger.info(f'Clearing file {json_file} -> STARTED.')
-        # json.dump({}, json_file)
-        # logger.info(f'Clearing file {json_file} -> COMPLETED.')
+        # Cleans up the json file before writing to it.
         cleanJsonFiles(file_name)
         logger.info(f'Writing {entry_data} to file {json_file} -> STARTED.')
         json.dump(entry_data, json_file)

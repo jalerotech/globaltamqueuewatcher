@@ -1,9 +1,6 @@
 import logging
-from TamPtoTracker.ptoAvailabilityWatcher import ptoWatcherMain
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher
 # from TamPtoTracker.ptoAvailabilityWatcher import returnTAMStatus
-from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
-from TamPtoTracker.getPersonDataWebEx import get_users_status
 import requests
 import os
 from pathlib import Path

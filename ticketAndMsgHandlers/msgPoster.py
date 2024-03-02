@@ -20,7 +20,7 @@ def sendMessageToWxT(data):
     logger = logging.getLogger('Message_Poster')
     logger.info("Running sendMessageToWxT function. - STARTED")
 
-    json_data = _add_room_id_to_date(data)
+    json_data = _add_room_id_to_date(data, None)
     try:
         webex_response = requests.post(tqw().webex_api_url, headers=tqw().webex_headers, json=json_data)
         if webex_response.status_code == 200:
@@ -36,9 +36,40 @@ def sendMessageToWxT(data):
         return None
 
 
-def _add_room_id_to_date(data_to_update):
-    data_to_update.update({'roomId': roomId})
-    return data_to_update
+def sendMessageToWxT4Cstat(data):
+    """
+    Function for posting messages to WxT, called by other functions when they need to send messages to WxT.
+    :param data: Formatted data to be sent to WxT
+    :return: None
+    """
+    logger = logging.getLogger('Message_Poster')
+    logger.info("Running sendMessageToWxT4Cstat function. - STARTED")
+
+    # json_data = _add_room_id_to_date(data)
+    cloudSecSpace_id = 'Y2lzY29zcGFyazovL3VzL1JPT00vOGJkNjE4MzAtZGQ1Ni0xMWU4LTlmNWYtOTc3ZWY0YmY5MmQ0'
+    json_data = _add_room_id_to_date(data, cloudSecSpace_id)
+    try:
+        webex_response = requests.post(tqw().webex_api_url, headers=tqw().cstat_webex_headers, json=json_data)
+        if webex_response.status_code == 200:
+            logger.info(f'Message successfully posted to WxT space.')
+            logger.info(f"Running sendMessageToWxT4Cstat function. - COMPLETED")
+            return json.loads(webex_response.content)['id']
+        else:
+            # If the API call was not successful
+            logger.info(f"Error in the API call to webex API {webex_response.status_code}: {webex_response.reason}")
+            return None
+    except Exception as e:
+        logger.info(f'Posting to WxT failed with error {e}.')
+        return None
+
+
+def _add_room_id_to_date(data_to_update, cloudSecSpace_id):
+    if cloudSecSpace_id:
+        data_to_update.update({'roomId': cloudSecSpace_id})
+        return data_to_update
+    else:
+        data_to_update.update({'roomId': roomId})
+        return data_to_update
 
 
 if __name__ == "__main__":

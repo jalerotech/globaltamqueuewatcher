@@ -19,13 +19,17 @@ def update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id) -> list:
     pto_data = read_json_file_line_by_line()
     updated_tam_to_cust_w_ticket_id = []
     for mapping in tam_to_cust_w_ticket_id:
-        for data in pto_data[0]:
-            if mapping['primary_tam']:
-                if mapping['primary_tam'] == data['name']:
-                    mapping['primary_tam'] = f"{mapping['primary_tam']} 🛫"
-                    updated_tam_to_cust_w_ticket_id.append(mapping)
-                else:
-                    updated_tam_to_cust_w_ticket_id.append(mapping)
+        if pto_data:
+            for data in pto_data[0]:
+                # print(data)
+                if mapping['primary_tam']:
+                    if mapping['primary_tam'] == data['name']:
+                        mapping['primary_tam'] = f"{mapping['primary_tam']} 🛫"
+                        updated_tam_to_cust_w_ticket_id.append(mapping)
+                    else:
+                        updated_tam_to_cust_w_ticket_id.append(mapping)
+        else:
+            logger.info("No PTO data yet")
     logger.info("Updating tam_to_cust_w_ticket_id list with TAM PTO status where needed - COMPLETED")
     return updated_tam_to_cust_w_ticket_id
 

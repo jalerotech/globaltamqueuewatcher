@@ -1,6 +1,7 @@
 from pathlib import Path
 from dotenv import load_dotenv
 import os
+import json
 
 env_path = Path('.') / 'authkey.env'
 if os.path.exists(env_path):
@@ -25,6 +26,13 @@ class TamQueueWatcher:
         self.tqw_webex_token = os.getenv('tqw_webex_token')
         self.tamqueuewatcher_room_id = os.getenv('tamqueuewatcher_room_id')
         self.Global_TAM_UMB_Queue_watcher = os.getenv('Global_TAM_UMB_Queue_watcher')
+
+        self.cstat_access_token = os.getenv('CloudSecTeamAvailabilityTracker_access_token')
+        # Set the header Webex API Endpoint - specifically for CSTAT.
+        self.cstat_webex_headers = {
+            'Content-Type': self.contentType,
+            'Authorization': f'Bearer {self.cstat_access_token}'
+        }
 
         # Requests Variables #
 
