@@ -1,3 +1,2 @@
-from .alertShiftStartStop import alertshiftstart
+from tQwAlerter.alertShiftStartStop import alertshiftstart, ShifttimeData, weekendAlert
 from .changeAlert import changeAlerter
-from .shiftTimeDataClass import ShifttimeData

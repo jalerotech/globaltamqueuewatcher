@@ -3,11 +3,14 @@ from datetime import datetime
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from reminderFeature.rmndrDataGenerator import rmndrDataWriter
+from msgReply.replyMsgDataGenerator import rplyMsgDataWriter
 import json
 
 logger = logging.getLogger('Msg_handler')
 processed_tickets = set()
 ticket_id_company_mapping = []
+msg_id_dict = {}
+msg_id_list = []
 
 currentDateAndTime = datetime.now()
 current_time = currentDateAndTime.time()
@@ -117,10 +120,18 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                     "text": msg_to_send,
                                     "markdown": msg_to_send
                                 }
-                                sendMessageToWxT(data)
+                                msg_id = sendMessageToWxT(data)
+                                if msg_id:
+                                    if msg_id not in msg_id_list:
+                                        msg_id_dict.update({'msg_id': msg_id,
+                                                            'ticket_id': ticket['ticket_id']})
+                                        msg_id_list.append(ticket['ticket_id'])
                                 if ticket['ticket_id'] not in reminder_added:
                                     rmndrDataWriter(_callReminderFun(ticket))
                                     reminder_added.add(ticket['ticket_id'])
+                                    msg_dict_data = {'msg_id': msg_id,
+                                                     'ticket_id': ticket['ticket_id']}
+                                    rplyMsgDataWriter(msg_dict_data)
                                 # _callReminderFun(ticket)
 
                                 if ticket['ticket_id'] not in handled_tickets:
@@ -146,10 +157,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                     "text": msg_to_send,
                                     "markdown": msg_to_send
                                 }
-                                sendMessageToWxT(data)
+                                # sendMessageToWxT(data)
+                                msg_id = sendMessageToWxT(data)
+                                if msg_id:
+                                    if msg_id not in msg_id_list:
+                                        msg_id_dict.update({'msg_id': msg_id,
+                                                            'ticket_id': ticket['ticket_id']})
+                                        msg_id_list.append(ticket['ticket_id'])
                                 if ticket['ticket_id'] not in reminder_added:
                                     rmndrDataWriter(_callReminderFun(ticket))
                                     reminder_added.add(ticket['ticket_id'])
+                                    msg_dict_data = {'msg_id': msg_id,
+                                                     'ticket_id': ticket['ticket_id']}
+                                    rplyMsgDataWriter(msg_dict_data)
 
                                 if ticket['ticket_id'] not in handled_tickets:
                                     handled_tickets.append(ticket['ticket_id'])
@@ -177,10 +197,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                 "text": msg_to_send,
                                 "markdown": msg_to_send
                             }
-                            sendMessageToWxT(data)
+                            # sendMessageToWxT(data)
+                            msg_id = sendMessageToWxT(data)
+                            if msg_id:
+                                if msg_id not in msg_id_list:
+                                    msg_id_dict.update({'msg_id': msg_id,
+                                                        'ticket_id': ticket['ticket_id']})
+                                    msg_id_list.append(ticket['ticket_id'])
                             if ticket['ticket_id'] not in reminder_added:
                                 rmndrDataWriter(_callReminderFun(ticket))
                                 reminder_added.add(ticket['ticket_id'])
+                                msg_dict_data = {'msg_id': msg_id,
+                                                 'ticket_id': ticket['ticket_id']}
+                                rplyMsgDataWriter(msg_dict_data)
 
                             if ticket['ticket_id'] not in handled_tickets:
                                 handled_tickets.append(ticket['ticket_id'])
@@ -206,10 +235,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         "text": msg_to_send,
                         "markdown": msg_to_send
                     }
-                    sendMessageToWxT(data)
+                    # sendMessageToWxT(data)
+                    msg_id = sendMessageToWxT(data)
+                    if msg_id:
+                        if msg_id not in msg_id_list:
+                            msg_id_dict.update({'msg_id': msg_id,
+                                                'ticket_id': ticket['ticket_id']})
+                            msg_id_list.append(ticket['ticket_id'])
                     if ticket['ticket_id'] not in reminder_added:
                         rmndrDataWriter(_callReminderFun(ticket))
                         reminder_added.add(ticket['ticket_id'])
+                        msg_dict_data = {'msg_id': msg_id,
+                                         'ticket_id': ticket['ticket_id']}
+                        rplyMsgDataWriter(msg_dict_data)
 
                     if ticket['ticket_id'] not in handled_tickets:
                         handled_tickets.append(ticket['ticket_id'])
@@ -236,10 +274,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         "text": msg_to_send,
                         "markdown": msg_to_send
                     }
-                    sendMessageToWxT(data)
+                    # sendMessageToWxT(data)
+                    msg_id = sendMessageToWxT(data)
+                    if msg_id:
+                        if msg_id not in msg_id_list:
+                            msg_id_dict.update({'msg_id': msg_id,
+                                                'ticket_id': ticket['ticket_id']})
+                            msg_id_list.append(ticket['ticket_id'])
                     if ticket['ticket_id'] not in reminder_added:
                         rmndrDataWriter(_callReminderFun(ticket))
                         reminder_added.add(ticket['ticket_id'])
+                        msg_dict_data = {'msg_id': msg_id,
+                                         'ticket_id': ticket['ticket_id']}
+                        rplyMsgDataWriter(msg_dict_data)
 
                     if ticket['ticket_id'] not in handled_tickets:
                         handled_tickets.append(ticket['ticket_id'])
@@ -265,10 +312,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         "text": msg_to_send,
                         "markdown": msg_to_send
                     }
-                    sendMessageToWxT(data)
+                    # sendMessageToWxT(data)
+                    msg_id = sendMessageToWxT(data)
+                    if msg_id:
+                        if msg_id not in msg_id_list:
+                            msg_id_dict.update({'msg_id': msg_id,
+                                                'ticket_id': ticket['ticket_id']})
+                            msg_id_list.append(ticket['ticket_id'])
                     if ticket['ticket_id'] not in reminder_added:
                         rmndrDataWriter(_callReminderFun(ticket))
                         reminder_added.add(ticket['ticket_id'])
+                        msg_dict_data = {'msg_id': msg_id,
+                                         'ticket_id': ticket['ticket_id']}
+                        rplyMsgDataWriter(msg_dict_data)
 
                     if ticket['ticket_id'] not in handled_tickets:
                         handled_tickets.append(ticket['ticket_id'])
@@ -294,10 +350,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                             "text": msg_to_send,
                             "markdown": msg_to_send
                         }
-                        sendMessageToWxT(data)
+                        # sendMessageToWxT(data)
+                        msg_id = sendMessageToWxT(data)
+                        if msg_id:
+                            if msg_id not in msg_id_list:
+                                msg_id_dict.update({'msg_id': msg_id,
+                                                    'ticket_id': ticket['ticket_id']})
+                                msg_id_list.append(ticket['ticket_id'])
                         if ticket['ticket_id'] not in reminder_added:
                             rmndrDataWriter(_callReminderFun(ticket))
                             reminder_added.add(ticket['ticket_id'])
+                            msg_dict_data = {'msg_id': msg_id,
+                                             'ticket_id': ticket['ticket_id']}
+                            rplyMsgDataWriter(msg_dict_data)
 
                         if ticket['ticket_id'] not in handled_tickets:
                             handled_tickets.append(ticket['ticket_id'])
@@ -322,10 +387,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         "text": msg_to_send,
                         "markdown": msg_to_send
                     }
-                    sendMessageToWxT(data)
+                    # sendMessageToWxT(data)
+                    msg_id = sendMessageToWxT(data)
+                    if msg_id:
+                        if msg_id not in msg_id_list:
+                            msg_id_dict.update({'msg_id': msg_id,
+                                                'ticket_id': ticket['ticket_id']})
+                            msg_id_list.append(ticket['ticket_id'])
                     if ticket['ticket_id'] not in reminder_added:
                         rmndrDataWriter(_callReminderFun(ticket))
                         reminder_added.add(ticket['ticket_id'])
+                        msg_dict_data = {'msg_id': msg_id,
+                                         'ticket_id': ticket['ticket_id']}
+                        rplyMsgDataWriter(msg_dict_data)
 
                     if ticket['ticket_id'] not in handled_tickets:
                         handled_tickets.append(ticket['ticket_id'])
@@ -354,10 +428,19 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                 "text": msg_to_send,
                 "markdown": msg_to_send
             }
-            sendMessageToWxT(data)
+            # sendMessageToWxT(data)
+            msg_id = sendMessageToWxT(data)
+            if msg_id:
+                if msg_id not in msg_id_list:
+                    msg_id_dict.update({'msg_id': msg_id,
+                                        'ticket_id': ticket['ticket_id']})
+                    msg_id_list.append(ticket['ticket_id'])
             if ticket['ticket_id'] not in reminder_added:
                 rmndrDataWriter(_callReminderFun(ticket))
                 reminder_added.add(ticket['ticket_id'])
+                msg_dict_data = {'msg_id': msg_id,
+                                 'ticket_id': ticket['ticket_id']}
+                rplyMsgDataWriter(msg_dict_data)
 
             if ticket['ticket_id'] not in handled_tickets:
                 handled_tickets.append(ticket['ticket_id'])
@@ -392,10 +475,19 @@ def postCollabTicketMsg(data) -> None:
             "text": msg_to_send,
             "markdown": msg_to_send
         }
-        sendMessageToWxT(msg_data)
+        # sendMessageToWxT(msg_data)
+        msg_id = sendMessageToWxT(data)
+        if msg_id:
+            if msg_id not in msg_id_list:
+                msg_id_dict.update({'msg_id': msg_id,
+                                    'ticket_id': data['ticket_id']})
+                msg_id_list.append(data['ticket_id'])
         if data['ticket_id'] not in reminder_added:
             rmndrDataWriter(_callReminderFun(data))
             reminder_added.add(data['ticket_id'])
+            msg_dict_data = {'msg_id': msg_id,
+                             'ticket_id': data['ticket_id']}
+            rplyMsgDataWriter(msg_dict_data)
 
         ticket_handled_data = {
             'ticket_id': data['id'],
@@ -429,6 +521,14 @@ def postCollabTicketMsg(data) -> None:
 
 def returnCurrentDataForStats() -> list[dict]:
     return ticket_id_company_mapping
+
+
+def retMsgList_MsgDict():
+    return msg_id_dict, msg_id_list
+
+
+def writeMsgList_MsgDict_to_file():
+    return msg_id_dict, msg_id_list
 
 
 def reset_processed_tickets() -> None:

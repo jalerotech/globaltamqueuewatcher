@@ -9,7 +9,7 @@ logging.basicConfig(
 logger = logging.getLogger('PTO message generator')
 
 
-def genPTOMsg(tam_ooo_list) -> dict:
+def genPTOMsg(tam_ooo_list, label) -> dict:
     """
     Generated the PTO alert message using the list of TAMS found to be on PTO.
     :param tam_ooo_list:
@@ -28,8 +28,13 @@ def genPTOMsg(tam_ooo_list) -> dict:
         if tam['region'] in tqw().APAC_region:
             tam_list_name.append(f"{tam['name']} (**_APAC_**)")
             joined_tam_list = '\n'.join(tam_list_name)
-    msg_to_send = f"### 🛫 TAM(s) on PTO today _(Beta)_: \n " \
-                  f"{joined_tam_list}"
+    msg_to_send = ''
+    if label == "For_CloudSec_Only":
+        msg_to_send = f"#### 🛫 CloudSec Team Member(s) on PTO today: \n " \
+                      f"{joined_tam_list}"
+    if label == "For_TAM_Only":
+        msg_to_send = f"#### 🛫 TAM(s) on PTO today: \n " \
+                      f"{joined_tam_list}"
     data = {
            "text": msg_to_send,
            "markdown": msg_to_send
