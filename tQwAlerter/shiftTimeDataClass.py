@@ -39,8 +39,8 @@ class ShifttimeData:
 
         # # Shift start
         # APAC
-        # Except for Saturday
-        if (self.currentDateAndTime.hour == 1) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+        # Except for Saturday and
+        if (self.currentDateAndTime.hour == 1) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "APAC",
