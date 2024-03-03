@@ -16,13 +16,16 @@ class ShifttimeData:
         """
         Produces the theatre name, and shift time needed to send the start and stop of shift alert.
         """
-        # # Test data:
-        # if (self.currentDateAndTime.hour == 20) and (self.currentDateAndTime.minute == 47):
+        # Test data:
+        # if (self.currentDateAndTime.hour == 20) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
+        # if (self.currentDateAndTime.hour == 20) and (self.currentDateAndTime.minute > 0) and (
+        #         self.today != "Saturday" or self.today != "Monday"):
+        #     print(self.currentDateAndTime.hour, self.currentDateAndTime.minute)
         #     self.logger.info('Getting shift time and status...')
         #     shift_data = {
         #         "theatre": "CYBERTRON",
         #         "shift_time": "17:10 CEST",
-        #         "status": "started"
+        #         "status": "started 🎬"
         #     }
         #     return shift_data
         # if (self.currentDateAndTime.hour == 20) and (self.currentDateAndTime.minute == 48) and (self.today != "Monday"):
@@ -47,7 +50,8 @@ class ShifttimeData:
             return shift_data
 
         # EMEA
-        if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+        # if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+        if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "EMEA",
@@ -57,7 +61,8 @@ class ShifttimeData:
             return shift_data
 
         # US
-        if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+        # if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+        if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "US",
