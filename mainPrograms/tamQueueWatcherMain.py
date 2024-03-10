@@ -30,7 +30,7 @@ def main():
         currentDateAndTime = datetime.now()
         today = currentDateAndTime.strftime('%A')
         currentTime = currentDateAndTime.strftime("%H:%M:%S")
-        # Not working after 02:00 AM CEST on Saturday.
+        # Not working after 02:00 AM CEST on Saturday
         # Allow 60 seconds more for the shift alert to be run to alert US shift end - As the last to be posted before global weekend start.
         # Sunday is a full day of not running the scripts.
         if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (today == "Sunday"):
