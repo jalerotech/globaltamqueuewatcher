@@ -18,9 +18,8 @@ class ShifttimeData:
         """
         # Test data:
         # if (self.currentDateAndTime.hour == 20) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
-        # if (self.currentDateAndTime.hour == 20) and (self.currentDateAndTime.minute > 0) and (
-        #         self.today != "Saturday" or self.today != "Monday"):
-        #     print(self.currentDateAndTime.hour, self.currentDateAndTime.minute)
+        # if (self.today != "Saturday" or self.today != "Monday"):
+        # if (self.currentDateAndTime.hour == 20) and (self.currentDateAndTime.minute > 8):
         #     self.logger.info('Getting shift time and status...')
         #     shift_data = {
         #         "theatre": "CYBERTRON",
