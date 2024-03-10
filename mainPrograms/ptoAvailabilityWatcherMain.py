@@ -1,5 +1,6 @@
 import logging
 import time
+from datetime import datetime
 from TamPtoTracker.getPersonDataWebEx import get_users_status
 from TamPtoTracker.ptoMsgGenerator import genPTOMsg
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT, sendMessageToWxT4Cstat
@@ -48,13 +49,18 @@ def StandalonePTOWatcherMain(label) -> None:
     while True:
         logger_local.info('Running StandalonePTOWatcherMain - STARTED.')
         shift_data = sd().theatre_shift_time()
-        if shift_data:
-            logger_local.info(f'Shift data received {shift_data}.')
-            if shift_data['status'] == "started 🎬":
-                ptoWatcherMain(label)
-            logger_local.info('Running StandalonePTOWatcherMain - COMPLETED.')
-        logger_local.info('No new shift data received - Not yet time for PTO alert - COMPLETED.')
-        logger.info("Pausing for 60 seconds before trying again.")
+        currentDateAndTime = datetime.now()
+        today = currentDateAndTime.strftime('%A')
+        if today == "Saturday" or today == "Sunday":
+            logger.info(f"No need for PTO alert as today is {today} and time is {currentDateAndTime.hour}:{currentDateAndTime.minute}")
+        else:
+            if shift_data:
+                logger_local.info(f'Shift data received {shift_data}.')
+                if shift_data['status'] == "started 🎬":
+                    ptoWatcherMain(label)
+                logger_local.info('Running StandalonePTOWatcherMain - COMPLETED.')
+            logger_local.info('No new shift data received - Not yet time for PTO alert - COMPLETED.')
+            logger.info("Pausing for 60 seconds before trying again.")
         time.sleep(tqw().zendesk_polling_interval)
 
 
