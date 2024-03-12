@@ -3,7 +3,7 @@ import logging
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from statsHandler.createAndPostStats import postDailyShiftTicketSummary
 from ticketAndMsgHandlers.handleTicketMessages import returnCurrentDataForStats, reset_tickets_handled_today, reset_processed_tickets
-from zendeskData.fetchProcessZendeskData import reset_sets_of_tickets_no_time_check
+from zendeskData.fetchProcessZendeskData import reset_sets_of_tickets_no_time_check, reset_ticket_msg_sent
 # from mainPrograms.ptoAvailabilityWatcherMain import ptoWatcherMain
 
 logging.basicConfig(
@@ -63,6 +63,7 @@ def weekendAlert() -> None:
         reset_processed_tickets()
         reset_tickets_handled_today()
         reset_sets_of_tickets_no_time_check()
+        reset_ticket_msg_sent()
     # else:
     #     logger.info("No shift data produced - Not weekend yet")
 

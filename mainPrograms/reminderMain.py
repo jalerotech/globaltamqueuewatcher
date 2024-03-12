@@ -4,6 +4,7 @@ from reminderFeature.reminderMsgHandler import createRmndrMsg
 import logging
 import time
 from datetime import datetime
+from Tools.jsonFileCleaner import cleanJsonFiles
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
@@ -25,8 +26,10 @@ def runReminderService() -> None:
         createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
         if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (today == "Sunday"):
             logger.info(f"Weekend is here, cleaning up the reminder_data.json file. - STARTED.")
-            with open("Files/reminder_data.json", 'w') as json_file:
-                json_file.close()
+            reminder_file_path = "Files/reminder_data.json"
+            cleanJsonFiles(reminder_file_path)
+            # with open("Files/reminder_data.json", 'w') as json_file:
+            #     json_file.close()
             logger.info(f"Weekend is here, cleaning up the reminder_data.json file. - COMPLETED.")
         time.sleep(60)
 
