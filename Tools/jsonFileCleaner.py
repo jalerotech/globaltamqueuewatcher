@@ -20,7 +20,8 @@ def cleanJsonFiles(file_name_input):
             json_file.close()
             logger.info(f'Cleaned up {file_name_input}.json file - COMPLETED')
     else:
-        file_name_list = ['parentMsgIds', 'reminder_data']
+        # file_name_list = ['parentMsgIds', 'reminder_data']
+        file_name_list = ['stats.json']
         for file_name in file_name_list:
             file_name = f'Files/{file_name}.json'
             with open(file_name, 'w') as json_file:

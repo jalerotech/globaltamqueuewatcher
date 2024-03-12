@@ -11,6 +11,7 @@ logging.basicConfig(
 logger = logging.getLogger('Zendesk Data')
 
 sets_of_tickets = set()
+ticket_msg_sent = []
 
 
 def getAllTickets() -> list[dict]:
@@ -33,54 +34,56 @@ def getAllTickets() -> list[dict]:
                 # Check if the ticket has a status
                 # Checks that ticket is not a non-reply requests.
                 if (ticket['status'] == tqw().ticket_status) and (ticket['recipient'] != tqw().no_reply_recipient):
-                    ticket_msg_number += 1
-                    if ticket['recipient'] != tqw().tac_collab:
-                        if ticket['organization_id']:
-                            if ticket['priority']:
-                                ticket_data = {
-                                    "ticket_counter": ticket_msg_number,
-                                    "ticket_id": ticket['id'],
-                                    "subject": ticket['subject'],
-                                    "cust_zendesk_org_id": ticket['organization_id'],
-                                    "created_at": ticket['created_at'],
-                                    "priority": ticket['priority'],
-                                    "assignee": ticket['assignee_id']
-                                }
-                                # print(ticket['priority'])
-                                list_of_new_tickets.append(ticket_data)
-                                sets_of_tickets.add(ticket['id'])
+                    if ticket['id'] not in ticket_msg_sent:
+                        ticket_msg_sent.append(ticket['id'])
+                        ticket_msg_number += 1
+                        if ticket['recipient'] != tqw().tac_collab:
+                            if ticket['organization_id']:
+                                if ticket['priority']:
+                                    ticket_data = {
+                                        "ticket_counter": ticket_msg_number,
+                                        "ticket_id": ticket['id'],
+                                        "subject": ticket['subject'],
+                                        "cust_zendesk_org_id": ticket['organization_id'],
+                                        "created_at": ticket['created_at'],
+                                        "priority": ticket['priority'],
+                                        "assignee": ticket['assignee_id']
+                                    }
+                                    # print(ticket['priority'])
+                                    list_of_new_tickets.append(ticket_data)
+                                    sets_of_tickets.add(ticket['id'])
+                                else:
+                                    ticket_data = {
+                                        "ticket_counter": ticket_msg_number,
+                                        "ticket_id": ticket['id'],
+                                        "subject": ticket['subject'],
+                                        "cust_zendesk_org_id": ticket['organization_id'],
+                                        "created_at": ticket['created_at'],
+                                        "priority": None,
+                                        "assignee": ticket['assignee_id']
+                                    }
+                                    # print(ticket['priority'])
+                                    list_of_new_tickets.append(ticket_data)
+                                    sets_of_tickets.add(ticket['id'])
+
                             else:
+
                                 ticket_data = {
                                     "ticket_counter": ticket_msg_number,
                                     "ticket_id": ticket['id'],
                                     "subject": ticket['subject'],
-                                    "cust_zendesk_org_id": ticket['organization_id'],
+                                    "cust_zendesk_org_id": None,
                                     "created_at": ticket['created_at'],
                                     "priority": None,
                                     "assignee": ticket['assignee_id']
                                 }
-                                # print(ticket['priority'])
                                 list_of_new_tickets.append(ticket_data)
                                 sets_of_tickets.add(ticket['id'])
-
                         else:
-
-                            ticket_data = {
-                                "ticket_counter": ticket_msg_number,
-                                "ticket_id": ticket['id'],
-                                "subject": ticket['subject'],
-                                "cust_zendesk_org_id": None,
-                                "created_at": ticket['created_at'],
-                                "priority": None,
-                                "assignee": ticket['assignee_id']
-                            }
-                            list_of_new_tickets.append(ticket_data)
+                            logger.info(f"Ticket {ticket['id']} is a TAC to Umbrella Collab case, pass it to ProcessTacCollabTicket function.")
+                            ticket.update({"ticket_counter": ticket_msg_number})
                             sets_of_tickets.add(ticket['id'])
-                    else:
-                        logger.info(f"Ticket {ticket['id']} is a TAC to Umbrella Collab case, pass it to ProcessTacCollabTicket function.")
-                        ticket.update({"ticket_counter": ticket_msg_number})
-                        sets_of_tickets.add(ticket['id'])
-                        ProcessTacCollabTicket(ticket)
+                            ProcessTacCollabTicket(ticket)
 
                 else:
                     logger.info(
@@ -91,6 +94,7 @@ def getAllTickets() -> list[dict]:
         if len(list_of_new_tickets) == 0:
             logger.info("No new tickets, life is great!.")
         logger.info("Finished fetching and processing tickets from the queue. Taking a small break and will repeat the process again in 60s.")
+        print(f"ticket_msg_sent {ticket_msg_sent}")
         return list_of_new_tickets
 
     else:
@@ -151,5 +155,19 @@ def reset_sets_of_tickets_no_time_check():
     sets_of_tickets.clear()
     logger.info(f"length of 'sets_of_tickets' is now {len(sets_of_tickets)}.")
     logger.info("Resetting the 'sets_of_tickets set to be a length of 0'...=> COMPLETED")
+
+
+def reset_ticket_msg_sent():
+    """
+    resets the ticket_msg_sent list to a length of 0 (used as message/ticket counter) to save memory usage.
+    This should be called every weekend.
+    :return:
+    """
+    logger.info("Running 'def reset_ticket_msg_sent()'")
+    logger.info(f"length of 'ticket_msg_sent' is {len(ticket_msg_sent)}.")
+    logger.info("Resetting the 'ticket_msg_sent set to be a length of 0'")
+    ticket_msg_sent.clear()
+    logger.info(f"length of 'ticket_msg_sent' is now {len(ticket_msg_sent)}.")
+    logger.info("Resetting the 'ticket_msg_sent set to be a length of 0'...=> COMPLETED")
 
 
