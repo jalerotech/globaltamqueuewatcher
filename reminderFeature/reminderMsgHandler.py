@@ -4,16 +4,14 @@ from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from reminderFeature.assigneeInfo import get_user_info
 from msgReply.readfromReplyDatarFile import read_json_file_line_by_line
 from msgReply.replyMsgs import reply_to_message
+from tamTicketStats.tamStatsGenerator import TamStatsDataWriter
 
 first_reminder_sent = []
 second_reminder_sent = []
 third_reminder_sent = []
 current_time = datetime.utcnow()
 is_assigned_msg_sent = []
-# first_reply_sent = []
-# second_reply_sent = []
-# third_reply_sent = []
-# assign_reply_sent = []
+tam_assigned_tickets_stats = {}
 
 
 def returnReplyMsgId(ticket_id):
@@ -111,7 +109,11 @@ def createRmndrMsg(list_of_ticket):
                                 logger.info(f"Ticket {ticket['ticket_id']} not yet ready for final reminder.")
             # Checks if the ticket is already assigned and hasn't been completely processed.
             if is_assigned:
+                if is_assigned['Email'] not in tam_assigned_tickets_stats:
+                    tam_assigned_tickets_stats.update({is_assigned['Email']: []})
                 if ticket['ticket_id'] not in is_assigned_msg_sent:
+                    email = is_assigned['Email']
+                    tam_assigned_tickets_stats[email].append(ticket['ticket_id'])
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - STARTED")
                     logger.info(f"Creating ticket Assignment Message for {ticket['ticket_id']} - STARTED")
                     # ticket_assigned_msg = \
@@ -133,6 +135,7 @@ def createRmndrMsg(list_of_ticket):
                     logger.info(f"Triggering ticket Assignment alert for ticket -> {ticket['ticket_id']} - COMPLETED")
                 else:
                     logger.info(f"Ticket {ticket['ticket_id']} is not yet assigned.")
+        TamStatsDataWriter(tam_assigned_tickets_stats)
         logger.info(f"Processed tickets -> {is_assigned_msg_sent}")
 
 
@@ -212,3 +215,8 @@ def _convert_seconds_to_hours_minutes(seconds) -> dict:
             "minutes": minutes
         }
         return time_in_queue
+
+
+def ret_tam_assigned_tickets_stats():
+    print(f'tam_assigned_tickets_stats -> {tam_assigned_tickets_stats}')
+    return tam_assigned_tickets_stats
