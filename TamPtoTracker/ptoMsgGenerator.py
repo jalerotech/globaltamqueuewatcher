@@ -56,7 +56,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
     if theatre_data:
         if theatre_data['theatre'] == "EMEA":
             try:
-                tos_msg_to_send = f'#### TAM(s) on shift: \n ' \
+                tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
                                   f'**EMEA**: \n ' \
                                   f'{joined_emea_tams} \n '
                 data = {
@@ -68,7 +68,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
         if theatre_data['theatre'] == "US":
             try:
-                tos_msg_to_send = f'#### TAM(s) on shift: \n ' \
+                tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
                                   f'**US**: \n ' \
                                   f'{joined_us_tams} \n '
                 data = {
@@ -80,7 +80,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
         if theatre_data['theatre'] == "APAC":
             try:
-                tos_msg_to_send = f'#### TAM(s) on shift: \n ' \
+                tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
                                   f'**APAC**: \n ' \
                                   f'{joined_apac_tams} \n '
                 data = {
