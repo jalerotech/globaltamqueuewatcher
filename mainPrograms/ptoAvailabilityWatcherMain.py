@@ -73,8 +73,8 @@ def StandalonePTOWatcherMain(label) -> None:
 
 
 if __name__ == '__main__':
-    ptoWatcherMain("local")
-    # StandalonePTOWatcherMain('local')
+    # ptoWatcherMain("local")
+    StandalonePTOWatcherMain('local')
     # StandalonePTOWatcherMain('Not_local')
     # user_email = ['anattwoo@cisco.com', 'aely@cisco.com', 'jalero@cisco.com',
     #               'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com', 'bewallac@cisco.com',

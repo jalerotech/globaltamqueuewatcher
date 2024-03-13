@@ -1,8 +1,6 @@
 from tamTicketStats.readFromTamStats import read_tam_stats_file
 from tQwAlerter.shiftTimeDataClass import ShifttimeData as sd
-from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
-import time
 import logging
 
 logging.basicConfig(
