@@ -1,8 +1,8 @@
 import logging
 import time
 from datetime import datetime
-from TamPtoTracker.getPersonDataWebEx import get_users_status
-from TamPtoTracker.ptoMsgGenerator import genPTOMsg
+from TamPtoTracker.getPersonDataWebEx import ret_available_tams, ret_team_ooo
+from TamPtoTracker.ptoMsgGenerator import genPTOMsg, genTAMS_on_shift_Msg
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT, sendMessageToWxT4Cstat
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from TamPtoTracker.TamPTOMsgDataGenerator import tamPTOMsgDataWriter
@@ -25,11 +25,19 @@ def ptoWatcherMain(label) -> list:
     :param:
     :return: None
     """
-
-    tam_in_ooo = get_users_status(tqw().list_of_tam)
+    # Produce the Team members on PTO.
+    tam_in_ooo = ret_team_ooo(tqw().cloud_sec_team_members)
+    # Produce the TAM(s) on shift and don't have a status of OutOfOffice.
+    tams_on_shift = ret_available_tams(tqw().tams)
     if label == 'local':
         pto_msg = genPTOMsg(tam_in_ooo, "For_CloudSec_Only")
+        # Sends PTO alerts to Cloud sec space with all TAMs and Managers.
         sendMessageToWxT4Cstat(pto_msg)
+        # Sends PTO alerts to Cloud sec space with all TAMs and Managers but for every shift that starts.
+        tams_on_shift_msg = genTAMS_on_shift_Msg(tams_on_shift, sd().theatre_shift_time())
+        if tams_on_shift_msg:
+            # Alert to be sent on the "Global_TAM_UMB_Queue_watcher_🤖" space.
+            sendMessageToWxT(tams_on_shift_msg)
         tamPTOMsgDataWriter(tam_in_ooo)
         return tam_in_ooo
     else:
@@ -67,6 +75,7 @@ def StandalonePTOWatcherMain(label) -> None:
 if __name__ == '__main__':
     # ptoWatcherMain("local")
     StandalonePTOWatcherMain('local')
+    # StandalonePTOWatcherMain('Not_local')
     # user_email = ['anattwoo@cisco.com', 'aely@cisco.com', 'jalero@cisco.com',
     #               'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com', 'bewallac@cisco.com',
     #               'brparnel@cisco.com', 'ccoral@cisco.com', 'ccardina@cisco.com', 'dforcade@cisco.com',

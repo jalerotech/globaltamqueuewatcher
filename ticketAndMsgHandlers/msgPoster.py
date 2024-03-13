@@ -14,6 +14,7 @@ roomId = tqw().Global_TAM_UMB_Queue_watcher
 def sendMessageToWxT(data):
     """
     Function for posting messages to WxT, called by other functions when they need to send messages to WxT.
+
     :param data: Formatted data to be sent to WxT
     :return: None
     """
