@@ -50,7 +50,7 @@ class ShifttimeData:
 
         # EMEA
         # if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
-        if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
+        if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute <= 1) and (self.today != "Saturday" or self.today != "Sunday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "EMEA",
@@ -61,7 +61,7 @@ class ShifttimeData:
 
         # US
         # if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
-        if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
+        if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute <= 1) and (self.today != "Saturday" or self.today != "Sunday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "US",
@@ -72,7 +72,7 @@ class ShifttimeData:
 
         # # Shift end
         # APAC
-        if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+        if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute <= 1) and (self.today != "Saturday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "APAC",
@@ -82,7 +82,7 @@ class ShifttimeData:
             return shift_data
 
         # EMEA
-        if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+        if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute <= 1) and (self.today != "Saturday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "EMEA",
@@ -92,7 +92,7 @@ class ShifttimeData:
             return shift_data
 
         # US (except for Monday morning)
-        if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 0) and (self.today != "Monday"):
+        if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute <= 1) and (self.today != "Monday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "US",
@@ -104,7 +104,7 @@ class ShifttimeData:
     def weekendAlertData(self):
         # Global weekend alert!
         # (today == "Saturday" and currentDateAndTime.hour >= 2 and currentDateAndTime.minute > 1)
-        if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 0) and (
+        if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute <= 1) and (
                 self.today == "Saturday"):
             self.logger.info('Getting weekend time and status/message...')
             shift_data = {
