@@ -110,9 +110,7 @@ class TamQueueWatcher:
         self.US_region = ['CR', 'US', 'CA']
         self.APAC_region = ['AU', 'CN']
 
-        # List of TAMs
-
-        self.list_of_tam = ['anattwoo@cisco.com', 'aely@cisco.com', 'jalero@cisco.com',
+        self.cloud_sec_team_members = ['anattwoo@cisco.com', 'aely@cisco.com', 'jalero@cisco.com',
                             'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com', 'bewallac@cisco.com',
                             'brparnel@cisco.com', 'ccoral@cisco.com', 'ccardina@cisco.com', 'dforcade@cisco.com',
                             'diebarra@cisco.com', 'hputra@cisco.com', 'harmeije@cisco.com', 'ianave@cisco.com',
@@ -123,4 +121,10 @@ class TamQueueWatcher:
                             'sknez@cisco.com', 'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com',
                             'wgardeaz@cisco.com', 'rgwillia@cisco.com',
                             'xiaoshya@cisco.com', 'yusito@cisco.com']
+        self.tams = ['jalero@cisco.com', 'aparedez@cisco.com', 'anattwoo@cisco.com', 'dforcade@cisco.com',
+                     'kporzezr@cisco.com', 'nnwobodo@cisco.com', 'aely@cisco.com', 'arjraina@cisco.com',
+                     'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
+                     'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
+                     'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
+                     'xiaoshya@cisco.com', 'yusito@cisco.com']
 
