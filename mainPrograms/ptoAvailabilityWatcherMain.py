@@ -1,7 +1,7 @@
 import logging
 import time
 from datetime import datetime
-from TamPtoTracker.getPersonDataWebEx import get_users_status, ret_available_tams, ret_team_ooo
+from TamPtoTracker.getPersonDataWebEx import ret_available_tams, ret_team_ooo
 from TamPtoTracker.ptoMsgGenerator import genPTOMsg, genTAMS_on_shift_Msg
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT, sendMessageToWxT4Cstat
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
@@ -36,7 +36,8 @@ def ptoWatcherMain(label) -> list:
         # Sends PTO alerts to Cloud sec space with all TAMs and Managers but for every shift that starts.
         tams_on_shift_msg = genTAMS_on_shift_Msg(tams_on_shift, sd().theatre_shift_time())
         if tams_on_shift_msg:
-            sendMessageToWxT4Cstat(tams_on_shift_msg)
+            # Alert to be sent on the "Global_TAM_UMB_Queue_watcher_🤖" space.
+            sendMessageToWxT(tams_on_shift_msg)
         tamPTOMsgDataWriter(tam_in_ooo)
         return tam_in_ooo
     else:
