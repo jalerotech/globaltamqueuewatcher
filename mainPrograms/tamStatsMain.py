@@ -23,6 +23,7 @@ def tamStatsMain():
             logger.info("Posting TAM stats message - COMPLETED")
         else:
             logger.info("No Stats message received, waiting for next stats message.")
+        time.sleep(20)
 
 
 if __name__ == '__main__':

@@ -19,7 +19,7 @@ def createStatsMsg() -> dict:
     shift_data = sd().theatre_shift_time()
     if shift_data:
         # logger.info(f'Waiting for 20 seconds before continuing')
-        if shift_data['status'] == "ended":
+        if shift_data['status'] == "ended 🏁":
             raw_stats = read_tam_stats_file()
             stat_msg = ''
             for email in raw_stats:
@@ -32,9 +32,6 @@ def createStatsMsg() -> dict:
                 "markdown": msg_to_send
             }
             logger.info("Creating TAM stats message - COMPLETED")
-            # logger.info("Posting TAM stats message - STARTED")
-            # sendMessageToWxT(data)
-            # logger.info("Posting TAM stats message - COMPLETED")
             return data
 
 
