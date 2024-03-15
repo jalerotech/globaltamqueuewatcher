@@ -17,7 +17,7 @@ def tamStatsMain():
         if stats_msg:
             logger.info("TAM stats message received.")
             logger.info("Waiting 20 seconds before posting the message.")
-            time.sleep(20)
+            time.sleep(45)
             logger.info("Posting TAM stats message - STARTED")
             sendMessageToWxT(stats_msg)
             logger.info("Posting TAM stats message - COMPLETED")
