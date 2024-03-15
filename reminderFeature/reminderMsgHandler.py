@@ -13,6 +13,13 @@ current_time = datetime.utcnow()
 is_assigned_msg_sent = []
 tam_assigned_tickets_stats = {}
 
+logging.basicConfig(
+    format='%(asctime)s %(levelname)s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
+logger = logging.getLogger('Reminder Message Handler')
+
 
 def returnReplyMsgId(ticket_id):
     """
@@ -27,7 +34,7 @@ def returnReplyMsgId(ticket_id):
 
 
 def createRmndrMsg(list_of_ticket):
-    logger = logging.getLogger('Reminder Services')
+    # logger = logging.getLogger('Reminder Services')
     """
     Creates the reminder message using the list_of_ticket received from processReminderData function
     which returns the data in dict format
@@ -220,3 +227,10 @@ def _convert_seconds_to_hours_minutes(seconds) -> dict:
 def ret_tam_assigned_tickets_stats():
     print(f'tam_assigned_tickets_stats -> {tam_assigned_tickets_stats}')
     return tam_assigned_tickets_stats
+
+
+def reset_tam_assigned_tickets_stats():
+    logger.info(f'Current tam_assigned_tickets_stats -> {tam_assigned_tickets_stats}')
+    logger.info(f'Resetting tam_assigned_tickets_stats - STARTED')
+    tam_assigned_tickets_stats.clear()
+    logger.info(f'Resetting tam_assigned_tickets_stats - COMPLETED')
