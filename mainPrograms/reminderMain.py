@@ -28,7 +28,7 @@ def runReminderService() -> None:
         shift_data = sd().theatre_shift_time()
         if shift_data:
             # Reset the tam_assigned_tickets_stats dict after every shift has ended.
-            if shift_data['status'] == "ended":
+            if shift_data['status'] == "ended 🏁":
                 reset_tam_assigned_tickets_stats()
                 # reminder_file_path = "Files/reminder_data.json"
                 # cleanJsonFiles(reminder_file_path)
