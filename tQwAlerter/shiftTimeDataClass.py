@@ -38,58 +38,64 @@ class ShifttimeData:
 
         # # Shift start
         # APAC
-        # Except for Saturday and
-        if (self.currentDateAndTime.hour == 1) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
-            self.logger.info('Getting shift time and status...')
-            shift_data = {
-                "theatre": "APAC",
-                "shift_time": "10:00 AEDT",
-                "status": "started 🎬"
-            }
-            return shift_data
+        # Except for Saturday and Sunday
+        if self.today != "Saturday" or self.today != "Sunday":
+            if (self.currentDateAndTime.hour == 1) and (self.currentDateAndTime.minute == 0):
+                self.logger.info('Getting shift time and status...')
+                shift_data = {
+                    "theatre": "APAC",
+                    "shift_time": "10:00 AEDT",
+                    "status": "started 🎬"
+                }
+                return shift_data
 
         # EMEA
         # if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
-        if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
-            self.logger.info('Getting shift time and status...')
-            shift_data = {
-                "theatre": "EMEA",
-                "shift_time": "08:00 CET",
-                "status": "started 🎬"
-            }
-            return shift_data
+        # if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
+            if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0):
+                self.logger.info('Getting shift time and status...')
+                shift_data = {
+                    "theatre": "EMEA",
+                    "shift_time": "08:00 CET",
+                    "status": "started 🎬"
+                }
+                return shift_data
 
         # US
         # if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
-        if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
-            self.logger.info('Getting shift time and status...')
-            shift_data = {
-                "theatre": "US",
-                "shift_time": "09:00 EST/EDT",
-                "status": "started 🎬"
-            }
-            return shift_data
+        # if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday" or self.today != "Sunday"):
+            if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0):
+                self.logger.info('Getting shift time and status...')
+                shift_data = {
+                    "theatre": "US",
+                    "shift_time": "09:00 EST/EDT",
+                    "status": "started 🎬"
+                }
+                return shift_data
 
         # # Shift end
-        # APAC
-        if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
-            self.logger.info('Getting shift time and status...')
-            shift_data = {
-                "theatre": "APAC",
-                "shift_time": "17:00 AEDT",
-                "status": "ended 🏁"
-            }
-            return shift_data
+        if self.today != "Saturday":
+            # APAC
+            # if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+            if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute == 0):
+                self.logger.info('Getting shift time and status...')
+                shift_data = {
+                    "theatre": "APAC",
+                    "shift_time": "17:00 AEDT",
+                    "status": "ended 🏁"
+                }
+                return shift_data
 
-        # EMEA
-        if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
-            self.logger.info('Getting shift time and status...')
-            shift_data = {
-                "theatre": "EMEA",
-                "shift_time": "16:00 CET",
-                "status": "ended 🏁"
-            }
-            return shift_data
+            # EMEA
+            # if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute == 0) and (self.today != "Saturday"):
+            if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute == 0):
+                self.logger.info('Getting shift time and status...')
+                shift_data = {
+                    "theatre": "EMEA",
+                    "shift_time": "16:00 CET",
+                    "status": "ended 🏁"
+                }
+                return shift_data
 
         # US (except for Monday morning)
         if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 0) and (self.today != "Monday"):
