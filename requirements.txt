@@ -1,6 +1,5 @@
 python-dotenv
-requests==2.30.0
+requests
 pathlib
-dotenv
 datetime
 
