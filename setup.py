@@ -8,7 +8,6 @@ setup(name='GlobalTAMQueueWatcher',
       install_requires=['python-dotenv',
                         'requests',
                         'pathlib',
-                        'dotenv',
                         'datetime'
                         ]
       )
