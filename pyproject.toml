@@ -1,2 +1,3 @@
 [build-system]
 requires = ['python-dotenv', 'requests', 'pathlib', 'dotenv', 'datetime']
+build-backend = "setuptools.build_meta"
