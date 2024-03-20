@@ -17,7 +17,7 @@ logger = logging.getLogger("Reply message poster")
 def reply_to_message(message_id, data):
     """
     Post the replies to initial messages sent from the main TQW program
-    :param message_id: Mssage ID from initial message sent to alert TAM of new ticket arrival.
+    :param message_id: Message ID from initial message sent to alert TAM of new ticket arrival.
     :param data: Message data including markdown.
     :return: None
     """
