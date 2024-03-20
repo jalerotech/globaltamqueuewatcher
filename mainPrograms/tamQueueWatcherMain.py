@@ -1,6 +1,7 @@
 import logging
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tQw
 import time
+from mondayData.getMondayData import ret_tam_to_customer_mappings, getOrgNameMonday
 from datetime import datetime
 from ticketAndMsgHandlers.handleTicketMessages import postMsgTicketInfo
 from zendeskData.fetchProcessZendeskData import getAllTickets, getOrgName
@@ -12,7 +13,6 @@ logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
-
 
 current_time = datetime.now().time()
 working_days = ["Tuesday", "Wednesday", "Thursday", "Friday"]
@@ -33,7 +33,8 @@ def main():
         # Not working after 02:00 AM CEST on Saturday.
         # Allow 60 seconds more for the shift alert to be run to alert US shift end - As the last to be posted before global weekend start.
         # Sunday is a full day of not running the scripts.
-        if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (today == "Sunday"):
+        if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (
+                today == "Sunday"):
             # weekendAlert()
             logger.info("It's the weekend, waiting for new week to start.")
         else:
@@ -41,7 +42,8 @@ def main():
             # 24 hours shift cover.
             # Except to start polling Zendesk on Monday from 1:00 AM CEST.
             # And to continue polling until Saturday as long as hour is less than 2:00 AM CEST -> since US shift ends on Saturday at 02:00 (From CEST point of view).
-            if today in working_days or (today == "Monday" and currentDateAndTime.hour >= 1) or (today == "Saturday" and currentDateAndTime.hour <= 2):
+            if today in working_days or (today == "Monday" and currentDateAndTime.hour >= 1) or (
+                    today == "Saturday" and currentDateAndTime.hour <= 2):
                 logger.info(f'The current time is {currentTime}')
                 try:
                     # lont = List of new tickets.
@@ -52,13 +54,14 @@ def main():
                         lont_w_OrgNames = getOrgName(lont)
                         if lont_w_OrgNames:
                             # Check for the customer assigned TAM name from Monday.com only upon the detection of 'new tickets'
-                            tam_cust_assignments_from_Monday = mdy().getDatafromdy()
-                            tam_to_cust_w_ticket_id = mdy().getOrgNameMonday(tam_cust_assignments_from_Monday,
-                                                                             lont_w_OrgNames)
-
+                            # tam_cust_assignments_from_Monday = mdy().getDatafromdy()
+                            tam_cust_assignments_from_Monday = ret_tam_to_customer_mappings()
+                            tam_to_cust_w_ticket_id = getOrgNameMonday(tam_cust_assignments_from_Monday,
+                                                                       lont_w_OrgNames)
                             updated_tam_to_cust_w_ticket_id = update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id)
                             # # Posts messages created to the WxT space
                             postMsgTicketInfo(lont_w_OrgNames, updated_tam_to_cust_w_ticket_id)
+
                     # Wait for the specified interval before making the next API call
                 except Exception or KeyboardInterrupt as e:
                     logger.info(f"An error occurred to execute the main task: {str(e)}")
