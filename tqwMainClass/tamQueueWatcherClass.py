@@ -76,6 +76,13 @@ class TamQueueWatcher:
             "Authorization": f"Bearer {self.monday_auth_keys}"
         }
 
+        # Set the header for Monday.com API
+        self.monday_headers_api_versioning = {
+            "Authorization": self.monday_auth_keys,
+            'Content-Type': 'application/json',
+            'API-Version': '2024-01'
+        }
+
         # Set the ticket status to monitor
         self.ticket_status = 'new'
 
