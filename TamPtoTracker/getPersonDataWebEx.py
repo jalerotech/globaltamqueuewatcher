@@ -10,46 +10,6 @@ logging.basicConfig(
 
 logger = logging.getLogger('TAM PTO Bot')
 
-# def get_users_status(tam_email_list):
-#     """
-#
-#     :param tam_email_list:
-#     :return:
-#     """
-#     logger.info("Getting user...")
-#     ooo_tams = []
-#     tams_on_shift = {
-#         "EMEA": [],
-#         "APAC": [],
-#         "US": []
-#     }
-#     country_list = []
-#     for tam_email in tam_email_list:
-#         url = f'{tqw().webex_base_url}people?email={tam_email}'
-#         webex_resp = requests.get(url, headers=tqw().webex_headers)
-#         for country in json.loads(webex_resp.content)['items'][0]['addresses']:
-#             country_list.append(country['country'])
-#         status = json.loads(webex_resp.content)['items'][0]['status']
-#         displayName = json.loads(webex_resp.content)['items'][0]['displayName']
-#         email = json.loads(webex_resp.content)['items'][0]['emails']
-#         region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
-#         if status == 'OutOfOffice':
-#             msg_data = {
-#                 'name': displayName,
-#                 'status': status,
-#                 'email': email,
-#                 'region': region
-#             }
-#             ooo_tams.append(msg_data)
-#         else:
-#             if region in tqw().EMEA_region:
-#                 tams_on_shift["EMEA"].append(displayName)
-#             if region in tqw().US_region:
-#                 tams_on_shift["US"].append(displayName)
-#             if region in tqw().APAC_region:
-#                 tams_on_shift["APAC"].append(displayName)
-#     return ooo_tams, tams_on_shift
-
 
 def ret_team_ooo(tam_email_list) -> list:
     logger.info("Returning List of Team members that are Out Of Office. - STARTED")
@@ -59,8 +19,14 @@ def ret_team_ooo(tam_email_list) -> list:
     ooo_tams = []
     country_list = []
     for tam_email in tam_email_list:
-        url = f'{tqw().webex_base_url}people?email={tam_email}'
-        webex_resp = requests.get(url, headers=tqw().webex_headers)
+        # Passing the email as a parameter -> this is needed for the @ symbol on the email be encoded with the "urllib.parse" lib.
+        params = {
+            "email": tam_email
+        }
+        url = f'{tqw().webex_base_url}people'
+        webex_resp = requests.get(url, params=params, headers=tqw().webex_headers)
+        # url = f'{tqw().webex_base_url}people?email={tam_email}'
+        # webex_resp = requests.get(url, headers=tqw().webex_headers)
         for country in json.loads(webex_resp.content)['items'][0]['addresses']:
             country_list.append(country['country'])
         status = json.loads(webex_resp.content)['items'][0]['status']
@@ -93,8 +59,12 @@ def ret_available_tams(email_list) -> dict:
     }
     country_list = []
     for email in email_list:
-        url = f'{tqw().webex_base_url}people?email={email}'
-        webex_resp = requests.get(url, headers=tqw().webex_headers)
+        # Passing the email as a parameter -> this is needed for the @ symbol on the email be encoded with the "urllib.parse" lib.
+        params = {
+            "email": email
+        }
+        url = f'{tqw().webex_base_url}people'
+        webex_resp = requests.get(url, params=params, headers=tqw().webex_headers)
         for country in json.loads(webex_resp.content)['items'][0]['addresses']:
             country_list.append(country['country'])
         status = json.loads(webex_resp.content)['items'][0]['status']
@@ -114,5 +84,4 @@ def ret_available_tams(email_list) -> dict:
 
 if __name__ == '__main__':
     user_email = ['anattwoo@cisco.com', 'aely@cisco.com', 'ianave@cisco.com']
-    pass
-
+    print(ret_available_tams(tqw().tams))
