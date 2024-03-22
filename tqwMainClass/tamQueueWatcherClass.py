@@ -104,8 +104,6 @@ class TamQueueWatcher:
         self.zend_agent_tickets_url = f"https://opendns.zendesk.com/agent/tickets/"
         self.zendesk_ticket_base_url = f"https://opendns.zendesk.com/api/v2/tickets/"
 
-        # f'https://{subdomain}.zendesk.com/api/v2/tickets/{ticket_id}.json'
-
         # Ticket message label(s):
         self.unassigned_label = "None Assigned"
         self.not_set = "Not Set"
@@ -115,7 +113,7 @@ class TamQueueWatcher:
 
         self.EMEA_region = ['GB', 'BE', 'PL', 'ES', 'PT']
         self.US_region = ['CR', 'US', 'CA']
-        self.APAC_region = ['AU', 'CN']
+        self.APAC_region = ['AU', 'CN', 'JP']
 
         self.cloud_sec_team_members = ['anattwoo@cisco.com', 'aely@cisco.com', 'jalero@cisco.com',
                             'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com', 'bewallac@cisco.com',
