@@ -131,5 +131,6 @@ class TamQueueWatcher:
                      'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
                      'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
                      'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
-                     'xiaoshya@cisco.com', 'yusito@cisco.com']
+                     'xiaoshya@cisco.com', 'yusito@cisco.com', "magainer@cisco.com", "diebarra@cisco.com",
+                     "jesshepp@cisco.com", "jonleduc@cisco.com"]
 
