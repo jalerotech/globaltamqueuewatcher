@@ -29,6 +29,8 @@ def runReminderService() -> None:
         if shift_data:
             # Reset the tam_assigned_tickets_stats dict after every shift has ended.
             if shift_data['status'] == "ended 🏁":
+                # wait 30 seconds before resetting the tam_assigned_ticket_stats
+                time.sleep(30)
                 reset_tam_assigned_tickets_stats()
                 # reminder_file_path = "Files/reminder_data.json"
                 # cleanJsonFiles(reminder_file_path)
