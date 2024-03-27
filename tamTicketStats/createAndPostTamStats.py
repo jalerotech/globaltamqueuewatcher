@@ -21,18 +21,23 @@ def createStatsMsg() -> dict:
         # logger.info(f'Waiting for 20 seconds before continuing')
         if shift_data['status'] == "ended 🏁":
             raw_stats = read_tam_stats_file()
-            stat_msg = ''
-            for email in raw_stats:
-                _return_ticket_list(raw_stats[email])
-                stat_msg += f" <@personEmail:{email}>: {_return_ticket_list(raw_stats[email])} \n"
-            msg_to_send = f"### **📊 Stats Per TAM from {shift_data['theatre']} shift**: \n " \
-                          f"{stat_msg}"
-            data = {
-                "text": msg_to_send,
-                "markdown": msg_to_send
-            }
-            logger.info("Creating TAM stats message - COMPLETED")
-            return data
+            # Proceed only if raw stats is received from the function that reads the stats from tamTicketStats.json.
+            if raw_stats:
+                logger.info(f"Stats per TAM received {raw_stats}.")
+                stat_msg = ''
+                for email in raw_stats:
+                    _return_ticket_list(raw_stats[email])
+                    stat_msg += f" <@personEmail:{email}>: {_return_ticket_list(raw_stats[email])} \n"
+                msg_to_send = f"### **📊 Stats Per TAM from {shift_data['theatre']} shift**: \n " \
+                              f"{stat_msg}"
+                data = {
+                    "text": msg_to_send,
+                    "markdown": msg_to_send
+                }
+                logger.info("Creating TAM stats message - COMPLETED")
+                return data
+            else:
+                logger.info(f"No stats data received from the read_tam_stats_file function.")
 
 
 def _return_ticket_list(ticket_data):
