@@ -38,7 +38,7 @@ def ptoWatcherMain(label) -> list:
         if tams_on_shift_msg:
             # Alert to be sent on the "Global_TAM_UMB_Queue_watcher_🤖" space.
             sendMessageToWxT(tams_on_shift_msg)
-        tamPTOMsgDataWriter(tam_in_ooo)
+            tamPTOMsgDataWriter(tam_in_ooo)
         return tam_in_ooo
     else:
         # Could be redundant as PTO alerts are not sent to the Queue Watcher space anymore due to the "noise" on that space.
