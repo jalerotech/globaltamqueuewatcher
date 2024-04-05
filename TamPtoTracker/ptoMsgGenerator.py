@@ -49,7 +49,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
     :param theatre_data:
     :return: message data in dict format.
     """
-    logger.info("Generating TAMs on shift message.")
+    logger.info("Generating TAMs on shift message.- STARTED")
     joined_emea_tams = '\n'.join(tams_on_shift["EMEA"])
     joined_us_tams = '\n'.join(tams_on_shift["US"])
     joined_apac_tams = '\n'.join(tams_on_shift["APAC"])
@@ -63,6 +63,8 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                     "text": tos_msg_to_send,
                     "markdown": tos_msg_to_send
                 }
+                logger.info(f"Generated TOS Message -> {tos_msg_to_send}")
+                logger.info("Generating TAMs on shift message.- COMPLETED")
                 return data
             except KeyError as k:
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
@@ -75,6 +77,8 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                     "text": tos_msg_to_send,
                     "markdown": tos_msg_to_send
                 }
+                logger.info(f"Generated TOS Message -> {tos_msg_to_send}")
+                logger.info("Generating TAMs on shift message.- COMPLETED")
                 return data
             except KeyError as k:
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
@@ -87,26 +91,9 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                     "text": tos_msg_to_send,
                     "markdown": tos_msg_to_send
                 }
+                logger.info(f"Generated TOS Message -> {tos_msg_to_send}")
+                logger.info("Generating TAMs on shift message.- COMPLETED")
                 return data
             except KeyError as k:
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
-        # try:
-    #     tos_msg_to_send = f'#### TAM(s) on shift today \n ' \
-    #                       f'**EMEA**: \n ' \
-    #                       f'{joined_emea_tams} \n ' \
-    #                       f'\n ' \
-    #                       f'**US**: \n ' \
-    #                       f'{joined_us_tams} \n ' \
-    #                       f'\n ' \
-    #                       f'**APAC**: \n ' \
-    #                       f'{joined_apac_tams} \n '
-    #     data = {
-    #         "text": tos_msg_to_send,
-    #         "markdown": tos_msg_to_send
-    #     }
-    #     return data
-    #
-    # except KeyError as k:
-    #     logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
-    #     return None
 
