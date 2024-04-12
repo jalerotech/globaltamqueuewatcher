@@ -182,7 +182,6 @@ def _IsTimeDifMoreThan30Mins(ticket):
     # Convert the datetime objects to Unix timestamps
     ticket_timestamp_unix = int(ticket_open_time.timestamp())
     current_time_unix = int(current_time_utc.timestamp())
-
     # Calculate the absolute difference in seconds
     time_difference_seconds = abs(current_time_unix - ticket_timestamp_unix)
     ticket_time_in_queue = _convert_seconds_to_hours_minutes(time_difference_seconds)
@@ -208,7 +207,7 @@ def _convert_seconds_to_hours_minutes(seconds) -> dict:
     minutes = remaining_seconds // 60
     # EMEA time is currently UTC+1 so need to deduct this from the ticket time (in UTC).
     if hours >= 1:
-        utc_minus_one = hours - 1
+        utc_minus_one = hours - 2
         # time_in_queue = f"{utc_minus_one} Hour(s) and {minutes} Minutes"
         time_in_queue = {
             "hours": utc_minus_one,

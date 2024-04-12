@@ -28,13 +28,23 @@ def _callReminderFun(ticket):
             "created_at": ticket['created_at']
         }
     else:
-        point_data = {
-            "ticket_counter": ticket['ticket_counter'],
-            "subject": ticket['subject'],
-            "ticket_id": ticket['ticket_id'],
-            "created_at": ticket['created_at'],
-            "assignee": None
-        }
+        # Specific for TAC collab tickets as they contain a TAC Service Request (SR) number
+        if ticket['SR_number']:
+            point_data = {
+                "ticket_counter": ticket['ticket_counter'],
+                "subject": ticket['subject'],
+                "assignee": None,
+                "ticket_id": ticket['id'],
+                "created_at": ticket['created_at']
+            }
+        else:
+            point_data = {
+                "ticket_counter": ticket['ticket_counter'],
+                "subject": ticket['subject'],
+                "ticket_id": ticket['ticket_id'],
+                "created_at": ticket['created_at'],
+                "assignee": None
+            }
     return point_data
 
 
@@ -475,18 +485,17 @@ def postCollabTicketMsg(data) -> None:
             "text": msg_to_send,
             "markdown": msg_to_send
         }
-        # sendMessageToWxT(msg_data)
-        msg_id = sendMessageToWxT(data)
+        msg_id = sendMessageToWxT(msg_data)
         if msg_id:
             if msg_id not in msg_id_list:
+                msg_id_list.append(msg_id)
                 msg_id_dict.update({'msg_id': msg_id,
-                                    'ticket_id': data['ticket_id']})
-                msg_id_list.append(data['ticket_id'])
-        if data['ticket_id'] not in reminder_added:
+                                    'ticket_id': data['id']})
+        if data['id'] not in reminder_added:
+            reminder_added.add(data['id'])
             rmndrDataWriter(_callReminderFun(data))
-            reminder_added.add(data['ticket_id'])
             msg_dict_data = {'msg_id': msg_id,
-                             'ticket_id': data['ticket_id']}
+                             'ticket_id': data['id']}
             rplyMsgDataWriter(msg_dict_data)
 
         ticket_handled_data = {
@@ -500,23 +509,6 @@ def postCollabTicketMsg(data) -> None:
     else:
         logger.info(f"Ticket {data['id']} has already been processed, Moving on.")
     return None
-
-
-# def ticketDataForStats() -> list[dict]:
-#     """
-#     Produces the number of tickets handled today mapping with company/customer's name
-#     This happens a minute before the end of each shift (theatre)
-#     :return:
-#     """
-#     # APAC
-#     if datetime.now().hour == 9 and (0 <= datetime.now().minute < 3):
-#         return ticket_id_company_mapping
-#     # EMEA
-#     if datetime.now().hour == 16 and (0 <= datetime.now().minute < 3):
-#         return ticket_id_company_mapping
-#     # US
-#     if datetime.now().hour == 2 and (0 <= datetime.now().minute < 3):
-#         return ticket_id_company_mapping
 
 
 def returnCurrentDataForStats() -> list[dict]:

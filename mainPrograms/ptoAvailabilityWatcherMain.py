@@ -18,7 +18,7 @@ logger = logging.getLogger('TAM PTO script')
 tam_in_ooo_export = []
 
 
-def ptoWatcherMain(label) -> list:
+def ptoWatcherMain(label, theatre_data) -> list:
     logger.info(f"Running the PTO Watcher Main function with a fixed list of TAM resources.")
     """
     Runs the main PTO programs using the imported modules "get_users_status", "genPTOMsg" and "sendMessageToWxT".
@@ -34,11 +34,11 @@ def ptoWatcherMain(label) -> list:
         # Sends PTO alerts to Cloud sec space with all TAMs and Managers.
         sendMessageToWxT4Cstat(pto_msg)
         # Sends PTO alerts to Cloud sec space with all TAMs and Managers but for every shift that starts.
-        tams_on_shift_msg = genTAMS_on_shift_Msg(tams_on_shift, sd().theatre_shift_time())
+        tams_on_shift_msg = genTAMS_on_shift_Msg(tams_on_shift, theatre_data)
         if tams_on_shift_msg:
             # Alert to be sent on the "Global_TAM_UMB_Queue_watcher_🤖" space.
             sendMessageToWxT(tams_on_shift_msg)
-        tamPTOMsgDataWriter(tam_in_ooo)
+            tamPTOMsgDataWriter(tam_in_ooo)
         return tam_in_ooo
     else:
         # Could be redundant as PTO alerts are not sent to the Queue Watcher space anymore due to the "noise" on that space.
@@ -65,7 +65,7 @@ def StandalonePTOWatcherMain(label) -> None:
             if shift_data:
                 logger_local.info(f'Shift data received {shift_data}.')
                 if shift_data['status'] == "started 🎬":
-                    ptoWatcherMain(label)
+                    ptoWatcherMain(label, shift_data)
                 logger_local.info('Running StandalonePTOWatcherMain - COMPLETED.')
             logger_local.info('No new shift data received - Not yet time for PTO alert - COMPLETED.')
             logger.info("Pausing for 60 seconds before trying again.")

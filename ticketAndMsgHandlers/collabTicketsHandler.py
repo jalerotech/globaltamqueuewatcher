@@ -16,24 +16,25 @@ def ProcessTacCollabTicket(ticket) -> None:
     logger.info(f"Processing TAC collab ticket -> {ticket['id']} -> STARTED")
     subject = ticket['subject']
     SR_number = subject.split(' ')[2].split('#')[1].strip(']')
-    org_name = subject.split(' ')[4].strip('[]')
+    # org_name = subject.split(' ')[4].strip('[]')
 
     timestamp = datetime.strptime(ticket['created_at'], "%Y-%m-%dT%H:%M:%SZ")
     formatted_timestamp = timestamp.strftime("%H:%M:%S")
 
     collabTickData = {
         'SR_number': SR_number,
-        'org_name': org_name,
+        'org_name': None,
         'id': ticket['id'],
         'formatted_timestamp': formatted_timestamp,
         'ticket_counter': ticket['ticket_counter'],
-        'subject': ticket['subject']
+        'subject': ticket['subject'],
+        'assignee': None,
+        'created_at': ticket['created_at']
     }
     ticket_handled_data = {
         'ticket_id': ticket['id'],
-        'customer_name': org_name
+        'customer_name': None
     }
-    # print(f"ticket_id_company_mapping so far -> {ticket_id_company_mapping}")
     if ticket_handled_data not in ticket_id_company_mapping:
         ticket_id_company_mapping.append(ticket_handled_data)
     logger.info(f"Processing TAC collab ticket -> {ticket['id']} -> COMPLETED, Sending to be posted to WxT.")

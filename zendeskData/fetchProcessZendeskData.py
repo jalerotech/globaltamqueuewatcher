@@ -47,7 +47,8 @@ def getAllTickets() -> list[dict]:
                                         "cust_zendesk_org_id": ticket['organization_id'],
                                         "created_at": ticket['created_at'],
                                         "priority": ticket['priority'],
-                                        "assignee": ticket['assignee_id']
+                                        "assignee": ticket['assignee_id'],
+                                        "SR_number": None
                                     }
                                     # print(ticket['priority'])
                                     list_of_new_tickets.append(ticket_data)
@@ -60,7 +61,8 @@ def getAllTickets() -> list[dict]:
                                         "cust_zendesk_org_id": ticket['organization_id'],
                                         "created_at": ticket['created_at'],
                                         "priority": None,
-                                        "assignee": ticket['assignee_id']
+                                        "assignee": ticket['assignee_id'],
+                                        "SR_number": None
                                     }
                                     # print(ticket['priority'])
                                     list_of_new_tickets.append(ticket_data)
@@ -75,7 +77,8 @@ def getAllTickets() -> list[dict]:
                                     "cust_zendesk_org_id": None,
                                     "created_at": ticket['created_at'],
                                     "priority": None,
-                                    "assignee": ticket['assignee_id']
+                                    "assignee": ticket['assignee_id'],
+                                    "SR_number": None
                                 }
                                 list_of_new_tickets.append(ticket_data)
                                 sets_of_tickets.add(ticket['id'])
