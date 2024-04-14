@@ -23,22 +23,28 @@ def runReminderService() -> None:
 
     currentDateAndTime = datetime.now()
     today = currentDateAndTime.strftime('%A')
+    is_cleaned = False
     while True:
-        createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
-        shift_data = sd().theatre_shift_time()
-        if shift_data:
-            # Reset the tam_assigned_tickets_stats dict after every shift has ended.
-            if shift_data['status'] == "ended 🏁":
-                # wait 30 seconds before resetting the tam_assigned_ticket_stats
-                time.sleep(30)
-                reset_tam_assigned_tickets_stats()
-                # reminder_file_path = "Files/reminder_data.json"
-                # cleanJsonFiles(reminder_file_path)
-        if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (today == "Sunday"):
-            logger.info(f"Weekend is here, cleaning up the reminder_data.json file. - STARTED.")
-            reminder_file_path = "Files/reminder_data.json"
-            cleanJsonFiles(reminder_file_path)
-            logger.info(f"Weekend is here, cleaning up the reminder_data.json file. - COMPLETED.")
+        if not is_cleaned:
+            logger.info("File 'reminder_data.json' cleanup status is unknown.")
+            logger.info("Checking if it's time to cleanup 'reminder_data.json' file")
+            if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (today == "Sunday"):
+                logger.info(f"Weekend is here. Time to clean up database file. \n")
+                reminder_file_path = "Files/reminder_data.json"
+                is_cleaned = cleanJsonFiles(reminder_file_path)
+            else:
+                logger.info(f"'reminder_data.json' is already cleaned or not yet time to clean it up.")
+        else:
+            createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
+            shift_data = sd().theatre_shift_time()
+            if shift_data:
+                # Resets the tam_assigned_tickets_stats dict after every shift has ended.
+                if shift_data['status'] == "ended 🏁":
+                    # wait 30 seconds before resetting the tam_assigned_ticket_stats
+                    time.sleep(30)
+                    reset_tam_assigned_tickets_stats()
+            else:
+                logger.info(f"Continuing as usual in 60 seconds, no shift data received. \n ")
         time.sleep(60)
 
 
