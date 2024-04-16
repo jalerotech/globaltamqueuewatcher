@@ -1,6 +1,9 @@
 import json
 import logging
 
+processed_ticket_data = []
+data_list = []
+
 
 def read_json_file_line_by_line():
     logger = logging.getLogger("read_json_file_line_by_line")
@@ -15,12 +18,20 @@ def read_json_file_line_by_line():
     - list: A list of dictionaries, where each dictionary corresponds to a line in the file.
     """
     file_name = 'Files/reminder_data.json'
-    data_list = []
+    # processed_ticket_data = []
+    # data_list = []
     with open(file_name, 'r') as json_file:
         for line in json_file:
             try:
                 data = json.loads(line)
-                data_list.append(data)
+                if data:
+                    if data['ticket_id'] not in processed_ticket_data:
+                        logger.info(f"New Ticket data found -> {data}")
+                        data_list.append(data)
+                        processed_ticket_data.append(data['ticket_id'])
+                    else:
+                        logger.info(f"Ticket {data['ticket_id']} already read from the reminder_file.")
+                logger.info(f"Processed from reminder_file -> {processed_ticket_data}")
             except json.JSONDecodeError as e:
                 logger.info(f"Error decoding JSON on line: {line}")
                 logger.info(f"Error details: {e}")

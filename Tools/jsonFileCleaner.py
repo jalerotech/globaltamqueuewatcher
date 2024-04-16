@@ -34,8 +34,6 @@ def cleanJsonFiles(file_name_input) -> bool:
             return False
         else:
             for file_name in file_name_list:
-                # Ensure to change the working directory if the jsonFileCleaner in this part of the script returns an error
-                # This part of the script needs access to "Files/{file_name}"
                 logger.info(f"Opening file {file_name}")
                 file_path = f"Files/{file_name}"
                 with open(file_path, 'w') as json_file:
@@ -53,11 +51,16 @@ def isFileEmpty(file_path):
     """
     interesting_file_path = check_file_path(file_path)
     try:
-        with open(interesting_file_path, 'r') as file:
-            data = json.load(file)
-            if data:
-                logger.info(f"File '{interesting_file_path.split('/')[1]}' is not empty, it's content is {data}")
-                return False
+        logger.info(f"Opening file '{interesting_file_path.split('/')[1]}'")
+        with open(interesting_file_path, 'r') as file_opened:
+            logger.info(f"File '{interesting_file_path.split('/')[1]}' opened ")
+            for line in file_opened:
+                data = json.loads(line)
+                if data:
+                    logger.info(f"File '{interesting_file_path.split('/')[1]}' is not empty, the first line of its content is {data}")
+                    return False
+            else:
+                logger.info(f"File {interesting_file_path.split('/')[1]} is empty.")
     except json.JSONDecodeError:
         logger.info(f"File '{interesting_file_path.split('/')[1]}' is empty, so no cleanup needed")
         return True
@@ -78,6 +81,8 @@ def check_file_path(file_path):
 
 
 if __name__ == '__main__':
-    file = None
-    cleanJsonFiles(file)
+    # file = None
+    # cleanJsonFiles(file)
+    fp = 'Files/reminder_data.json'
+    isFileEmpty(fp)
 
