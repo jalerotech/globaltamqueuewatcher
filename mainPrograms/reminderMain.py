@@ -4,7 +4,6 @@ from reminderFeature.reminderMsgHandler import createRmndrMsg, reset_tam_assigne
 from tQwAlerter.shiftTimeDataClass import ShifttimeData as sd
 import logging
 import time
-from datetime import datetime
 from Tools.jsonFileCleaner import cleanJsonFiles
 
 logging.basicConfig(
@@ -21,24 +20,26 @@ def runReminderService() -> None:
     logger = logging.getLogger("runReminderService")
     logger.info("Running Reminder Service Program")
 
-    currentDateAndTime = datetime.now()
-    today = currentDateAndTime.strftime('%A')
     while True:
-        createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
-        shift_data = sd().theatre_shift_time()
-        if shift_data:
-            # Reset the tam_assigned_tickets_stats dict after every shift has ended.
-            if shift_data['status'] == "ended 🏁":
-                # wait 30 seconds before resetting the tam_assigned_ticket_stats
-                time.sleep(30)
-                reset_tam_assigned_tickets_stats()
-                # reminder_file_path = "Files/reminder_data.json"
-                # cleanJsonFiles(reminder_file_path)
-        if (today == "Saturday" and (currentDateAndTime.hour > 2 and currentDateAndTime.minute > 0)) or (today == "Sunday"):
-            logger.info(f"Weekend is here, cleaning up the reminder_data.json file. - STARTED.")
+        weekend_data = sd().weekendAlertData()
+        # Start clean up process once weekend data is received.
+        if weekend_data:
+            logger.info(f"Weekend is here. Time to clean up database file. \n")
             reminder_file_path = "Files/reminder_data.json"
-            cleanJsonFiles(reminder_file_path)
-            logger.info(f"Weekend is here, cleaning up the reminder_data.json file. - COMPLETED.")
+            is_cleaned = cleanJsonFiles(reminder_file_path)
+            if is_cleaned:
+                logger.info(f"Reminder file clean status -> {is_cleaned} thus Cleaned. \n ")
+        else:
+            createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
+            shift_data = sd().theatre_shift_time()
+            if shift_data:
+                # Resets the tam_assigned_tickets_stats dict after every shift has ended.
+                if shift_data['status'] == "ended 🏁":
+                    # wait 30 seconds before resetting the tam_assigned_ticket_stats
+                    time.sleep(30)
+                    reset_tam_assigned_tickets_stats()
+            else:
+                logger.info(f"Continuing as usual in 60 seconds, no shift data received. \n ")
         time.sleep(60)
 
 
