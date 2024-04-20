@@ -29,6 +29,8 @@ def runReminderService() -> None:
             is_cleaned = cleanJsonFiles(reminder_file_path)
             if is_cleaned:
                 logger.info(f"Reminder file clean status -> {is_cleaned} thus Cleaned. \n ")
+                # Reset tam_ticket_assignment_data after cleaning reminder file
+                reset_tam_assigned_tickets_stats()
         else:
             createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
             shift_data = sd().theatre_shift_time()
