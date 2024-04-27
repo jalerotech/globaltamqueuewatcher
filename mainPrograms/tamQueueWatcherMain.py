@@ -36,7 +36,7 @@ def main():
         # While the script should still run until after 2 am on Saturday.
         if (today == "Saturday" and (currentDateAndTime.hour >= 2 and currentDateAndTime.minute >= 0)) or (
                 today == "Sunday"):
-            # weekendAlert()
+            weekendAlert()
             logger.info("It's the weekend, waiting for new week to start.")
         else:
             alertshiftstart()
@@ -68,7 +68,7 @@ def main():
                     logger.info(f"An error occurred to execute the main task: {str(e)}")
             else:
                 logger.info(f"Shift to start at 02:00 CEST on Monday morning. Sleeping for now")
-            weekendAlert()
+            # weekendAlert()
         time.sleep(tQw().zendesk_polling_interval)
 
 
