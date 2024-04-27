@@ -184,7 +184,7 @@ def postDailyShiftTicketSummary(ticket_id_company_mapping, shift_data) -> None:
             reset_tickets_handled_today()
             reset_sets_of_tickets_no_time_check()
             # Clean up
-            cleanJsonFiles(None)
+            # cleanJsonFiles(None)
         return None
 
 
