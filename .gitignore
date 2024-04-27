@@ -1,4 +1,6 @@
 *.env
 *.json
-*msgPoster.py
-*replyMsgs.py
+msgPoster.py
+replyMsgs.py
+msgReply/replyMsgs.py
+ticketAndMsgHandlers/msgPoster.py
