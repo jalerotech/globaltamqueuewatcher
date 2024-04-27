@@ -223,9 +223,14 @@ def _convert_seconds_to_hours_minutes(seconds) -> dict:
         return time_in_queue
 
 
-def ret_tam_assigned_tickets_stats():
+def ret_tam_assigned_tickets_stats() -> dict:
     print(f'tam_assigned_tickets_stats -> {tam_assigned_tickets_stats}')
     return tam_assigned_tickets_stats
+
+
+def ret_is_assigned_msg_sent() -> list:
+    print(f'tam_assigned_tickets_stats -> {is_assigned_msg_sent}')
+    return is_assigned_msg_sent
 
 
 def reset_tam_assigned_tickets_stats():
@@ -233,3 +238,11 @@ def reset_tam_assigned_tickets_stats():
     logger.info(f'Resetting tam_assigned_tickets_stats - STARTED')
     tam_assigned_tickets_stats.clear()
     logger.info(f'Resetting tam_assigned_tickets_stats - COMPLETED')
+
+
+def reset_is_assigned_msg_sent():
+    logger.info(f'Processed tickets w/ message sent (ptwms) -> {is_assigned_msg_sent}')
+    logger.info(f'Resetting "ptwms" list.')
+    is_assigned_msg_sent.clear()
+    logger.info(f'"ptwms" reset, current value is  {is_assigned_msg_sent}')
+
