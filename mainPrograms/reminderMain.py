@@ -1,6 +1,6 @@
 from reminderFeature.readfromReminderFile import read_json_file_line_by_line
 from reminderFeature.processReminderData import retTickFromDataList
-from reminderFeature.reminderMsgHandler import createRmndrMsg, reset_tam_assigned_tickets_stats
+from reminderFeature.reminderMsgHandler import createRmndrMsg, reset_tam_assigned_tickets_stats,  reset_is_assigned_msg_sent, ret_tam_assigned_tickets_stats, ret_is_assigned_msg_sent
 from tQwAlerter.shiftTimeDataClass import ShifttimeData as sd
 import logging
 import time
@@ -30,7 +30,11 @@ def runReminderService() -> None:
             if is_cleaned:
                 logger.info(f"Reminder file clean status -> {is_cleaned} thus Cleaned. \n ")
                 # Reset tam_ticket_assignment_data after cleaning reminder file
-                reset_tam_assigned_tickets_stats()
+                # But only reset if the length is not 0
+                if len(ret_tam_assigned_tickets_stats()) > 0:
+                    reset_tam_assigned_tickets_stats()
+                if len(ret_is_assigned_msg_sent()) > 0:
+                    reset_is_assigned_msg_sent()
         else:
             createRmndrMsg(retTickFromDataList(read_json_file_line_by_line()))
             shift_data = sd().theatre_shift_time()
