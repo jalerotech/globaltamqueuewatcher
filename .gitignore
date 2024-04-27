@@ -1,4 +1,4 @@
 *.env
 *.json
-msgPoster.py
-replyMsgs.py
+*msgPoster.py
+*replyMsgs.py
