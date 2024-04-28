@@ -133,7 +133,7 @@ def getOrgNameMonday(tam_cust_assignments_from_Monday, Zendesk_New_ticks_w_orgna
             # Updating ticket information since COVEA GROUP is not on Zendesk since only SFR opens tickets with Umbrella support for Covea.
             if ticket['org_name'] is not None:
                 if ticket['org_name'] == 'Sfr':
-                    ticket['org_name'] = "COVEA GROUP"
+                    ticket['org_name'] = "COVEA GROUPE"
                     covea_data = ret_covea_data(ticket['ticket_id'])
                     if covea_data not in tam_to_cust_w_ticket_id:
                         tam_to_cust_w_ticket_id.append(covea_data)
