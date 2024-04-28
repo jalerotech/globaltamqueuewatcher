@@ -71,6 +71,23 @@ def main():
             # weekendAlert()
         time.sleep(tQw().zendesk_polling_interval)
 
+        # # Testing without any time checking
+        # lont = getAllTickets()
+        # if lont:
+        #     logger.info(f"Found {len(lont)} new tickets in the queue!")
+        #     # list with company names added
+        #     lont_w_OrgNames = getOrgName(lont)
+        #     if lont_w_OrgNames:
+        #         # Check for the customer assigned TAM name from Monday.com only upon the detection of 'new tickets'
+        #         # tam_cust_assignments_from_Monday = mdy().getDatafromdy()
+        #         tam_cust_assignments_from_Monday = ret_tam_to_customer_mappings()
+        #         tam_to_cust_w_ticket_id = getOrgNameMonday(tam_cust_assignments_from_Monday,
+        #                                                    lont_w_OrgNames)
+        #         updated_tam_to_cust_w_ticket_id = update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id)
+        #         # # Posts messages created to the WxT space
+        #         postMsgTicketInfo(lont_w_OrgNames, updated_tam_to_cust_w_ticket_id)
+        # time.sleep(tQw().zendesk_polling_interval)
+
 
 if __name__ == "__main__":
     main()
