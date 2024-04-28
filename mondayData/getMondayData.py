@@ -3,6 +3,7 @@ from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher
 import requests
 from mondayData.returnMappings import ret_tam_cus_mappings
 from mondayData.nextPageItems import next_page_results
+from bfgData.getBfgUrlFromList import createBfgUrls
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
@@ -129,8 +130,15 @@ def getOrgNameMonday(tam_cust_assignments_from_Monday, Zendesk_New_ticks_w_orgna
     try:
         for ticket in Zendesk_New_ticks_w_orgnames:
             org_name = ''
+            # Updating ticket information since COVEA GROUP is not on Zendesk since only SFR opens tickets with Umbrella support for Covea.
             if ticket['org_name'] is not None:
-                org_name = ticket['org_name'].lower()
+                if ticket['org_name'] == 'Sfr':
+                    ticket['org_name'] = "COVEA GROUP"
+                    covea_data = ret_covea_data(ticket['ticket_id'])
+                    if covea_data not in tam_to_cust_w_ticket_id:
+                        tam_to_cust_w_ticket_id.append(covea_data)
+                else:
+                    org_name = ticket['org_name'].lower()
             tam_info = {
                 "ticket_id": ticket['ticket_id'],
                 "primary_tam": None,
@@ -165,6 +173,17 @@ def ret_group_items(mndy_groups):
             logger.info('Returning data from "TAM Customers" group from the TAM Deployment Monday Board. -> COMPLETED')
             cursor_id = group['items_page']['cursor']
             return group['items_page']['items'], cursor_id
+
+
+def ret_covea_data(ticket_id):
+    tam_info = {
+        "ticket_id": ticket_id,
+        "primary_tam": "Joshua Alero",
+        "backup_tam": "Anthony Attwood",
+        "customer_region": "EMEA",
+        "bfg_org_id": createBfgUrls([7948441])[0]
+    }
+    return tam_info
 
 
 if __name__ == '__main__':
