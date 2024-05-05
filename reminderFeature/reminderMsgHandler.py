@@ -224,13 +224,8 @@ def _convert_seconds_to_hours_minutes(seconds) -> dict:
 
 
 def ret_tam_assigned_tickets_stats() -> dict:
-    print(f'tam_assigned_tickets_stats -> {tam_assigned_tickets_stats}')
+    logger.info(f'tam_assigned_tickets_stats -> {tam_assigned_tickets_stats}')
     return tam_assigned_tickets_stats
-
-
-def ret_is_assigned_msg_sent() -> list:
-    print(f'tam_assigned_tickets_stats -> {is_assigned_msg_sent}')
-    return is_assigned_msg_sent
 
 
 def reset_tam_assigned_tickets_stats():
@@ -238,6 +233,11 @@ def reset_tam_assigned_tickets_stats():
     logger.info(f'Resetting tam_assigned_tickets_stats - STARTED')
     tam_assigned_tickets_stats.clear()
     logger.info(f'Resetting tam_assigned_tickets_stats - COMPLETED')
+
+
+def ret_is_assigned_msg_sent() -> list:
+    logger.info(f'tam_assigned_tickets_stats -> {is_assigned_msg_sent}')
+    return is_assigned_msg_sent
 
 
 def reset_is_assigned_msg_sent():
