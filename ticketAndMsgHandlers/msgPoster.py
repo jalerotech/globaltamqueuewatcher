@@ -6,9 +6,9 @@ import json
 
 # # Room IDs:
 # Global WxT space
-roomId = tqw().Global_TAM_UMB_Queue_watcher
+# roomId = tqw().Global_TAM_UMB_Queue_watcher
 # Devs room ID:
-# roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
+roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
 
 
 def sendMessageToWxT(data):
@@ -48,8 +48,8 @@ def sendMessageToWxT4Cstat(data):
 
     # Cloud Sec TAM Space ID
     cloudSecSpace_id = 'Y2lzY29zcGFyazovL3VzL1JPT00vOGJkNjE4MzAtZGQ1Ni0xMWU4LTlmNWYtOTc3ZWY0YmY5MmQ0'
-    json_data = _add_room_id_to_date(data, cloudSecSpace_id)
-    # json_data = _add_room_id_to_date(data, roomId)
+    # json_data = _add_room_id_to_date(data, cloudSecSpace_id)
+    json_data = _add_room_id_to_date(data, roomId)
     try:
         webex_response = requests.post(tqw().webex_api_url, headers=tqw().cstat_webex_headers, json=json_data)
         if webex_response.status_code == 200:
