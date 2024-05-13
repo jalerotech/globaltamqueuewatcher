@@ -4,6 +4,7 @@ from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
 from reminderFeature.rmndrDataGenerator import rmndrDataWriter
 from msgReply.replyMsgDataGenerator import rplyMsgDataWriter
+from weeklyStats.writeStatsDailyToFile import writeHandledTicketsToFile
 import json
 
 logger = logging.getLogger('Msg_handler')
@@ -152,6 +153,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                 }
                                 if ticket_handled_data not in ticket_id_company_mapping:
                                     ticket_id_company_mapping.append(ticket_handled_data)
+                                    writeHandledTicketsToFile(ticket_handled_data)
                             else:
                                 msg_to_send = f"### New ticket has landed in the TAM Q !!! ({ticket['ticket_counter']}) \n " \
                                               f"Ticket number: #[{ticket['ticket_id']}]({tqw().zend_agent_tickets_url}{ticket['ticket_id']}) \n " \
@@ -189,6 +191,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                 }
                                 if ticket_handled_data not in ticket_id_company_mapping:
                                     ticket_id_company_mapping.append(ticket_handled_data)
+                                    writeHandledTicketsToFile(ticket_handled_data)
                 # This checks if the customer has region set and has primary and NO backup TAMs on Monday.com
                 if not tam_data['backup_tam']:
                     if tam_data['primary_tam']:
@@ -229,6 +232,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                             }
                             if ticket_handled_data not in ticket_id_company_mapping:
                                 ticket_id_company_mapping.append(ticket_handled_data)
+                                writeHandledTicketsToFile(ticket_handled_data)
 
                 # This checks if the customer has no region assigned and has both primary and backup TAMs on Monday.com
                 if (tam_data['primary_tam']) and (tam_data['backup_tam']) and (not tam_data['customer_region']) and tam_data['bfg_org_id']:
@@ -267,6 +271,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
+                        writeHandledTicketsToFile(ticket_handled_data)
 
                 # This checks if the customer has no region assigned and has primary TAM assigned but NO backup TAMs on Monday.com
                 if (tam_data['primary_tam']) and (not tam_data['backup_tam']) and (not tam_data['customer_region']) and tam_data['bfg_org_id']:
@@ -306,6 +311,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
+                        writeHandledTicketsToFile(ticket_handled_data)
 
                 # This checks if the customer has no region assigned and has primary TAM assigned but NO backup TAMs on Monday.com
                 if (tam_data['primary_tam']) and (not tam_data['backup_tam']) and (not tam_data['customer_region']) and (not tam_data['bfg_org_id']):
@@ -344,6 +350,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
+                        writeHandledTicketsToFile(ticket_handled_data)
 
                 else:
                     if ticket['ticket_id'] not in handled_tickets:
@@ -382,6 +389,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         }
                         if ticket_handled_data not in ticket_id_company_mapping:
                             ticket_id_company_mapping.append(ticket_handled_data)
+                            writeHandledTicketsToFile(ticket_handled_data)
             else:
                 if ticket['ticket_id'] not in handled_tickets:
                     msg_to_send = f"### New ticket has landed in the TAM Q !!! ({ticket['ticket_counter']}) \n " \
@@ -419,6 +427,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
+                        writeHandledTicketsToFile(ticket_handled_data)
 
         except KeyError as e:
             logger.info(f'{tam_data} is Missing information {e.args}')
@@ -460,6 +469,7 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
             }
             if ticket_handled_data not in ticket_id_company_mapping:
                 ticket_id_company_mapping.append(ticket_handled_data)
+                writeHandledTicketsToFile(ticket_handled_data)
 
 
 def postCollabTicketMsg(data) -> None:
@@ -506,6 +516,7 @@ def postCollabTicketMsg(data) -> None:
             handled_collab_tickets.append(data['id'])
         if ticket_handled_data not in ticket_id_company_mapping:
             ticket_id_company_mapping.append(ticket_handled_data)
+            writeHandledTicketsToFile(ticket_handled_data)
     else:
         logger.info(f"Ticket {data['id']} has already been processed, Moving on.")
     return None
