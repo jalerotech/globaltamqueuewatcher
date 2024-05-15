@@ -1,5 +1,6 @@
 from datetime import datetime
 from ticketAndMsgHandlers.handleTicketMessages import postCollabTicketMsg, ticket_id_company_mapping
+from weeklyStats.writeStatsDailyToFile import writeHandledTicketsToFile
 import logging
 
 logger = logging.getLogger('Running ProcessTacCollabTicket')
@@ -35,8 +36,13 @@ def ProcessTacCollabTicket(ticket) -> None:
         'ticket_id': ticket['id'],
         'customer_name': None
     }
+    weeklyStats_data = {
+        'ticket_id': ticket['id'],
+        'customer_name': 'TAC-Collab'
+    }
     if ticket_handled_data not in ticket_id_company_mapping:
         ticket_id_company_mapping.append(ticket_handled_data)
+        writeHandledTicketsToFile(weeklyStats_data)
     logger.info(f"Processing TAC collab ticket -> {ticket['id']} -> COMPLETED, Sending to be posted to WxT.")
 
     return postCollabTicketMsg(collabTickData)
