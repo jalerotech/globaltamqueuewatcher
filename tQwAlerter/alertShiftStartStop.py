@@ -43,7 +43,7 @@ def alertshiftstart() -> None:
         #     ptoWatcherMain('Not_local')
 
 
-def weekendAlert() -> None:
+def weekendAlert() -> bool:
     """
     posts weekend alert when conditions are met.
     :return: None
@@ -67,6 +67,7 @@ def weekendAlert() -> None:
         reset_ticket_msg_sent()
         # Clean up files hardcoded in the cleanJsonFiles function.
         cleanJsonFiles(None)
+        return True
     # else:
     #     logger.info("No shift data produced - Not weekend yet")
 

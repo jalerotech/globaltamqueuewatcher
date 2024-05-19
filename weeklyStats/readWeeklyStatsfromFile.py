@@ -7,6 +7,8 @@ logging.basicConfig(
 
 logger = logging.getLogger("Weekly stats generator")
 
+processed_data = []
+
 
 def readHandledTicketsDataFromFile() -> list:
     """
@@ -17,8 +19,17 @@ def readHandledTicketsDataFromFile() -> list:
         for line in json_file:
             try:
                 data = json.loads(line)
-                logger.info("Reading ticket from weeklyStats.json file - COMPLETED.")
-                data_list.append(data)
+                if data['ticket_id'] not in processed_data:
+                    data_list.append(data)
+                    processed_data.append(data['ticket_id'])
+                else:
+                    logger.info(f"Ticket {data['ticket_id']} already read from the weeklyStats.json file.")
             except json.JSONDecodeError as e:
+                logger.info(f"Error decoding JSON on line: {line}")
                 logger.info(f"Error details: {e}")
+    logger.info("Reading ticket from weeklyStats.json file - COMPLETED.")
     return data_list
+
+
+if __name__ == '__main__':
+    readHandledTicketsDataFromFile()
