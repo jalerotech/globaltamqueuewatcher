@@ -1,5 +1,6 @@
 import logging
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tQw
+from mainPrograms.weeklyStatsMain import weeklyStatsMain
 import time
 from mondayData.getMondayData import ret_tam_to_customer_mappings, getOrgNameMonday
 from datetime import datetime
@@ -36,7 +37,8 @@ def main():
         # While the script should still run until after 2 am on Saturday.
         if (today == "Saturday" and (currentDateAndTime.hour >= 2 and currentDateAndTime.minute >= 0)) or (
                 today == "Sunday"):
-            weekendAlert()
+            if weekendAlert():
+                weeklyStatsMain()
             logger.info("It's the weekend, waiting for new week to start.")
         else:
             alertshiftstart()
