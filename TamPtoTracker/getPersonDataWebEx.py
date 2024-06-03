@@ -27,20 +27,21 @@ def ret_team_ooo(tam_email_list) -> list:
         webex_resp = requests.get(url, params=params, headers=tqw().webex_headers)
         # url = f'{tqw().webex_base_url}people?email={tam_email}'
         # webex_resp = requests.get(url, headers=tqw().webex_headers)
-        for country in json.loads(webex_resp.content)['items'][0]['addresses']:
-            country_list.append(country['country'])
-        status = json.loads(webex_resp.content)['items'][0]['status']
-        displayName = json.loads(webex_resp.content)['items'][0]['displayName']
-        email = json.loads(webex_resp.content)['items'][0]['emails']
-        region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
-        if status == 'OutOfOffice':
-            msg_data = {
-                'name': displayName,
-                'status': status,
-                'email': email,
-                'region': region
-            }
-            ooo_tams.append(msg_data)
+        if json.loads(webex_resp.content)['items']:
+            for country in json.loads(webex_resp.content)['items'][0]['addresses']:
+                country_list.append(country['country'])
+            status = json.loads(webex_resp.content)['items'][0]['status']
+            displayName = json.loads(webex_resp.content)['items'][0]['displayName']
+            email = json.loads(webex_resp.content)['items'][0]['emails']
+            region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
+            if status == 'OutOfOffice':
+                msg_data = {
+                    'name': displayName,
+                    'status': status,
+                    'email': email,
+                    'region': region
+                }
+                ooo_tams.append(msg_data)
     logger.info("Returning List of Team members that are Out Of Office. - COMPLETED")
     logger.info(f"Returning list -> {ooo_tams}")
     return ooo_tams
@@ -65,18 +66,19 @@ def ret_available_tams(email_list) -> dict:
         }
         url = f'{tqw().webex_base_url}people'
         webex_resp = requests.get(url, params=params, headers=tqw().webex_headers)
-        for country in json.loads(webex_resp.content)['items'][0]['addresses']:
-            country_list.append(country['country'])
-        status = json.loads(webex_resp.content)['items'][0]['status']
-        displayName = json.loads(webex_resp.content)['items'][0]['displayName']
-        region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
-        if status != 'OutOfOffice':
-            if region in tqw().EMEA_region:
-                tams_on_shift["EMEA"].append(displayName)
-            if region in tqw().US_region:
-                tams_on_shift["US"].append(displayName)
-            if region in tqw().APAC_region:
-                tams_on_shift["APAC"].append(displayName)
+        if json.loads(webex_resp.content)['items']:
+            for country in json.loads(webex_resp.content)['items'][0]['addresses']:
+                country_list.append(country['country'])
+            status = json.loads(webex_resp.content)['items'][0]['status']
+            displayName = json.loads(webex_resp.content)['items'][0]['displayName']
+            region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
+            if status != 'OutOfOffice':
+                if region in tqw().EMEA_region:
+                    tams_on_shift["EMEA"].append(displayName)
+                if region in tqw().US_region:
+                    tams_on_shift["US"].append(displayName)
+                if region in tqw().APAC_region:
+                    tams_on_shift["APAC"].append(displayName)
     logger.info("Returning Dict of TAMs that are available. - COMPLETED")
     logger.info(f"Returned Dict -> {tams_on_shift}.")
     return tams_on_shift
