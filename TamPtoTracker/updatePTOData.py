@@ -24,7 +24,6 @@ def update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id) -> list:
         if mapping['primary_tam'] or mapping['backup_tam']:
             if pto_data:
                 for data in pto_data[0]:
-                    # print(data)
                     if mapping['primary_tam']:
                         if mapping['primary_tam'] == data['name']:
                             mapping['primary_tam'] = f"{mapping['primary_tam']} 🛫"
@@ -34,6 +33,8 @@ def update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id) -> list:
                             if mapping['ticket_id'] not in updated_tickets:
                                 updated_tam_to_cust_w_ticket_id.append(mapping)
             else:
+                if mapping['ticket_id'] not in updated_tickets:
+                    updated_tam_to_cust_w_ticket_id.append(mapping)
                 logger.info("No PTO data yet")
         else:
             logger.info(f"No TAM data retrieved from Monday.com for ticket {mapping['ticket_id']}")
