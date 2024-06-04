@@ -39,7 +39,8 @@ def genPTOMsg(tam_ooo_list, label) -> dict:
            "text": msg_to_send,
            "markdown": msg_to_send
        }
-    return data
+    if joined_tam_list:
+        return data
 
 
 def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):

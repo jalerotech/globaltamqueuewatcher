@@ -19,7 +19,7 @@ def read_json_file_line_by_line():
     with open(file_name, 'r') as json_file:
         for line in json_file:
             try:
-                data = json.loads(line)
+                data = json.load(json_file)
                 data_list.append(data)
             except json.JSONDecodeError as e:
                 logger.info(f"Error decoding JSON on line: {line}")
