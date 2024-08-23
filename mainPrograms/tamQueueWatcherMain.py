@@ -8,6 +8,8 @@ from zendeskData.fetchProcessZendeskData import getAllTickets, getOrgName
 from mondayData.fetchProcessMdyDataClass import MondayDotCom as mdy
 from tQwAlerter.alertShiftStartStop import alertshiftstart, weekendAlert
 from TamPtoTracker.updatePTOData import update_tam_to_cust_w_ticket_id
+from mondayData.mdyTamCustStandalone import mdyTamCustMain
+from zendeskData.fetchProcessZendeskData import validateTickets
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
@@ -40,6 +42,7 @@ def main():
             logger.info("It's the weekend, waiting for new week to start.")
         else:
             alertshiftstart()
+            mdyTamCustMain()
             # 24 hours shift cover.
             # Except to start polling Zendesk on Monday from 1:00 AM CEST.
             # And to continue polling until Saturday as long as hour is less than 2:00 AM CEST -> since US shift ends on Saturday at 02:00 (From CEST point of view).
@@ -50,25 +53,32 @@ def main():
                     # lont = List of new tickets.
                     lont = getAllTickets()
                     if lont:
-                        logger.info(f"Found {len(lont)} new tickets in the queue!")
-                        # list with company names added
-                        lont_w_OrgNames = getOrgName(lont)
-                        if lont_w_OrgNames:
-                            # Check for the customer assigned TAM name from Monday.com only upon the detection of 'new tickets'
-                            # tam_cust_assignments_from_Monday = mdy().getDatafromdy()
-                            tam_cust_assignments_from_Monday = ret_tam_to_customer_mappings()
-                            tam_to_cust_w_ticket_id = getOrgNameMonday(tam_cust_assignments_from_Monday,
-                                                                       lont_w_OrgNames)
-                            updated_tam_to_cust_w_ticket_id = update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id)
-                            # # Posts messages created to the WxT space
-                            postMsgTicketInfo(lont_w_OrgNames, updated_tam_to_cust_w_ticket_id)
-
-                    # Wait for the specified interval before making the next API call
+                        validated_tickets, lont_w_orgName_local = validateTickets(lont)
+                        if validated_tickets and lont_w_orgName_local:
+                            updated_tam_to_cust_w_ticket_id = update_tam_to_cust_w_ticket_id(validated_tickets)
+                            postMsgTicketInfo(lont_w_orgName_local, updated_tam_to_cust_w_ticket_id)
+                    # if lont:
+                    #     logger.info(f"Found {len(lont)} new tickets in the queue!")
+                    #     # list with company names added
+                    #     lont_w_OrgNames = getOrgName(lont)
+                    #     if lont_w_OrgNames:
+                    #
+                    #         # Check for the customer assigned TAM name from Monday.com only upon the detection of 'new tickets'
+                    #         # tam_cust_assignments_from_Monday = mdy().getDatafromdy()
+                    #         tam_cust_assignments_from_Monday = ret_tam_to_customer_mappings()
+                    #         # print(f"tam_cust_assignments_from_Monday -> {tam_cust_assignments_from_Monday}")
+                    #         tam_to_cust_w_ticket_id = getOrgNameMonday(tam_cust_assignments_from_Monday,
+                    #                                                    lont_w_OrgNames)
+                    #         updated_tam_to_cust_w_ticket_id = update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id)
+                    #         # print(f"updated_tam_to_cust_w_ticket_id -> {updated_tam_to_cust_w_ticket_id}")
+                    #         # print(f"length of updated_tam_to_cust_w_ticket_id -> {len(updated_tam_to_cust_w_ticket_id)}")
+                    #         # # Posts messages created to the WxT space
+                    #         postMsgTicketInfo(lont_w_OrgNames, updated_tam_to_cust_w_ticket_id)
                 except Exception or KeyboardInterrupt as e:
                     logger.info(f"An error occurred to execute the main task: {str(e)}")
             else:
                 logger.info(f"Shift to start at 02:00 CEST on Monday morning. Sleeping for now")
-            # weekendAlert()
+        # Wait for the specified interval before making the next API call
         time.sleep(tQw().zendesk_polling_interval)
 
         # # Testing without any time checking

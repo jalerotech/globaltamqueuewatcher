@@ -24,7 +24,6 @@ def update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id) -> list:
         if mapping['primary_tam'] or mapping['backup_tam']:
             if pto_data:
                 for data in pto_data[0]:
-                    # print(data)
                     if mapping['primary_tam']:
                         if mapping['primary_tam'] == data['name']:
                             mapping['primary_tam'] = f"{mapping['primary_tam']} 🛫"
