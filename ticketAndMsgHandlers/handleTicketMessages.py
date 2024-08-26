@@ -58,6 +58,8 @@ def postMsgTicketInfo(lont_w_OrgNames, TAMs_data):
     :param lont_w_OrgNames: List of new tickets with org names populated.
     :return: List -> list of handled tickets as soon as message is posted to WxT.
     """
+    # print(f"lont_w_OrgNames -> {lont_w_OrgNames}")
+    # print(f"TAMs_data -> {TAMs_data}")
     try:
         for ticket in lont_w_OrgNames:
             for tam_data in TAMs_data:
@@ -107,6 +109,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
     """
     logger.info('Creating personalized message to send to WxT space.')
     handled_tickets = []
+    # print(ticket)
+    # print(f"tam_data -> {tam_data}")
     if tam_data:
         # This checks if the customer has region and both primary & backup TAMs on Monday.com
         try:
