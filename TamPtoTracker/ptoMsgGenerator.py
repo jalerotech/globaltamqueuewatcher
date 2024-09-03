@@ -55,11 +55,57 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
     joined_us_tams = '\n'.join(tams_on_shift["US"])
     joined_apac_tams = '\n'.join(tams_on_shift["APAC"])
     if theatre_data:
+        # if theatre_data['theatre'] == "EMEA":
+        #     try:
+        #         tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
+        #                           f'**EMEA**: \n ' \
+        #                           f'{joined_emea_tams} \n '
+        #         data = {
+        #             "text": tos_msg_to_send,
+        #             "markdown": tos_msg_to_send
+        #         }
+        #         logger.info(f"Generated TOS Message -> {tos_msg_to_send}")
+        #         logger.info("Generating TAMs on shift message.- COMPLETED")
+        #         return data
+        #     except KeyError as k:
+        #         logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
+        # if theatre_data['theatre'] == "US":
+        #     try:
+        #         tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
+        #                           f'**US**: \n ' \
+        #                           f'{joined_us_tams} \n '
+        #         data = {
+        #             "text": tos_msg_to_send,
+        #             "markdown": tos_msg_to_send
+        #         }
+        #         logger.info(f"Generated TOS Message -> {tos_msg_to_send}")
+        #         logger.info("Generating TAMs on shift message.- COMPLETED")
+        #         return data
+        #     except KeyError as k:
+        #         logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
+        # if theatre_data['theatre'] == "APAC":
+        #     try:
+        #         tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
+        #                           f'**APAC**: \n ' \
+        #                           f'{joined_apac_tams} \n '
+        #         data = {
+        #             "text": tos_msg_to_send,
+        #             "markdown": tos_msg_to_send
+        #         }
+        #         logger.info(f"Generated TOS Message -> {tos_msg_to_send}")
+        #         logger.info("Generating TAMs on shift message.- COMPLETED")
+        #         return data
+        #     except KeyError as k:
+        #         logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
         if theatre_data['theatre'] == "EMEA":
             try:
-                tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
+                tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**EMEA**: \n ' \
-                                  f'{joined_emea_tams} \n '
+                                  f'{joined_emea_tams} \n ' \
+                                  f'**MANAGER**: \n ' \
+                                  f'Szymon Knez \n ' \
+                                  f'**TEAM LEAD**: \n ' \
+                                  f'Anthon Attwood'
                 data = {
                     "text": tos_msg_to_send,
                     "markdown": tos_msg_to_send
@@ -71,7 +117,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
         if theatre_data['theatre'] == "US":
             try:
-                tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
+                tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**US**: \n ' \
                                   f'{joined_us_tams} \n '
                 data = {
@@ -85,7 +131,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
         if theatre_data['theatre'] == "APAC":
             try:
-                tos_msg_to_send = f'#### 📌 TAM(s) on shift: \n ' \
+                tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**APAC**: \n ' \
                                   f'{joined_apac_tams} \n '
                 data = {

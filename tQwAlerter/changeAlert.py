@@ -27,12 +27,17 @@ def changeAlerter() -> None:
     }
 
     fr_data = {"markdown": f"📝 **Feature/Enhancement Requests** : \n " 
-                           f"1. TAMs PTO alert. {status[4]} \n "
-                           f"2. TAMs on shift alert. {status[4]} \n "}
+                           f"1. TSEs Team Leads on shift alert. {status[2]} \n "
+                           f"2. TSEs Managers on shift alert. {status[2]} \n "}
 
     changes_data = {"markdown": f"📣 **Changes** : \n " " "
-                                f"1. EMEA time zone updated to CET. \n "
-                                f"2. APAC time zone updated. \n "}
+                                f"1. Rewrote Zendesk Data pull/processing logic: \n "
+                                f"- Pulling data from Monday.com and storing the data locally (tam-to-customer-mapping.json). \n "
+                                f"- Checking the notes on org-level to which the tickets on Zendesk belong. \n "
+                                f"- Evaluating the notes and checking if they're viable or not - contains the Primary_TAM, Backup_TAM, Customer_region, BFG_Org_id etc. \n "
+                                f"- If the notes are viable, they're used to update the ticket message that's sent to WxT. \n "
+                                f"- Otherwise, it uses the locally stored tam-to-customer-mapping for the same purpose. \n "
+                    }
 
     data_list = [fr_data, changes_data]
 
