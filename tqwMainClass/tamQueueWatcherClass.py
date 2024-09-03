@@ -114,18 +114,6 @@ class TamQueueWatcher:
         self.EMEA_region = ['GB', 'BE', 'PL', 'ES', 'PT']
         self.US_region = ['CR', 'US', 'CA']
         self.APAC_region = ['AU', 'CN', 'JP']
-
-        # self.cloud_sec_team_members = ['anattwoo@cisco.com', 'aely@cisco.com', 'jalero@cisco.com',
-        #                     'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com', 'bewallac@cisco.com',
-        #                     'brparnel@cisco.com', 'ccoral@cisco.com', 'ccardina@cisco.com', 'dforcade@cisco.com',
-        #                     'diebarra@cisco.com', 'hputra@cisco.com', 'harmeije@cisco.com', 'ianave@cisco.com',
-        #                     'halijenn@cisco.com', 'jesshepp@cisco.com', 'jonleduc@cisco.com', 'kahowes@cisco.com',
-        #                     'kevhudso@cisco.com', 'kporzezr@cisco.com', 'kvindas@cisco.com',
-        #                     'magainer@cisco.com', 'mneibert@cisco.com', 'nnwobodo@cisco.com', 'paulth2@cisco.com',
-        #                     'pwijenay@cisco.com',
-        #                     'sknez@cisco.com', 'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com',
-        #                     'wgardeaz@cisco.com', 'rgwillia@cisco.com',
-        #                     'xiaoshya@cisco.com', 'yusito@cisco.com', "hputra@cisco.com"]
         self.cloud_sec_team_members = ['anattwoo@cisco.com', 'jalero@cisco.com',
                                        'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com',
                                        'bewallac@cisco.com',
@@ -143,18 +131,11 @@ class TamQueueWatcher:
                                        'ugandhi@cisco.com',
                                        'wgardeaz@cisco.com', 'rgwillia@cisco.com',
                                        'xiaoshya@cisco.com', 'yusito@cisco.com', "hputra@cisco.com"]
-        # self.tams = ['jalero@cisco.com', 'aparedez@cisco.com', 'anattwoo@cisco.com', 'dforcade@cisco.com',
-        #              'kporzezr@cisco.com', 'nnwobodo@cisco.com', 'aely@cisco.com', 'arjraina@cisco.com',
-        #              'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
-        #              'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
-        #              'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
-        #              'xiaoshya@cisco.com', 'yusito@cisco.com', "magainer@cisco.com", "diebarra@cisco.com",
-        #              "jesshepp@cisco.com", "jonleduc@cisco.com", "hputra@cisco.com"]
         self.tams = ['jalero@cisco.com', 'aparedez@cisco.com', 'anattwoo@cisco.com', 'dforcade@cisco.com',
                      'kporzezr@cisco.com', 'nnwobodo@cisco.com', 'arjraina@cisco.com',
                      'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
                      'kvindas@cisco.com', 'mneibert@cisco.com', 'paulth2@cisco.com', 'pwijenay@cisco.com',
                      'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
                      'xiaoshya@cisco.com', 'yusito@cisco.com', "magainer@cisco.com", "diebarra@cisco.com",
-                     "jesshepp@cisco.com", "jonleduc@cisco.com", "hputra@cisco.com"]
+                     "jesshepp@cisco.com", "jonleduc@cisco.com", "hputra@cisco.com", "harmeije@cisco.com"]
 
