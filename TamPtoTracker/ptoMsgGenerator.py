@@ -102,10 +102,12 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                 tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**EMEA**: \n ' \
                                   f'{joined_emea_tams} \n ' \
+                                  f'\n ' \
                                   f'**MANAGER**: \n ' \
                                   f'Szymon Knez \n ' \
+                                  f'\n ' \
                                   f'**TEAM LEAD**: \n ' \
-                                  f'Anthon Attwood'
+                                  f'Anthony Attwood'
                 data = {
                     "text": tos_msg_to_send,
                     "markdown": tos_msg_to_send
@@ -119,7 +121,16 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
             try:
                 tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**US**: \n ' \
-                                  f'{joined_us_tams} \n '
+                                  f'{joined_us_tams} \n ' \
+                                  f'\n ' \
+                                  f'**MANAGER**: \n ' \
+                                  f'Jared Kalmus _(EAST)_ \n ' \
+                                  f'Murillo Perrotti _(WEST)_ \n' \
+                                  f'\n ' \
+                                  f'**TEAM LEAD**: \n ' \
+                                  f'Max-Erick Gainer _(EAST)_ \n ' \
+                                  f'Harm Meijer _(WEST)_'
+
                 data = {
                     "text": tos_msg_to_send,
                     "markdown": tos_msg_to_send
@@ -133,7 +144,13 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
             try:
                 tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**APAC**: \n ' \
-                                  f'{joined_apac_tams} \n '
+                                  f'{joined_apac_tams} \n ' \
+                                  f'\n ' \
+                                  f'**MANAGER**: \n ' \
+                                  f'Jennifer Halim \n ' \
+                                  f'\n ' \
+                                  f'**TEAM LEAD**: \n ' \
+                                  f'Handy Putra'
                 data = {
                     "text": tos_msg_to_send,
                     "markdown": tos_msg_to_send
