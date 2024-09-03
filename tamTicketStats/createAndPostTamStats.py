@@ -8,13 +8,13 @@ logging.basicConfig(
     level=logging.INFO,
     datefmt='%Y-%m-%d %H:%M:%S')
 
-logger = logging.getLogger("Running TAM stats script")
+logger = logging.getLogger("Running TSE stats script")
 
 
 def createStatsMsg() -> dict:
-    logger.info("Creating TAM stats message - STARTED")
+    logger.info("Creating TSE stats message - STARTED")
     """
-    Creates statistics per TAM and postes the message to WxT.
+    Creates statistics per TSE and postes the message to WxT.
     """
     shift_data = sd().theatre_shift_time()
     if shift_data:
@@ -23,18 +23,18 @@ def createStatsMsg() -> dict:
             raw_stats = read_tam_stats_file()
             # Proceed only if raw stats is received from the function that reads the stats from tamTicketStats.json.
             if raw_stats:
-                logger.info(f"Stats per TAM received {raw_stats}.")
+                logger.info(f"Stats per TSE received {raw_stats}.")
                 stat_msg = ''
                 for email in raw_stats:
                     _return_ticket_list(raw_stats[email])
                     stat_msg += f" <@personEmail:{email}>: {_return_ticket_list(raw_stats[email])} \n"
-                msg_to_send = f"### **📊 Stats Per TAM from {shift_data['theatre']} shift**: \n " \
+                msg_to_send = f"### **📊 Stats Per TSE from {shift_data['theatre']} shift**: \n " \
                               f"{stat_msg}"
                 data = {
                     "text": msg_to_send,
                     "markdown": msg_to_send
                 }
-                logger.info("Creating TAM stats message - COMPLETED")
+                logger.info("Creating TSE stats message - COMPLETED")
                 return data
             else:
                 logger.info(f"No stats data received from the read_tam_stats_file function.")
