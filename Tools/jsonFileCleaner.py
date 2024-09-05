@@ -51,7 +51,7 @@ def isFileEmpty(file):
     file_path = f"Files/{file}"
     interesting_file_path = file_path
     # reminder_data.json and parentMsgIds.json are in format where the data are written one line at a time. So the json decoding of this should be treated differently.
-    if file == 'reminder_data.json' or file == 'parentMsgIds.json':
+    if file == 'reminder_data.json' or file == 'parentMsgIds.json' or file == "weeklyStats.json":
         logger.info(f"Cleaning json files with contents written one line at a time.")
         try:
             logger.info(f"Checking if '{interesting_file_path.split('/')[1]}' is empty or not")

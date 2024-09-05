@@ -39,8 +39,9 @@ def ptoWatcherMain(label, theatre_data) -> list:
     if label == 'local':
         pto_msg = genPTOMsg(tam_in_ooo, "For_CloudSec_Only")
         # Sends PTO alerts to Cloud sec space with all TAMs and Managers.
-        sendMessageToWxT4Cstat(pto_msg)
-        # Sends PTO alerts to Cloud sec space with all TAMs and Managers but for every shift that starts.
+        if pto_msg:
+            sendMessageToWxT4Cstat(pto_msg)
+            # Sends PTO alerts to Cloud sec space with all TAMs and Managers but for every shift that starts.
         tams_on_shift_msg = genTAMS_on_shift_Msg(tams_on_shift, theatre_data)
         tse_tse_mngrs_on_shift_msg = genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_pto, tse_mngrs_on_pto, theatre_data)
         if tams_on_shift_msg:

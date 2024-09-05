@@ -33,6 +33,8 @@ def update_tam_to_cust_w_ticket_id(tam_to_cust_w_ticket_id) -> list:
                             if mapping['ticket_id'] not in updated_tickets:
                                 updated_tam_to_cust_w_ticket_id.append(mapping)
             else:
+                if mapping['ticket_id'] not in updated_tickets:
+                    updated_tam_to_cust_w_ticket_id.append(mapping)
                 logger.info("No PTO data yet")
         else:
             logger.info(f"No TAM data retrieved from Monday.com for ticket {mapping['ticket_id']}")
