@@ -131,6 +131,7 @@ class TamQueueWatcher:
                                        'ugandhi@cisco.com',
                                        'wgardeaz@cisco.com', 'rgwillia@cisco.com',
                                        'xiaoshya@cisco.com', 'yusito@cisco.com', "hputra@cisco.com"]
+
         self.tams = ['jalero@cisco.com', 'aparedez@cisco.com', 'anattwoo@cisco.com', 'dforcade@cisco.com',
                      'kporzezr@cisco.com', 'nnwobodo@cisco.com', 'arjraina@cisco.com',
                      'ajavaher@cisco.com', 'brparnel@cisco.com', 'ccoral@cisco.com', 'kevhudso@cisco.com',
@@ -138,6 +139,7 @@ class TamQueueWatcher:
                      'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
                      'xiaoshya@cisco.com', 'yusito@cisco.com', "magainer@cisco.com", "diebarra@cisco.com",
                      "jesshepp@cisco.com", "jonleduc@cisco.com", "hputra@cisco.com", "harmeije@cisco.com"]
+
         self.tse_TLs = ["syedsyed@cisco.com","esgoyal@cisco.com", "mbignell@cisco.com", "roavrame@cisco.com", "dbarksda@cisco.com", "deqpowel@cisco.com",
                         "rmargall@cisco.com", "dsaludes@cisco.com", "lgoulart@cisco.com", "chrstew2@cisco.com"]
         self.tse_Mngrs = ["prersinh@cisco.com", "msarband@cisco.com", "dpetrezs@cisco.com", "micolema@cisco.com",

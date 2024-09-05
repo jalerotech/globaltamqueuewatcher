@@ -16,11 +16,13 @@ def genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_shift, tse_mngr_on_shift, theatre_dat
     :param theatre_data:
     :return: message data in dict format.
     """
-    logger.info("Generating TSE Team Leads and TSE Mngrs on shift message.- STARTED")
+    logger.info("Generating TSE TLs and TSE Mngrs on shift message.- STARTED")
+    # Managers
     joined_emea_tse = '\n'.join(tse_on_shift["EMEA"])
     joined_us_tse = '\n'.join(tse_on_shift["US"])
     joined_apac_tse = '\n'.join(tse_on_shift["APAC"])
 
+    # Team leads
     joined_emea_tse_TLs = '\n'.join(tse_mngr_on_shift["EMEA"])
     joined_us_tse_TLs = '\n'.join(tse_mngr_on_shift["US"])
     joined_apac_tse_Tls = '\n'.join(tse_mngr_on_shift["APAC"])
