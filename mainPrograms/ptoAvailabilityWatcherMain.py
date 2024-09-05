@@ -7,6 +7,7 @@ from ticketAndMsgHandlers.msgPoster import sendMessageToWxT, sendMessageToWxT4Cs
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
 from TamPtoTracker.TamPTOMsgDataGenerator import tamPTOMsgDataWriter
 from tQwAlerter.shiftTimeDataClass import ShifttimeData as sd
+from tseAvailabilityTracker.tseOnlineMsgGen import genTSE_TLAnd_Mngrs_on_shift_Msg
 
 logging.basicConfig(
     format='%(asctime)s %(levelname)s %(message)s',
@@ -27,6 +28,12 @@ def ptoWatcherMain(label, theatre_data) -> list:
     """
     # Produce the Team members on PTO.
     tam_in_ooo = ret_team_ooo(tqw().cloud_sec_team_members)
+    tse_list = tqw().tse_TLs
+    tse_mngr_list = tqw().tse_Mngrs
+    tse_on_pto = ret_available_tams(tse_list)
+    tse_mngrs_on_pto = ret_available_tams(tse_mngr_list)
+    # genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_pto, tse_mngrs_on_pto, theatre_data)
+
     # Produce the TAM(s) on shift and don't have a status of OutOfOffice.
     tams_on_shift = ret_available_tams(tqw().tams)
     if label == 'local':
@@ -36,10 +43,15 @@ def ptoWatcherMain(label, theatre_data) -> list:
             sendMessageToWxT4Cstat(pto_msg)
             # Sends PTO alerts to Cloud sec space with all TAMs and Managers but for every shift that starts.
         tams_on_shift_msg = genTAMS_on_shift_Msg(tams_on_shift, theatre_data)
+        tse_tse_mngrs_on_shift_msg = genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_pto, tse_mngrs_on_pto, theatre_data)
         if tams_on_shift_msg:
             # Alert to be sent on the "Global_TAM_UMB_Queue_watcher_🤖" space.
             sendMessageToWxT(tams_on_shift_msg)
+            # sendMessageToWxT(genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_pto, tse_mngrs_on_pto, theatre_data))
             tamPTOMsgDataWriter(tam_in_ooo)
+            # Only send TSE and TSE Manager on shift alerts when actual message is available.
+            if tse_tse_mngrs_on_shift_msg:
+                sendMessageToWxT(tse_tse_mngrs_on_shift_msg)
         return tam_in_ooo
     else:
         # Could be redundant as PTO alerts are not sent to the Queue Watcher space anymore due to the "noise" on that space.
