@@ -113,7 +113,7 @@ class TamQueueWatcher:
 
         self.EMEA_region = ['GB', 'BE', 'PL', 'ES', 'PT']
         self.US_region = ['CR', 'US', 'CA']
-        self.APAC_region = ['AU', 'CN', 'JP']
+        self.APAC_region = ['AU', 'CN', 'JP', 'IN']
         self.cloud_sec_team_members = ['anattwoo@cisco.com', 'jalero@cisco.com',
                                        'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com',
                                        'bewallac@cisco.com',
@@ -138,4 +138,7 @@ class TamQueueWatcher:
                      'tarrashi@cisco.com', 'tingwa2@cisco.com', 'ugandhi@cisco.com', 'wgardeaz@cisco.com',
                      'xiaoshya@cisco.com', 'yusito@cisco.com', "magainer@cisco.com", "diebarra@cisco.com",
                      "jesshepp@cisco.com", "jonleduc@cisco.com", "hputra@cisco.com", "harmeije@cisco.com"]
-
+        self.tse_TLs = ["syedsyed@cisco.com","esgoyal@cisco.com", "mbignell@cisco.com", "roavrame@cisco.com", "dbarksda@cisco.com", "deqpowel@cisco.com",
+                        "rmargall@cisco.com", "dsaludes@cisco.com", "lgoulart@cisco.com", "chrstew2@cisco.com"]
+        self.tse_Mngrs = ["prersinh@cisco.com", "msarband@cisco.com", "dpetrezs@cisco.com", "micolema@cisco.com",
+                          "rwamer@cisco.com", "ezgable@cisco.com", "kendang@cisco.com", "vesenthi@cisco.com"]

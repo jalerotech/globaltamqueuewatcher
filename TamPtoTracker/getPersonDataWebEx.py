@@ -25,14 +25,21 @@ def ret_team_ooo(tam_email_list) -> list:
         }
         url = f'{tqw().webex_base_url}people'
         webex_resp = requests.get(url, params=params, headers=tqw().webex_headers)
-        # url = f'{tqw().webex_base_url}people?email={tam_email}'
-        # webex_resp = requests.get(url, headers=tqw().webex_headers)
         for country in json.loads(webex_resp.content)['items'][0]['addresses']:
             country_list.append(country['country'])
         status = json.loads(webex_resp.content)['items'][0]['status']
         displayName = json.loads(webex_resp.content)['items'][0]['displayName']
         email = json.loads(webex_resp.content)['items'][0]['emails']
         region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
+        if displayName == "Chris Stewart":
+            if status == 'OutOfOffice':
+                msg_data = {
+                    'name': displayName,
+                    'status': status,
+                    'email': email,
+                    'region': 'CN'
+                }
+                ooo_tams.append(msg_data)
         if status == 'OutOfOffice':
             msg_data = {
                 'name': displayName,
@@ -69,7 +76,10 @@ def ret_available_tams(email_list) -> dict:
             country_list.append(country['country'])
         status = json.loads(webex_resp.content)['items'][0]['status']
         displayName = json.loads(webex_resp.content)['items'][0]['displayName']
-        region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
+        if displayName == "Chris Stewart":
+            region = 'AU'
+        else:
+            region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
         if status != 'OutOfOffice':
             if region in tqw().EMEA_region:
                 tams_on_shift["EMEA"].append(displayName)
