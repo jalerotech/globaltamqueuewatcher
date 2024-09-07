@@ -115,6 +115,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
         # This checks if the customer has region and both primary & backup TAMs on Monday.com
         try:
             # Extra check to make sure the ticket_ids from both data collected matches for accurate results.
+            print(ticket)
+            print(tam_data)
             if tam_data['ticket_id'] == ticket['ticket_id']:
                 if tam_data['primary_tam']:
                     if tam_data['backup_tam']:
@@ -153,7 +155,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                     handled_tickets.append(ticket['ticket_id'])
                                 ticket_handled_data = {
                                     'ticket_id': ticket['ticket_id'],
-                                    'customer_name': ticket['org_name']
+                                    'customer_name': ticket['org_name'],
+                                    'region': tam_data['customer_region']
                                 }
                                 if ticket_handled_data not in ticket_id_company_mapping:
                                     ticket_id_company_mapping.append(ticket_handled_data)
@@ -191,7 +194,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                     handled_tickets.append(ticket['ticket_id'])
                                 ticket_handled_data = {
                                     'ticket_id': ticket['ticket_id'],
-                                    'customer_name': ticket['org_name']
+                                    'customer_name': ticket['org_name'],
+                                    'region': tam_data['customer_region']
                                 }
                                 if ticket_handled_data not in ticket_id_company_mapping:
                                     ticket_id_company_mapping.append(ticket_handled_data)
@@ -232,7 +236,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                                 handled_tickets.append(ticket['ticket_id'])
                             ticket_handled_data = {
                                 'ticket_id': ticket['ticket_id'],
-                                'customer_name': ticket['org_name']
+                                'customer_name': ticket['org_name'],
+                                'region': tam_data['customer_region']
                             }
                             if ticket_handled_data not in ticket_id_company_mapping:
                                 ticket_id_company_mapping.append(ticket_handled_data)
@@ -271,7 +276,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         handled_tickets.append(ticket['ticket_id'])
                     ticket_handled_data = {
                         'ticket_id': ticket['ticket_id'],
-                        'customer_name': ticket['org_name']
+                        'customer_name': ticket['org_name'],
+                        'region': tam_data['customer_region']
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
@@ -311,7 +317,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         handled_tickets.append(ticket['ticket_id'])
                     ticket_handled_data = {
                         'ticket_id': ticket['ticket_id'],
-                        'customer_name': ticket['org_name']
+                        'customer_name': ticket['org_name'],
+                        'region': tam_data['customer_region']
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
@@ -350,7 +357,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         handled_tickets.append(ticket['ticket_id'])
                     ticket_handled_data = {
                         'ticket_id': ticket['ticket_id'],
-                        'customer_name': ticket['org_name']
+                        'customer_name': ticket['org_name'],
+                        'region': tam_data['customer_region']
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
@@ -389,7 +397,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                             handled_tickets.append(ticket['ticket_id'])
                         ticket_handled_data = {
                             'ticket_id': ticket['ticket_id'],
-                            'customer_name': ticket['org_name']
+                            'customer_name': ticket['org_name'],
+                            'region': tam_data['customer_region']
                         }
                         if ticket_handled_data not in ticket_id_company_mapping:
                             ticket_id_company_mapping.append(ticket_handled_data)
@@ -427,7 +436,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                         handled_tickets.append(ticket['ticket_id'])
                     ticket_handled_data = {
                         'ticket_id': ticket['ticket_id'],
-                        'customer_name': ticket['org_name']
+                        'customer_name': ticket['org_name'],
+                        'region': tam_data['customer_region']
                     }
                     if ticket_handled_data not in ticket_id_company_mapping:
                         ticket_id_company_mapping.append(ticket_handled_data)
@@ -469,7 +479,8 @@ def pickMsgToSend(tam_data, ticket, formatted_timestamp):
                 handled_tickets.append(ticket['ticket_id'])
             ticket_handled_data = {
                 'ticket_id': ticket['ticket_id'],
-                'customer_name': ticket['org_name']
+                'customer_name': ticket['org_name'],
+                'region': tam_data['customer_region']
             }
             if ticket_handled_data not in ticket_id_company_mapping:
                 ticket_id_company_mapping.append(ticket_handled_data)
@@ -514,7 +525,8 @@ def postCollabTicketMsg(data) -> None:
 
         ticket_handled_data = {
             'ticket_id': data['id'],
-            'customer_name': data['org_name']
+            'customer_name': data['org_name'],
+            'region': None
         }
         if data['id'] not in handled_collab_tickets:
             handled_collab_tickets.append(data['id'])
