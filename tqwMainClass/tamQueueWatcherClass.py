@@ -140,7 +140,7 @@ class TamQueueWatcher:
                      'xiaoshya@cisco.com', 'yusito@cisco.com', "magainer@cisco.com", "diebarra@cisco.com",
                      "jesshepp@cisco.com", "jonleduc@cisco.com", "hputra@cisco.com", "harmeije@cisco.com"]
 
-        self.tse_TLs = ["syedsyed@cisco.com","esgoyal@cisco.com", "mbignell@cisco.com", "roavrame@cisco.com", "dbarksda@cisco.com", "deqpowel@cisco.com",
+        self.tse_TLs = ["mbignell@cisco.com", "roavrame@cisco.com", "dbarksda@cisco.com", "deqpowel@cisco.com",
                         "rmargall@cisco.com", "dsaludes@cisco.com", "chrstew2@cisco.com"]
         self.tse_Mngrs = ["prersinh@cisco.com", "msarband@cisco.com", "dpetrezs@cisco.com", "micolema@cisco.com",
                           "rwamer@cisco.com", "ezgable@cisco.com", "kendang@cisco.com", "vesenthi@cisco.com"]
