@@ -33,21 +33,31 @@ def ret_team_ooo(tam_email_list) -> list:
         region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
         if displayName == "Chris Stewart":
             if status == 'OutOfOffice':
+                if email in tqw().tse_TLs:
+                    msg_data = {
+                        'name': f"{displayName}{'TEAM LEAD'}",
+                        'status': status,
+                        'email': email,
+                        'region': 'CN'
+                    }
+                    ooo_tams.append(msg_data)
+        if status == 'OutOfOffice':
+            if email in tqw().tse_TLs:
+                msg_data = {
+                    'name': f"{displayName}{'TEAM LEAD'}",
+                    'status': status,
+                    'email': email,
+                    'region': region
+                }
+                ooo_tams.append(msg_data)
+            else:
                 msg_data = {
                     'name': displayName,
                     'status': status,
                     'email': email,
-                    'region': 'CN'
+                    'region': region
                 }
                 ooo_tams.append(msg_data)
-        if status == 'OutOfOffice':
-            msg_data = {
-                'name': displayName,
-                'status': status,
-                'email': email,
-                'region': region
-            }
-            ooo_tams.append(msg_data)
     logger.info("Returning List of Team members that are Out Of Office. - COMPLETED")
     logger.info(f"Returning list -> {ooo_tams}")
     return ooo_tams
@@ -81,12 +91,20 @@ def ret_available_tams(email_list) -> dict:
         else:
             region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
         if status != 'OutOfOffice':
-            if region in tqw().EMEA_region:
-                tams_on_shift["EMEA"].append(displayName)
-            if region in tqw().US_region:
-                tams_on_shift["US"].append(displayName)
-            if region in tqw().APAC_region:
-                tams_on_shift["APAC"].append(displayName)
+            if email in tqw().tse_TLs:
+                if region in tqw().EMEA_region:
+                    tams_on_shift["EMEA"].append(f"{displayName} {'(_TL_)'}")
+                if region in tqw().US_region:
+                    tams_on_shift["US"].append(f"{displayName} {'(_TL_)'}")
+                if region in tqw().APAC_region:
+                    tams_on_shift["APAC"].append(f"{displayName} {'(_TL_)'}")
+            else:
+                if region in tqw().EMEA_region:
+                    tams_on_shift["EMEA"].append(displayName)
+                if region in tqw().US_region:
+                    tams_on_shift["US"].append(displayName)
+                if region in tqw().APAC_region:
+                    tams_on_shift["APAC"].append(displayName)
     logger.info("Returning Dict of TAMs that are available. - COMPLETED")
     logger.info(f"Returned Dict -> {tams_on_shift}.")
     return tams_on_shift
