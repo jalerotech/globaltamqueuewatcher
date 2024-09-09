@@ -1,6 +1,7 @@
 import logging
 import time
 from datetime import datetime
+
 from TamPtoTracker.getPersonDataWebEx import ret_available_tams, ret_team_ooo
 from TamPtoTracker.ptoMsgGenerator import genPTOMsg, genTAMS_on_shift_Msg
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT, sendMessageToWxT4Cstat
@@ -28,11 +29,7 @@ def ptoWatcherMain(label, theatre_data) -> list:
     """
     # Produce the Team members on PTO.
     tam_in_ooo = ret_team_ooo(tqw().cloud_sec_team_members)
-    tse_list = tqw().tse_TLs
-    tse_mngr_list = tqw().tse_Mngrs
-    tse_on_pto = ret_available_tams(tse_list)
-    tse_mngrs_on_pto = ret_available_tams(tse_mngr_list)
-    # genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_pto, tse_mngrs_on_pto, theatre_data)
+    tse_on_shift, tse_tls_on_shift, tse_mngrs_on_shift = retTSEAvailability(theatre_data)
 
     # Produce the TAM(s) on shift and don't have a status of OutOfOffice.
     tams_on_shift = ret_available_tams(tqw().tams)
@@ -43,15 +40,14 @@ def ptoWatcherMain(label, theatre_data) -> list:
             sendMessageToWxT4Cstat(pto_msg)
             # Sends PTO alerts to Cloud sec space with all TAMs and Managers but for every shift that starts.
         tams_on_shift_msg = genTAMS_on_shift_Msg(tams_on_shift, theatre_data)
-        tse_tse_mngrs_on_shift_msg = genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_pto, tse_mngrs_on_pto, theatre_data)
+        tse_tse_mngrs_on_shift_msg = genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_shift, tse_tls_on_shift, tse_mngrs_on_shift, theatre_data)
         if tams_on_shift_msg:
             # Alert to be sent on the "Global_TAM_UMB_Queue_watcher_🤖" space.
             sendMessageToWxT(tams_on_shift_msg)
-            # sendMessageToWxT(genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_pto, tse_mngrs_on_pto, theatre_data))
             tamPTOMsgDataWriter(tam_in_ooo)
             # Only send TSE and TSE Manager on shift alerts when actual message is available.
-            if tse_tse_mngrs_on_shift_msg:
-                sendMessageToWxT(tse_tse_mngrs_on_shift_msg)
+        if tse_tse_mngrs_on_shift_msg:
+            sendMessageToWxT(tse_tse_mngrs_on_shift_msg)
         return tam_in_ooo
     else:
         # Could be redundant as PTO alerts are not sent to the Queue Watcher space anymore due to the "noise" on that space.
@@ -83,6 +79,36 @@ def StandalonePTOWatcherMain(label) -> None:
             logger_local.info('No new shift data received - Not yet time for PTO alert - COMPLETED.')
             logger.info("Pausing for 60 seconds before trying again.")
         time.sleep(tqw().zendesk_polling_interval)
+
+
+def retTSEAvailability(theatre_data) -> tuple[dict, dict, dict]:
+    """
+    Using the theatre data received, produce dict of available TSE resources - TSE (+TLs) and Managers per theatre/region
+    """
+
+    if theatre_data['theatre'] == "TSE_EMEA":
+        tse_on_shift = ret_available_tams(tqw().TSE_EMEA)
+        tse_tls_on_shift = ret_available_tams(tqw().TSE_TLs_EMEA)
+        tse_mngrs_on_shift = ret_available_tams(tqw().TSE_Mngrs_EMEA)
+        return tse_on_shift, tse_tls_on_shift, tse_mngrs_on_shift
+
+    if theatre_data['theatre'] == "APAC":
+        tse_on_shift = ret_available_tams(tqw().TSE_APAC)
+        tse_tls_on_shift = ret_available_tams(tqw().TSE_TLs_APAC)
+        tse_mngrs_on_shift = ret_available_tams(tqw().TSE_Mngrs_APAC)
+        return tse_on_shift, tse_tls_on_shift, tse_mngrs_on_shift
+
+    if theatre_data['theatre'] == "TSE_US_EAST":
+        tse_on_shift = ret_available_tams(tqw().TSE_US_EAST)
+        tse_tls_on_shift = ret_available_tams(tqw().TSE_TLs_EAST)
+        tse_mngrs_on_shift = ret_available_tams(tqw().TSE_Mngrs_EAST)
+        return tse_on_shift, tse_tls_on_shift, tse_mngrs_on_shift
+
+    if theatre_data['theatre'] == "TSE_US_WEST":
+        tse_on_shift = ret_available_tams(tqw().TSE_US_WEST)
+        tse_tls_on_shift = ret_available_tams(tqw().TSE_TLs_WEST)
+        tse_mngrs_on_shift = ret_available_tams(tqw().TSE_Mngrs_WEST)
+        return tse_on_shift, tse_tls_on_shift, tse_mngrs_on_shift
 
 
 if __name__ == '__main__':

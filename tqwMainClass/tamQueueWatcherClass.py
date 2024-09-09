@@ -140,7 +140,37 @@ class TamQueueWatcher:
                      'xiaoshya@cisco.com', 'yusito@cisco.com', "magainer@cisco.com", "diebarra@cisco.com",
                      "jesshepp@cisco.com", "jonleduc@cisco.com", "hputra@cisco.com", "harmeije@cisco.com"]
 
+        # TSE team members:
         self.tse_TLs = ["mbignell@cisco.com", "roavrame@cisco.com", "dbarksda@cisco.com", "deqpowel@cisco.com",
                         "rmargall@cisco.com", "dsaludes@cisco.com", "chrstew2@cisco.com"]
         self.tse_Mngrs = ["prersinh@cisco.com", "msarband@cisco.com", "dpetrezs@cisco.com", "micolema@cisco.com",
                           "rwamer@cisco.com", "ezgable@cisco.com", "kendang@cisco.com", "vesenthi@cisco.com"]
+        # EMEA
+        self.TSE_EMEA = ["roavrame@cisco.com", "mbignell@cisco.com", "beash@cisco.com", "cloupas@cisco.com",
+                         "harpraja@cisco.com", "kloxdale@cisco.com", "rosahni@cisco.com", "rysia@cisco.com",
+                         "bilbarne@cisco.com", "gonzamar@cisco.com", "simdavis@cisco.com"]
+        self.TSE_Mngrs_EMEA = ["vesenthi@cisco.com", "dpetrezs@cisco.com"]
+        self.TSE_TLs_EMEA = ["mbignell@cisco.com", "roavrame@cisco.com"]
+
+        # APAC
+        self.TSE_APAC = ["chrstew2@cisco.com", "hmushtaq@cisco.com", "syedsyed@cisco.com", "esgoyal@cisco.com"]
+        self.TSE_Mngrs_APAC = ["prersinh@cisco.com"]
+        self.TSE_TLs_APAC = ["chrstew2@cisco.com"]
+
+        # US-EAST
+        self.TSE_US_EAST = ["dbarksda@cisco.com", "deqpowel@cisco.com", "aakindel@cisco.com", "ftodote@cisco.com",
+                            "henrthom@cisco.com", "janeandr@cisco.com", "ljoyner@cisco.com", "mzejli@cisco.com",
+                            "pragagra@cisco.com", "skeckii@cisco.com", "tinclark@cisco.com", "tkeshinr@cisco.com",
+                            "ookon@cisco.com", "stegille@cisco.com"]
+        self.TSE_Mngrs_EAST = ["rwamer@cisco.com", "ezgable@cisco.com"]
+        self.TSE_TLs_EAST = ["dbarksda@cisco.com", "deqpowel@cisco.com"]
+
+        # US-WEST:
+        self.TSE_US_WEST = ["rmargall@cisco.com", "dsaludes@cisco.com", "alihass@cisco.com", "awaramma@cisco.com",
+                            "daadum@cisco.com", "jaishah2@cisco.com", "mpourman@cisco.com", "nidsaxen@cisco.com",
+                            "nimoalle@cisco.com", "skarimia@cisco.com", "sshaghay@cisco.com", "zchiang@cisco.com",
+                            "atrahbar@cisco.com", "cupan@cisco.com", "davidng3@cisco.com", "robchu@cisco.com",
+                            "santjana@cisco.com"]
+        self.TSE_Mngrs_WEST = ["kendang@cisco.com", "msarband@cisco.com", "micolema@cisco.com"]
+        self.TSE_TLs_WEST = ["rmargall@cisco.com", "dsaludes@cisco.com"]
+

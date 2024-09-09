@@ -29,8 +29,8 @@ def alertshiftstart() -> None:
         logger.info(f"Shift data produced -> {shift_data}")
         logger.info(f"Posting {shift_data['theatre']} Shift {shift_data['status']} message.")
         data = {
-            "text": f"Time is now {shift_data['shift_time']}, shift for {shift_data['theatre']} theatre has {shift_data['status']}.",
-            "markdown": f"**Time is now {shift_data['shift_time']}, shift for {shift_data['theatre']} theatre has {shift_data['status']}**."
+            "text": f"Time is now {shift_data['shift_time']}, {shift_data['theatre']} shift has {shift_data['status']}",
+            "markdown": f"**Time is now {shift_data['shift_time']}, _{shift_data['theatre']}_ shift has {shift_data['status']}**."
         }
         logger.info(f"{shift_data['theatre']} shift {shift_data['status']}.")
         sendMessageToWxT(data)
@@ -73,5 +73,5 @@ def weekendAlert() -> bool:
 
 
 if __name__ == '__main__':
-    # alertshiftstart()
-    weekendAlert()
+    alertshiftstart()
+    # weekendAlert()
