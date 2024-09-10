@@ -92,7 +92,7 @@ def retTSEAvailability(theatre_data) -> tuple[dict, dict, dict]:
         tse_mngrs_on_shift = ret_available_tams(tqw().TSE_Mngrs_EMEA)
         return tse_on_shift, tse_tls_on_shift, tse_mngrs_on_shift
 
-    if theatre_data['theatre'] == "APAC":
+    if theatre_data['theatre'] == "TSE_APAC":
         tse_on_shift = ret_available_tams(tqw().TSE_APAC)
         tse_tls_on_shift = ret_available_tams(tqw().TSE_TLs_APAC)
         tse_mngrs_on_shift = ret_available_tams(tqw().TSE_Mngrs_APAC)

@@ -43,7 +43,7 @@ class ShifttimeData:
             if (self.currentDateAndTime.hour == 1) and (self.currentDateAndTime.minute == 0):
                 self.logger.info('Getting shift time and status...')
                 shift_data = {
-                    "theatre": "APAC",
+                    "theatre": "TSE_APAC",
                     "shift_time": "10:00 AEDT",
                     "status": "started 🎬"
                 }
@@ -61,33 +61,33 @@ class ShifttimeData:
             #         return shift_data
 
         # EMEA-TAM
+        #     if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0):
+        #         self.logger.info('Getting shift time and status...')
+        #         shift_data = {
+        #             "theatre": "TAM_EMEA",
+        #             "shift_time": "08:00 CET",
+        #             "status": "started 🎬"
+        #         }
+        #         return shift_data
+            # TSE-EMEA (TSE_EMEA (9am-4pm CET))
             if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0):
                 self.logger.info('Getting shift time and status...')
                 shift_data = {
-                    "theatre": "EMEA",
-                    "shift_time": "08:00 CET",
-                    "status": "started 🎬"
-                }
-                return shift_data
-            # TSE-EMEA (TSE_EMEA (9am-4pm CET))
-            if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute == 0):
-                self.logger.info('Getting shift time and status...')
-                shift_data = {
                     "theatre": "TSE_EMEA",
-                    "shift_time": "09:00 CET",
+                    "shift_time": "08:00 CET",
                     "status": "started 🎬"
                 }
                 return shift_data
 
         # US-TAM
-            if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0):
-                self.logger.info('Getting shift time and status...')
-                shift_data = {
-                    "theatre": "US",
-                    "shift_time": "09:00 EST/EDT",
-                    "status": "started 🎬"
-                }
-                return shift_data
+        #     if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0):
+        #         self.logger.info('Getting shift time and status...')
+        #         shift_data = {
+        #             "theatre": "TAM_US",
+        #             "shift_time": "09:00 EST/EDT",
+        #             "status": "started 🎬"
+        #         }
+        #         return shift_data
         # US-EAST (TSE_US_EAST (3pm CET-10PM CET))
             if (self.currentDateAndTime.hour == 15) and (self.currentDateAndTime.minute == 0):
                 self.logger.info('Getting shift time and status...')
@@ -114,21 +114,21 @@ class ShifttimeData:
             if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute == 0):
                 self.logger.info('Getting shift time and status...')
                 shift_data = {
-                    "theatre": "APAC",
+                    "theatre": "TSE_APAC",
                     "shift_time": "17:00 AEDT",
                     "status": "ended 🏁"
                 }
                 return shift_data
 
-            # EMEA-TAM
-            if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute == 0):
-                self.logger.info('Getting shift time and status...')
-                shift_data = {
-                    "theatre": "EMEA",
-                    "shift_time": "16:00 CET",
-                    "status": "ended 🏁"
-                }
-                return shift_data
+            # # EMEA-TAM
+            # if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute == 0):
+            #     self.logger.info('Getting shift time and status...')
+            #     shift_data = {
+            #         "theatre": "TAM_EMEA",
+            #         "shift_time": "16:00 CET",
+            #         "status": "ended 🏁"
+            #     }
+            #     return shift_data
 
             # TSE-EMEA (TSE_EMEA (9am-4pm CET))
             if (self.currentDateAndTime.hour == 16) and (self.currentDateAndTime.minute == 0):
@@ -150,25 +150,35 @@ class ShifttimeData:
                 }
                 return shift_data
 
-            # US-WEST (TSE_US_WEST (6pm CET-2:30am CET)) (except for Monday morning)
-            if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 30) and (self.today != "Monday"):
-                self.logger.info('Getting shift time and status...')
-                shift_data = {
-                    "theatre": "TSE_US_WEST",
-                    "shift_time": "20:30 EDT/EST",
-                    "status": "ended 🏁"
-                }
-                return shift_data
+            # # US-WEST (TSE_US_WEST (6pm CET-2:30am CET)) (except for Monday morning)
+            # if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 30) and (self.today != "Monday"):
+            #     self.logger.info('Getting shift time and status...')
+            #     shift_data = {
+            #         "theatre": "TSE_US_WEST",
+            #         "shift_time": "20:30 EDT/EST",
+            #         "status": "ended 🏁"
+            #     }
+            #     return shift_data
 
-        # US (except for Monday morning) - TAM
+        # US-WEST (TSE_US_WEST (6pm CET-2:30am CET)) (except for Monday morning)
         if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 0) and (self.today != "Monday"):
             self.logger.info('Getting shift time and status...')
             shift_data = {
-                "theatre": "US",
-                "shift_time": "20:00 EST/EDT",
+                "theatre": "TSE_US_WEST",
+                "shift_time": "20:30 EDT/EST",
                 "status": "ended 🏁"
             }
             return shift_data
+
+        # # US (except for Monday morning) - TAM
+        # if (self.currentDateAndTime.hour == 2) and (self.currentDateAndTime.minute == 0) and (self.today != "Monday"):
+        #     self.logger.info('Getting shift time and status...')
+        #     shift_data = {
+        #         "theatre": "TAM_US",
+        #         "shift_time": "20:00 EST/EDT",
+        #         "status": "ended 🏁"
+        #     }
+        #     return shift_data
 
     def weekendAlertData(self):
         # Global weekend alert!
