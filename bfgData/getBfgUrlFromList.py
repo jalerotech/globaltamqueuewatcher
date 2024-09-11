@@ -1,5 +1,12 @@
 from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tQw
 bfgBaseUrl = tQw().bfg_base_url
+import logging
+logging.basicConfig(
+    format='%(asctime)s %(levelname)s %(message)s',
+    level=logging.INFO,
+    datefmt='%Y-%m-%d %H:%M:%S')
+
+logger = logging.getLogger('BGF org links generator')
 
 
 def createBfgUrls(list_bfg_org_id):
@@ -14,17 +21,26 @@ def createBfgUrls(list_bfg_org_id):
     """
     bfg_url_list = []
     if list_bfg_org_id:
-        for org_id in list_bfg_org_id:
-            fullUrl = f"{bfgBaseUrl}{org_id}"
-            # bfg_url = ''
-            if org_id:
-                bfg_url = f"[ORG_ID:{org_id}]({fullUrl})"
+        try:
+            list_of_bfg_org_ids = (list_bfg_org_id[0].split(', '))
+            logger.info("List of org_id is greater than 1")
+            for org_id in list_of_bfg_org_ids:
+                fullUrl = f"{bfgBaseUrl}{org_id}"
+                if org_id:
+                    bfg_url = f"[ORG_ID:{org_id}]({fullUrl})"
+                    bfg_url_list.append(bfg_url)
+                else:
+                    bfg_url = None
+                    bfg_url_list.append(bfg_url)
+        except AttributeError as e:
+            logger.info(f"Not a splittable value/data {list_bfg_org_id}")
+            fullUrl = f"{bfgBaseUrl}{list_bfg_org_id[0]}"
+            if list_bfg_org_id[0]:
+                bfg_url = f"[ORG_ID:{list_bfg_org_id[0]}]({fullUrl})"
                 bfg_url_list.append(bfg_url)
             else:
                 bfg_url = None
                 bfg_url_list.append(bfg_url)
-        if len(bfg_url_list) > 1:
-            bfg_url_list = ', '.join(bfg_url_list)
     if bfg_url_list:
         return bfg_url_list
     else:

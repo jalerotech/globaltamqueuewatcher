@@ -42,13 +42,17 @@ def retZDOrgData(tick_org_notes) -> dict:
     backup_tams = backup_tams_match.group(1).strip() if backup_tams_match else None
     cust_region = cust_region_match.group(1).strip() if cust_region_match else None
     bfg_org = bfg_org_match.group(1).strip() if bfg_org_match else None
-
+    ret_bfg_url = createBfgUrls([bfg_org])
+    if len(ret_bfg_url) > 1:
+        bfg_url_w_org_ids = ', '.join(ret_bfg_url)
+    else:
+        bfg_url_w_org_ids = ret_bfg_url[0]
     updated_tick_data = {
         "ticket_id": tick_org_notes['ticket_id'],
         "primary_tam": tam,
         "backup_tam": backup_tams,
         "customer_region": cust_region,
-        "bfg_org_id": createBfgUrls([bfg_org])[0]
+        "bfg_org_id": bfg_url_w_org_ids
     }
     logger.info(f"Returning updated ticket data for ticket {tick_org_notes['ticket_id']}.")
     return updated_tick_data
