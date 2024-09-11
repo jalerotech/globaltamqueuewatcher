@@ -88,7 +88,7 @@ def genTSE_TLAnd_Mngrs_on_shift_Msg(tse_on_shift, tse_tls_on_shift, tse_mngrs_on
             except KeyError as k:
                 logger.info(f"Key {k} Missing so no TSE from that region that's available.")
 
-        if theatre_data['theatre'] == "APAC":
+        if theatre_data['theatre'] == "TSE_APAC":
             try:
                 tos_msg_to_send = f'#### 📌 TSE resource(s) currently on shift: \n ' \
                                   f'**APAC**: \n ' \

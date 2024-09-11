@@ -97,7 +97,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
         #         return data
         #     except KeyError as k:
         #         logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
-        if theatre_data['theatre'] == "EMEA":
+        if theatre_data['theatre'] == "TSE_EMEA":
             try:
                 tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**EMEA**: \n ' \
@@ -117,7 +117,7 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                 return data
             except KeyError as k:
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
-        if theatre_data['theatre'] == "US":
+        if theatre_data['theatre'] == "TSE_US_EAST":
             try:
                 tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**US**: \n ' \
@@ -140,7 +140,30 @@ def genTAMS_on_shift_Msg(tams_on_shift, theatre_data):
                 return data
             except KeyError as k:
                 logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
-        if theatre_data['theatre'] == "APAC":
+        if theatre_data['theatre'] == "TSE_US_WEST":
+            try:
+                tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
+                                  f'**US**: \n ' \
+                                  f'{joined_us_tams} \n ' \
+                                  f'\n ' \
+                                  f'**MANAGER**: \n ' \
+                                  f'Jared Kalmus _(EAST)_ \n ' \
+                                  f'Murillo Perrotti _(WEST)_ \n' \
+                                  f'\n ' \
+                                  f'**TEAM LEAD**: \n ' \
+                                  f'Max-Erick Gainer _(EAST)_ \n ' \
+                                  f'Harm Meijer _(WEST)_'
+
+                data = {
+                    "text": tos_msg_to_send,
+                    "markdown": tos_msg_to_send
+                }
+                logger.info(f"Generated TOS Message -> {tos_msg_to_send}")
+                logger.info("Generating TAMs on shift message.- COMPLETED")
+                return data
+            except KeyError as k:
+                logger.info(f"Key {k} Missing so no TAMs from that region that's available.")
+        if theatre_data['theatre'] == "TSE_APAC":
             try:
                 tos_msg_to_send = f'#### 📌 Available TAM resource(s): \n ' \
                                   f'**APAC**: \n ' \

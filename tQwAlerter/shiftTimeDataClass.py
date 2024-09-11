@@ -70,11 +70,11 @@ class ShifttimeData:
         #         }
         #         return shift_data
             # TSE-EMEA (TSE_EMEA (9am-4pm CET))
-            if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 0):
+            if (self.currentDateAndTime.hour == 9) and (self.currentDateAndTime.minute == 0):
                 self.logger.info('Getting shift time and status...')
                 shift_data = {
                     "theatre": "TSE_EMEA",
-                    "shift_time": "08:00 CET",
+                    "shift_time": "09:00 CET",
                     "status": "started 🎬"
                 }
                 return shift_data
@@ -165,7 +165,7 @@ class ShifttimeData:
             self.logger.info('Getting shift time and status...')
             shift_data = {
                 "theatre": "TSE_US_WEST",
-                "shift_time": "20:30 EDT/EST",
+                "shift_time": "20:00 EDT/EST",
                 "status": "ended 🏁"
             }
             return shift_data
