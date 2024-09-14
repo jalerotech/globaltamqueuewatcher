@@ -40,12 +40,15 @@ def _retUsableData(raw_list):
     usable_list_dict_list_length = {}
     for item in raw_list:
         ticket = item['ticket_id']
-        if item['region'] in usable_list_dict:
-            usable_list_dict[item['region']].append(ticket)
-        else:
-            usable_list_dict.update({item['region']: [item['ticket_id']]})
-        if ticket not in ticket_count:
-            ticket_count.append(ticket)
+        try:
+            if item['region'] in usable_list_dict:
+                usable_list_dict[item['region']].append(ticket)
+            else:
+                usable_list_dict.update({item['region']: [item['ticket_id']]})
+            if ticket not in ticket_count:
+                ticket_count.append(ticket)
+        except KeyError as e:
+            logger.info(f"Ticket data is missing region in the written entry -> error raised is {e.args}")
     for region in usable_list_dict:
         usable_list_dict_list_length.update({region: len(usable_list_dict[region])})
     return usable_list_dict_list_length, ticket_count
