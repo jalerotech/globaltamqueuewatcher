@@ -27,32 +27,32 @@ def changeAlerter() -> None:
         4: "**Open** 🚏"
     }
 
-    fr_data = {"markdown": f"📝 **Feature/Enhancement Requests** : \n "
-                           f"1. TSEs Team Leads on shift alert. {status[1]} \n "
-                           f"2. TSEs Managers on shift alert. {status[1]} \n "}
-
-    changes_data = {"markdown": f"📣 **Changes** : \n " " "
-                                f"1. Rewrote Zendesk Data pull/processing logic: \n "
-                                f"- Pulling data from Monday.com and storing the data locally (tam-to-customer-mapping.json). \n "
-                                f"- Checking the notes on org-level to which the tickets on Zendesk belong. \n "
-                                f"- Evaluating the notes and checking if they're viable or not - contains the Primary_TAM, Backup_TAM, Customer_region, BFG_Org_id etc. \n "
-                                f"- If the notes are viable, they're used to update the ticket message that's sent to WxT. \n "
-                                f"- Otherwise, it uses the locally stored tam-to-customer-mapping for the same purpose. \n "
-                    }
-    announcements = {"markdown": f"📣 **Additional info** : \n " " "
-                                 f"Please continue to use this template when adding notes on Zendesk org: \n "
+    fr_data = {"markdown": f"📝 **New Features**: \n "
+                           f"1. TSEs Team members on shift alert per region. {status[1]} \n "
+                           f"2. Daily ticket stats per TSE (per region) {status[1]} \n"
+                           f"3. Weekly ticket stats per region (EMEA, APAC, US) alerts {status[1]} \n"
+               }
+    #
+    # changes_data = {"markdown": f"📣 **Changes** : \n " " "
+    #                             f"1. Rewrote Zendesk Data pull/processing logic: \n "
+    #                             f"- Pulling data from Monday.com and storing the data locally (tam-to-customer-mapping.json). \n "
+    #                             f"- Checking the notes on org-level to which the tickets on Zendesk belong. \n "
+    #                             f"- Evaluating the notes and checking if they're viable or not - contains the Primary_TAM, Backup_TAM, Customer_region, BFG_Org_id etc. \n "
+    #                             f"- If the notes are viable, they're used to update the ticket message that's sent to WxT. \n "
+    #                             f"- Otherwise, it uses the locally stored tam-to-customer-mapping for the same purpose. \n "
+    #                 }
+    announcements = {"markdown": f"📣 **Announcement(s)**: \n " " "
+                                 f" For customers with multi-orgs that have premium support, ensure the org IDs are documented in the Zendesk notes using the following format: \n "
                                  f"\n "
-                                 f"```PRIMARY_TAM: <FULL_NAME>``` \n "
-                                 f"```BACKUP_TAM: <FULL_NAME>``` \n "
-                                 f"```CSM: <FULL_NAME>``` \n "
-                                 f"```CUSTOMER_REGION: <EMEA/APAC/US>``` \n  "
-                                 f"```BFG_ORG: <org_id>``` \n "
-                                 f"```SUBSCRIPTION_PACKAGE: <subscription_package>``` \n "
-                                 f"```AD-ONs: <add-on info>``` \n "
-                                 f"```ADDITIONAL_INFO: <extra notes, links etc.>``` \n "
+                                 f"```BFG_ORG: <org_id_1>, <org_id_2>, <org_id_n>``` \n "
+                                 f"\n "
+                                 f"Example from the MTN NIGERIA COMMUNICATIONS PLC org: \n "
+                                 f"\n "
+                                 f"```BFG_ORG: 8064755, 8146346``` \n "
                      }
     # print(announcements)
-    data_list = [fr_data, changes_data, announcements]
+    # data_list = [fr_data, changes_data, announcements]
+    data_list = [fr_data, announcements]
 
     for data in data_list:
         webex_response = requests.post(webHookUrl_GlobalSpace, headers=tQw().webex_headers, json=data)
