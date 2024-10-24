@@ -18,7 +18,7 @@ def runReminderService() -> None:
     Runs the reminder program
     :return: None
     """
-    logger = logging.getLogger("runReminderService")
+    logger = logging.getLogger("runReminderServices")
     logger.info("Running Reminder Service Program")
 
     while True:
