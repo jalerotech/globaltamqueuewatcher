@@ -188,6 +188,37 @@ def postDailyShiftTicketSummary(ticket_id_company_mapping, shift_data) -> None:
         return None
 
 
+def apacPreWeekendStatsSummary(ticket_id_company_mapping, shift_data) -> None:
+
+    """
+    Posts last TSE shift ticket summary just for APAC Team to WxT after Weekend shift alert.
+    :param ticket_id_company_mapping -> ticket_id and company mapping.
+    :param shift_data
+    :return: None
+    """
+    if shift_data:
+        if shift_data['status'] == "ended 🏁":
+            logger.info(f"Got shift data {shift_data} and theatre is {shift_data['theatre']}, attempting to produce the summary.")
+            if ticket_id_company_mapping:
+                logger.info(f"Current Stats raw data contains -> {ticket_id_company_mapping}.")
+                logger.info(f"Stats generator for {shift_data['theatre']} theatre - STARTED.")
+                # Sends the raw data to create the formatted stats string.
+                msg_to_send = _createStatsMsg_v2(ticket_id_company_mapping, shift_data)
+                if msg_to_send:
+                    logger.info(f"Yes! got stats message -> {msg_to_send}, now posting it.")
+                    try:
+                        # Set the Webex API request payload
+                        data = {
+                            "text": msg_to_send,
+                            "markdown": msg_to_send
+                        }
+                        sendMessageToWxT(data)
+                        logger.info(f"Stats generator for {shift_data['theatre']} theatre - COMPLETED.")
+                    except Exception as e:
+                        logger.info(f"Posting {shift_data['theatre']} to WxT space failed with error -> {e}.")
+        return None
+
+
 if __name__ == "__main__":  # Local testing.
     # tickets_cust_handled_today = [{'ticket_id': 1615151, 'customer_name': 'SAP'}, {'ticket_id': 1615305, 'customer_name': 'PepsiCo'}, {'ticket_id': 1615312, 'customer_name': 'Cae'}, {'ticket_id': 1615313, 'customer_name': 'Rent-A-Center'}, {'ticket_id': 1615442, 'customer_name': 'PepsiCo'}, {'ticket_id': 1615458, 'customer_name': 'Sutter Health'}, {'ticket_id': 1615469, 'customer_name': 'PepsiCo'}, {'ticket_id': 1615516, 'customer_name': 'NBN COMPANY LTD'}]
     # tickets_cust_handled_today = [{'ticket_id': 1616869, 'customer_name': 'Koninklijke Philips'}, {'ticket_id': 1617148, 'customer_name': 'PepsiCo'}, {'ticket_id': 1617222, 'customer_name': 'PepsiCo'}, {'ticket_id': 1617262, 'customer_name': 'PepsiCo'}, {'ticket_id': 1617280, 'customer_name': 'Ineos NV'}]

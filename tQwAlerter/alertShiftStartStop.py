@@ -1,7 +1,7 @@
 from tQwAlerter.shiftTimeDataClass import ShifttimeData
 import logging
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
-from statsHandler.createAndPostStats import postDailyShiftTicketSummary
+from statsHandler.createAndPostStats import postDailyShiftTicketSummary, apacPreWeekendStatsSummary
 from ticketAndMsgHandlers.handleTicketMessages import returnCurrentDataForStats, reset_tickets_handled_today, reset_processed_tickets
 from zendeskData.fetchProcessZendeskData import reset_sets_of_tickets_no_time_check, reset_ticket_msg_sent
 from Tools.jsonFileCleaner import cleanJsonFiles
@@ -61,6 +61,13 @@ def weekendAlert() -> bool:
         logger.info(f"{shift_data['theatre']} with status {shift_data['status']}.")
         sendMessageToWxT(data)
         logger.info(f"Posting {shift_data['status']} Alert for ALL {shift_data['theatre']} message. -> COMPLETED")
+        # Create APAC TSE stats to be sent before resetting counters.
+        # HardCoded shift data for APAC TSE timeslot
+        TSE_APAC_Custom_shift_data = {
+            "theatre": "TSE_APAC",
+            "status": "ended 🏁"
+        }
+        apacPreWeekendStatsSummary(returnCurrentDataForStats(), TSE_APAC_Custom_shift_data)
         reset_processed_tickets()
         reset_tickets_handled_today()
         reset_sets_of_tickets_no_time_check()

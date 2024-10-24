@@ -19,7 +19,7 @@ def createWeeklyStatsPerRegionMsg(raw_list) -> dict:
         uldll, tc = _retUsableData(raw_list)
         for region in uldll:
             stat_msg += f" - ***{region}***: {uldll[region]} \n "
-        msg_to_send = f"### **🗃️ Weekly Summary of Tickets Per Region:** \n " \
+        msg_to_send = f"### **🗃️ Weekly Summary of Tickets Per Customer Region:** \n " \
                       f"{stat_msg}"
         data = {
             "text": msg_to_send,
