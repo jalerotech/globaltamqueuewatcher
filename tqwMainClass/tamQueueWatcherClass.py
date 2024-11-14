@@ -146,6 +146,7 @@ class TamQueueWatcher:
         self.tse_Mngrs = ["prersinh@cisco.com", "msarband@cisco.com", "dpetrezs@cisco.com", "micolema@cisco.com",
                           "rwamer@cisco.com", "ezgable@cisco.com", "kendang@cisco.com", "vesenthi@cisco.com"]
         # EMEA
+
         self.TSE_EMEA = ["roavrame@cisco.com", "mbignell@cisco.com", "beash@cisco.com", "cloupas@cisco.com",
                          "harpraja@cisco.com", "kloxdale@cisco.com", "rosahni@cisco.com", "rysia@cisco.com",
                          "bilbarne@cisco.com", "gonzamar@cisco.com",
@@ -154,15 +155,18 @@ class TamQueueWatcher:
         self.TSE_TLs_EMEA = ["mbignell@cisco.com", "roavrame@cisco.com"]
 
         # APAC
+
         self.TSE_APAC = ["chrstew2@cisco.com", "hmushtaq@cisco.com", "syedsyed@cisco.com", "esgoyal@cisco.com"]
         self.TSE_Mngrs_APAC = ["prersinh@cisco.com"]
         self.TSE_TLs_APAC = ["chrstew2@cisco.com"]
 
         # US-EAST
+
         self.TSE_US_EAST = ["dbarksda@cisco.com", "deqpowel@cisco.com", "aakindel@cisco.com", "ftodote@cisco.com",
                             "henrthom@cisco.com", "janeandr@cisco.com", "ljoyner@cisco.com", "mzejli@cisco.com",
                             "pragagra@cisco.com", "skeckii@cisco.com", "tinclark@cisco.com", "tkeshinr@cisco.com",
                             "ookon@cisco.com", "stegille@cisco.com"]
+
         self.TSE_Mngrs_EAST = ["rwamer@cisco.com", "ezgable@cisco.com"]
         self.TSE_TLs_EAST = ["dbarksda@cisco.com", "deqpowel@cisco.com"]
 
