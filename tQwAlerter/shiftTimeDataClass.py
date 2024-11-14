@@ -107,7 +107,6 @@ class ShifttimeData:
                     "status": "started 🎬"
                 }
                 return shift_data
-
         ################ Shift end #################
         if self.today != "Saturday":
             if (self.currentDateAndTime.hour == 8) and (self.currentDateAndTime.minute == 59):
