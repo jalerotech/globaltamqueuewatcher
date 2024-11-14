@@ -114,10 +114,10 @@ class TamQueueWatcher:
         self.EMEA_region = ['GB', 'BE', 'PL', 'ES', 'PT']
         self.US_region = ['CR', 'US', 'CA']
         self.APAC_region = ['AU', 'CN', 'JP', 'IN']
-        self.cloud_sec_team_members = ['anattwoo@cisco.com', 'jalero@cisco.com',
+        self.cloud_sec_team_members = ['anattwoo@cisco.com', 'jalero@cisco.com', 'prersinh@cisco.com',
                                        'aparedez@cisco.com', 'arjraina@cisco.com', 'ajavaher@cisco.com',
                                        'bewallac@cisco.com',
-                                       'brparnel@cisco.com', 'ccoral@cisco.com', 'ccardina@cisco.com',
+                                       'brparnel@cisco.com', 'ccoral@cisco.com',
                                        'dforcade@cisco.com',
                                        'diebarra@cisco.com', 'hputra@cisco.com', 'harmeije@cisco.com',
                                        'ianave@cisco.com',
