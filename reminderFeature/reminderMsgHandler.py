@@ -171,6 +171,7 @@ def reminder_trigger(ticket, is_assigned) -> tuple:
 
 
 def _IsTimeDifMoreThan30Mins(ticket):
+    logger.info("Check if ticket is more than 30 minutes in queue..")
     """
     Checks if the time difference is at least 30 minutes before enabling the trigger.
     :param ticket: ticket data -> ticket_id, ticket_open_time etc.
@@ -182,9 +183,11 @@ def _IsTimeDifMoreThan30Mins(ticket):
     # Convert the datetime objects to Unix timestamps
     ticket_timestamp_unix = int(ticket_open_time.timestamp())
     current_time_unix = int(current_time_utc.timestamp())
+
     # Calculate the absolute difference in seconds
     time_difference_seconds = abs(current_time_unix - ticket_timestamp_unix)
     ticket_time_in_queue = _convert_seconds_to_hours_minutes(time_difference_seconds)
+
     if (30 <= ticket_time_in_queue['minutes'] < 31) and ticket_time_in_queue['hours'] == 0:
         return ticket_time_in_queue, tqw().half_hour_trigger
     if (45 <= ticket_time_in_queue['minutes'] < 47) and ticket_time_in_queue['hours'] == 0:
@@ -206,8 +209,11 @@ def _convert_seconds_to_hours_minutes(seconds) -> dict:
     remaining_seconds = seconds % 3600
     minutes = remaining_seconds // 60
     # EMEA time is currently UTC+1 so need to deduct this from the ticket time (in UTC).
+    #  create a function that would check the date and then uncomment "utc_minus_one" and not "utc_minus_two" depending on the date.
+    # Reminder to change "utc_minus_one = hours - 1" (during winter time) to "utc_minus_two = hours - 2" (during Summer time)
     if hours >= 1:
-        utc_minus_one = hours - 2
+        utc_minus_one = hours - 1  # Winter_time
+        utc_minus_two = hours - 2  # Summer_time
         # time_in_queue = f"{utc_minus_one} Hour(s) and {minutes} Minutes"
         time_in_queue = {
             "hours": utc_minus_one,
