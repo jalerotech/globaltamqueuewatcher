@@ -9,6 +9,7 @@ import json
 roomId = tqw().Global_TAM_UMB_Queue_watcher
 # Devs room ID:
 # roomId = 'Y2lzY29zcGFyazovL3VzL1JPT00vNWMwY2EzZDAtZjI2ZS0xMWVkLTkwYTUtYjdjMTAyNGFjMDZm'
+high_touch_roomId = "Y2lzY29zcGFyazovL3VzL1JPT00vYjQ5NGI0NzEtZDI5MS0xMWVmLTljYzctMTk1YmEyOTkyZmMz"
 
 
 def sendMessageToWxT(data):
@@ -21,7 +22,17 @@ def sendMessageToWxT(data):
     logger = logging.getLogger('Message_Poster')
     logger.info("Running sendMessageToWxT function. - STARTED")
 
-    json_data = _add_room_id_to_date(data, None)
+    # Service key is only in the data used by high-touch-notification
+    if "high_touch_service" in data:
+        logger.info("Triggering high-touch ticket alerting messages.")
+        json_data = {
+            "text": data['text'],
+            "markdown": data['markdown'],
+            'roomId': high_touch_roomId
+        }
+    else:
+        logger.info("No additional service data in data provided. Normal Queue Watcher Operation")
+        json_data = _add_room_id_to_date(data, None)
     try:
         webex_response = requests.post(tqw().webex_api_url, headers=tqw().webex_headers, json=json_data)
         if webex_response.status_code == 200:
@@ -47,9 +58,9 @@ def sendMessageToWxT4Cstat(data):
     logger.info("Running sendMessageToWxT4Cstat function. - STARTED")
 
     # Cloud Sec TAM Space ID
-    cloudSecSpace_id = 'Y2lzY29zcGFyazovL3VzL1JPT00vOGJkNjE4MzAtZGQ1Ni0xMWU4LTlmNWYtOTc3ZWY0YmY5MmQ0'
-    json_data = _add_room_id_to_date(data, cloudSecSpace_id)
-    # json_data = _add_room_id_to_date(data, roomId)
+    # cloudSecSpace_id = 'Y2lzY29zcGFyazovL3VzL1JPT00vOGJkNjE4MzAtZGQ1Ni0xMWU4LTlmNWYtOTc3ZWY0YmY5MmQ0'
+    # json_data = _add_room_id_to_date(data, cloudSecSpace_id)
+    json_data = _add_room_id_to_date(data, roomId)
     try:
         webex_response = requests.post(tqw().webex_api_url, headers=tqw().cstat_webex_headers, json=json_data)
         if webex_response.status_code == 200:
