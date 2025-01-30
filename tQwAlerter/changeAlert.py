@@ -18,7 +18,7 @@ def changeAlerter() -> None:
     """
     # webHookUrl = "https://webexapis.com/v1/webhooks/incoming/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svNmQ0ZDg2NzUtZTkzNS00ZmU5LTg1NTctMzRhMDcyNWU3NTdi"
     webHookUrl_GlobalSpace = "https://webexapis.com/v1/webhooks/incoming/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svYTkwNzIyYTAtYTgwMC00OTcxLTk0MmMtOTYxYWM1MDc0YmRl"
-    # webHookUrl_TQWDEV = "https://webexapis.com/v1/webhooks/incoming/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svYjEwZTViZDEtMWFlZS00NTQ3LTg5NzEtMzUyNzIyNjhjMzVl"
+    webHookUrl_TQWDEV = "https://webexapis.com/v1/webhooks/incoming/Y2lzY29zcGFyazovL3VzL1dFQkhPT0svYjEwZTViZDEtMWFlZS00NTQ3LTg5NzEtMzUyNzIyNjhjMzVl"
     # "Y2lzY29zcGFyazovL3VzL1dFQkhPT0svYTkwNzIyYTAtYTgwMC00OTcxLTk0MmMtOTYxYWM1MDc0YmRl"
     status = {
         1: "**Completed** ✅",
@@ -42,17 +42,16 @@ def changeAlerter() -> None:
     #                             f"- Otherwise, it uses the locally stored tam-to-customer-mapping for the same purpose. \n "
     #                 }
     announcements = {"markdown": f"📣 **Announcement(s)**: \n " " "
-                                 f" For customers with multi-orgs that have premium support, ensure the org IDs are documented in the Zendesk notes using the following format: \n "
+                                 f"Zendesk Queue Watcher will be going offline during the shutdown (starting from December 24, 2024). I will be chilaxing with the other tools deep in the metaverse during this time. \n "
                                  f"\n "
-                                 f"```BFG_ORG: <org_id_1>, <org_id_2>, <org_id_n>``` \n "
+                                 f"Don't worry, I will be back on January 6th and will continue to provide the same top-notch alerting services that you are accustomed to. \n "
                                  f"\n "
-                                 f"Example from the MTN NIGERIA COMMUNICATIONS PLC org: \n "
-                                 f"\n "
-                                 f"```BFG_ORG: 8064755, 8146346``` \n "
+                                 f"On that note, I would like to wish you all a Merry Christmas and a Happy New Year in advance. \n "
                      }
     # print(announcements)
     # data_list = [fr_data, changes_data, announcements]
-    data_list = [fr_data, announcements]
+    # data_list = [fr_data, announcements]
+    data_list = [announcements]
 
     for data in data_list:
         webex_response = requests.post(webHookUrl_GlobalSpace, headers=tQw().webex_headers, json=data)
