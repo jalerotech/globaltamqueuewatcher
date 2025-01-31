@@ -1,7 +1,7 @@
 import logging
 
 from ticketAndMsgHandlers.msgPoster import sendMessageToWxT
-from tqwMainClass.tamQueueWatcherClass import TamQueueWatcher as tqw
+from highTouchCustomerTickets.highTouchClass import highTouchBlob as htb
 
 
 logging.basicConfig()
@@ -25,20 +25,21 @@ def createMsg(list_of_incidents):
                       f"Affected Service(s): **{incident['namesOfServices']}** \n " \
                       f"Incident Type: **{incident['incidentType']}** \n " \
                       f"Status: **{incident['incidentState']}** \n " \
-                      f"Creation time in UTC: {incident['creationDateTime']} \n" \
+                      f"Creation date & time (UTC): {incident['creationDateTime']} \n" \
                       f"Scope:  **{incident['affectedRegions']}** \n " \
+                      f"Email template(s):  **[Walmart]({htb().walmartTemplate})** \n " \
 
         # Live environment
-        data = {
-            "text": msg_to_send,
-            "markdown": msg_to_send,
-            "high_touch_service": True
-        }
-        # Send message to dev space.
         # data = {
         #     "text": msg_to_send,
-        #     "markdown": msg_to_send
+        #     "markdown": msg_to_send,
+        #     "high_touch_service": True
         # }
+        # Send message to dev space.
+        data = {
+            "text": msg_to_send,
+            "markdown": msg_to_send
+        }
         if incident['incidentId'] not in handled_incident:
             sendMessageToWxT(data)
             handled_incident.append(incident['incidentId'])
