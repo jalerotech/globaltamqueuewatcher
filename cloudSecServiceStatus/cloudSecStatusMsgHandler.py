@@ -30,16 +30,16 @@ def createMsg(list_of_incidents):
                       f"Email template(s):  **[Walmart]({htb().walmartTemplate})** \n " \
 
         # Live environment
-        # data = {
-        #     "text": msg_to_send,
-        #     "markdown": msg_to_send,
-        #     "high_touch_service": True
-        # }
-        # Send message to dev space.
         data = {
             "text": msg_to_send,
-            "markdown": msg_to_send
+            "markdown": msg_to_send,
+            "high_touch_service": True
         }
+        # # Send message to dev space.
+        # data = {
+        #     "text": msg_to_send,
+        #     "markdown": msg_to_send
+        # }
         if incident['incidentId'] not in handled_incident:
             sendMessageToWxT(data)
             handled_incident.append(incident['incidentId'])
