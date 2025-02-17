@@ -150,7 +150,8 @@ class TamQueueWatcher:
         self.TSE_EMEA = ["roavrame@cisco.com", "mbignell@cisco.com", "beash@cisco.com", "cloupas@cisco.com",
                          "harpraja@cisco.com", "kloxdale@cisco.com", "rosahni@cisco.com", "rysia@cisco.com",
                          "bilbarne@cisco.com", "gonzamar@cisco.com",
-                         "arataj@cisco.com", "nucabral@cisco.com"]
+                         "arataj@cisco.com", "nucabral@cisco.com", "balka@cisco.com",
+                         "malnadi@cisco.com", "namro@cisco.com", "oghawi@cisco.com", "zalali@cisco.com"]
         self.TSE_Mngrs_EMEA = ["vesenthi@cisco.com", "dpetrezs@cisco.com"]
         self.TSE_TLs_EMEA = ["mbignell@cisco.com", "roavrame@cisco.com"]
 
