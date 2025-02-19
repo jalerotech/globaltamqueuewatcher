@@ -69,6 +69,7 @@ def ret_available_tams(email_list) -> dict:
     Returns a list of available TAMs with no OOO set.
     Produces a dict with a list of all available TAMs per region.
     """
+    # print(email_list)
     tams_on_shift = {
         "EMEA": [],
         "APAC": [],
@@ -86,8 +87,12 @@ def ret_available_tams(email_list) -> dict:
             country_list.append(country['country'])
         status = json.loads(webex_resp.content)['items'][0]['status']
         displayName = json.loads(webex_resp.content)['items'][0]['displayName']
-        if displayName == "Chris Stewart":
-            region = 'AU'
+        other_tse_team = ["BAHAA YASER ALKASHEF", "Mosab Alnadi", "Nedal Amro", "Odai Ghawi", "Zaid Alali", "Chris Stewart"]
+        if displayName in other_tse_team:
+            if displayName == "Chris Stewart":
+                region = 'AU'
+            else:
+                region = "GB"
         else:
             region = json.loads(webex_resp.content)['items'][0]['addresses'][0]['country']
         if status != 'OutOfOffice':
