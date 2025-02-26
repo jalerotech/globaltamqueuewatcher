@@ -219,6 +219,16 @@ def validateTickets(list_of_new_tickets) -> tuple[
                             if usable_data:
                                 # Adds the updated ticket to the validated ticket list
                                 validatedTickets.append(usable_data)
+                            else:
+                                logger.info(f"Ticket {tick['ticket_id']} has no Zendesk notes and no Monday.com entry.")
+                                tick.update({
+                                    'ticket_id': tick['ticket_id'],
+                                    'primary_tam': None,
+                                    'backup_tam': None,
+                                    'customer_region': None,
+                                    'bfg_org_id': None
+                                })
+                                validatedTickets.append(tick)
                     else:
                         # If the API call was not successful, display the status code and reason
                         logger.info(
